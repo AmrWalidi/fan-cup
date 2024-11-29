@@ -10,4 +10,10 @@
     <string name="login_screen_title">login screen title</string>
     <string name="email_or_username_icon">email or username icon</string>
     <string name="password_icon">password icon</string>
+    <string name="register">Register</string>
+    <string name="username_icon">username icon</string>
+    <string name="username">Username</string>
+    <string name="email_icon">email icon</string>
+    <string name="email">Email</string>
+    <string name="repeat_password">Repeat Password</string>
 </resources>
