@@ -16,4 +16,12 @@
     <string name="email_icon">email icon</string>
     <string name="email">Email</string>
     <string name="repeat_password">Repeat Password</string>
+    <string name="level_counter">%1$s / %2$s</string>
+    <string name="plus_sign">+</string>
+    <string name="rank_icon">rank icon</string>
+    <string name="store_icon">store icon</string>
+    <string name="online_icon">online icon</string>
+    <string name="home_icon">home icon</string>
+    <string name="champion_icon">champion icon</string>
+    <string name="settings_icon">settings icon</string>
 </resources>
