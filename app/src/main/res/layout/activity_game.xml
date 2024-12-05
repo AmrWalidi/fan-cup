@@ -27,6 +27,7 @@
                 android:layout_width="17dp"
                 android:layout_height="17dp"
                 android:background="@drawable/notification_count_background"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
 
@@ -74,6 +75,7 @@
                 android:layout_width="17dp"
                 android:layout_height="17dp"
                 android:background="@drawable/notification_count_background"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
 
@@ -262,6 +264,16 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/main_fragment"
+            android:name="com.example.android.fancup.HomeFragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/footer_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/stats_group"
+            tools:layout="@layout/fragment_challenges" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/footer_background"

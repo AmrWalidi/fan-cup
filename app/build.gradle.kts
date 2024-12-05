@@ -36,13 +36,12 @@ android {
         jvmTarget = "11"
     }
 
-    dataBinding{
+    dataBinding {
         enable = true
     }
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

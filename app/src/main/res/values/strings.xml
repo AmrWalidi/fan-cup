@@ -24,4 +24,15 @@
     <string name="home_icon">home icon</string>
     <string name="champion_icon">champion icon</string>
     <string name="settings_icon">settings icon</string>
+    <string name="challenge_panel">challenge panel</string>
+    <string name="home_game_category_image">home game category image</string>
+    <string name="start">Start</string>
+    <string name="_1v1">1 v 1</string>
+    <string name="with_friend">with Friend</string>
+    <string name="ranking">Ranking</string>
+    <string name="rank_points">%1$d pts</string>
+    <string name="searching">searching</string>
+    <string name="vs">vs</string>
+    <string name="play">Play</string>
+    <string name="select_challenge">select challenge</string>
 </resources>

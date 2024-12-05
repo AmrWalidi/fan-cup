@@ -151,7 +151,8 @@
                 android:shadowDy="4"
                 android:shadowRadius="10"
                 android:text="@string/login"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                app:cornerRadius="9dp" />
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
