@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/online_nav"
+    app:startDestination="@id/onlineFragment">
+
+    <fragment
+        android:id="@+id/onlineFragment"
+        android:name="com.example.android.fancup.OnlineFragment"
+        android:label="OnlineFragment" >
+        <action
+            android:id="@+id/action_onlineFragment_to_playWithFriendFragment"
+            app:destination="@id/playWithFriendFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/playWithFriendFragment"
+        android:name="com.example.android.fancup.PlayWithFriendFragment"
+        android:label="PlayWithFriendFragment" />
+</navigation>

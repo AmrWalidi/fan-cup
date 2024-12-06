@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/online_game_nav"
+    app:startDestination="@id/searchPlayerFragment">
+
+    <fragment
+        android:id="@+id/searchPlayerFragment"
+        android:name="com.example.android.fancup.SearchPlayerFragment"
+        android:label="fragment_search_player"
+        tools:layout="@layout/fragment_search_player" >
+        <action
+            android:id="@+id/action_searchPlayerFragment_to_spinnerFragment"
+            app:destination="@id/spinnerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/spinnerFragment"
+        android:name="com.example.android.fancup.SpinnerFragment"
+        android:label="SpinnerFragment" />
+</navigation>

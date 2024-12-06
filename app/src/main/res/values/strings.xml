@@ -46,4 +46,16 @@
     <string name="logout">Logout</string>
     <string name="delete_account">Delete account</string>
     <string name="delete_icon">delete icon</string>
+    <string name="arabic">Arabic</string>
+    <string name="arabic_language_icon">arabic language icon</string>
+    <string name="english">English</string>
+    <string name="english_language_icon">english language icon</string>
+    <string name="turkish">Turkish</string>
+    <string name="turkish_language_icon">turkish language icon</string>
+    <string name="search">Search</string>
+    <string name="search_icon">search icon</string>
+    <string name="request">request</string>
+    <string name="invite">invite</string>
+    <string name="question_spinner">question spinner</string>
+    <string name="question_picker">question picker</string>
 </resources>
