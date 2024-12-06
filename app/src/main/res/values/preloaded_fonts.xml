@@ -2,6 +2,7 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/inter_medium</item>
+        <item>@font/pontano_sans_bold</item>
         <item>@font/poppins_bold</item>
         <item>@font/poppins_extrabold</item>
         <item>@font/poppins_semibold</item>

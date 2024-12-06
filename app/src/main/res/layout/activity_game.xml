@@ -273,7 +273,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/stats_group"
-            tools:layout="@layout/fragment_challenges" />
+            tools:layout="@layout/fragment_online" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/footer_background"

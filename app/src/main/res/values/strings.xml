@@ -35,4 +35,15 @@
     <string name="vs">vs</string>
     <string name="play">Play</string>
     <string name="select_challenge">select challenge</string>
+    <string name="edit_button">edit button</string>
+    <string name="change_language">Change language</string>
+    <string name="language_icon">language icon</string>
+    <string name="send_friend_request">Send friend request</string>
+    <string name="send_friend_request_icon">send friend request icon</string>
+    <string name="about_icon">about icon</string>
+    <string name="about">About</string>
+    <string name="logout_icon">logout icon</string>
+    <string name="logout">Logout</string>
+    <string name="delete_account">Delete account</string>
+    <string name="delete_icon">delete icon</string>
 </resources>
