@@ -69,4 +69,15 @@
     <string name="return_to_main_menu_icon">return to main menu icon</string>
     <string name="submit">Submit</string>
     <string name="answer">answer</string>
+    <string name="left_arrow">left arrow</string>
+    <string name="right_arrow">right arrow</string>
+    <string name="time">Time: %1$ds</string>
+    <string name="point">POINT: %1$dxp</string>
+    <string name="menu">Menu</string>
+    <string name="next">Next</string>
+    <string name="cancel">Cancel</string>
+    <string name="app_about">Fan Cup is an exciting and engaging trivia game designed for football enthusiasts of all ages. Dive into a world of football knowledge as you answer thought-provoking questions covering the history, players, teams, tournaments, and iconic moments of the beautiful game. Whether you\'re testing your skills solo or competing with friends online, Fan Cup offers a thrilling mix of challenges across multiple levels. With both offline and online modes, you can enjoy the game anywhere, anytime. Climb the ranks, unlock achievements, and prove that you\'re the ultimate football fan. Are you ready to take the Fan Cup challenge and claim your spot at the top?</string>
+    <string name="result_first_star">result first star</string>
+    <string name="result_second_star">result second star</string>
+    <string name="result_third_star">result third star</string>
 </resources>
