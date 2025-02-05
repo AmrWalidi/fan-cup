@@ -11,36 +11,20 @@
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
-            android:id="@+id/action_splashFragment_to_appFragment"
-            app:destination="@id/appFragment" />
+            android:id="@+id/action_splashFragment_to_appActivity"
+            app:destination="@id/appActivity" />
         <action
-            android:id="@+id/action_splashFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            android:id="@+id/action_splashFragment_to_authenticationActivity"
+            app:destination="@id/authenticationActivity" />
     </fragment>
-    <fragment
-        android:id="@+id/appFragment"
-        android:name="com.example.android.fancup.AppFragment"
-        android:label="fragment_app"
-        tools:layout="@layout/fragment_app" />
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.example.android.fancup.LoginFragment"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
-        <action
-            android:id="@+id/action_loginFragment_to_registerFragment"
-            app:destination="@id/registerFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_appFragment"
-            app:destination="@id/appFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/registerFragment"
-        android:name="com.example.android.fancup.RegisterFragment"
-        android:label="fragment_register"
-        tools:layout="@layout/fragment_register" >
-        <action
-            android:id="@+id/action_registerFragment_to_appFragment"
-            app:destination="@id/appFragment" />
-    </fragment>
+    <activity
+        android:id="@+id/appActivity"
+        android:name="com.example.android.fancup.AppActivity"
+        android:label="activity_app"
+        tools:layout="@layout/activity_app" />
+    <activity
+        android:id="@+id/authenticationActivity"
+        android:name="com.example.android.fancup.AuthenticationActivity"
+        android:label="activity_authentication"
+        tools:layout="@layout/activity_authentication" />
 </navigation>

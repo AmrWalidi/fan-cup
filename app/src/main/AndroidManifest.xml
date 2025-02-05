@@ -13,6 +13,12 @@
         android:theme="@style/Theme.FanCup"
         tools:targetApi="31">
         <activity
+            android:name=".AuthenticationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AppActivity"
+            android:exported="false" />
+        <activity
             android:name=".GameActivity"
             android:exported="false" />
         <activity

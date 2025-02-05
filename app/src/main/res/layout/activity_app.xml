@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".AppFragment">
+    tools:context=".AppActivity">
 
     <data />
 
@@ -265,15 +265,17 @@
         </LinearLayout>
 
         <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/main_fragment"
-            android:name="com.example.android.fancup.HomeFragment"
+            android:id="@+id/fragmentContainerView6"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            app:defaultNavHost="true"
             app:layout_constraintBottom_toTopOf="@+id/footer_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/stats_group"
-            tools:layout="@layout/fragment_offline"/>
+            app:navGraph="@navigation/home_nav"
+            tools:layout="@layout/fragment_home"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/footer_background"

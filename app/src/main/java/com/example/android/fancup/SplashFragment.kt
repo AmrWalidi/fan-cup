@@ -21,7 +21,7 @@ class SplashFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             delay(3000)
             findNavController().navigate(
-                SplashFragmentDirections.actionSplashFragmentToAppFragment()
+                SplashFragmentDirections.actionSplashFragmentToAppActivity()
             )
         }
         return inflater.inflate(R.layout.fragment_splash, container, false)

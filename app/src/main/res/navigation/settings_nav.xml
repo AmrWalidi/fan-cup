@@ -3,26 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/settings_nav"
-    app:startDestination="@id/settingsListFragment">
+    app:startDestination="@id/settingsFragment">
 
     <fragment
         android:id="@+id/languageFragment"
         android:name="com.example.android.fancup.LanguageFragment"
         android:label="LanguageFragment" />
-    <fragment
-        android:id="@+id/settingsListFragment"
-        android:name="com.example.android.fancup.SettingsListFragment"
-        android:label="SettingsListFragment">
-        <action
-            android:id="@+id/action_settingsListFragment_to_languageFragment"
-            app:destination="@id/languageFragment" />
-        <action
-            android:id="@+id/action_settingsListFragment_to_friendRequestFragment"
-            app:destination="@id/friendRequestFragment" />
-        <action
-            android:id="@+id/action_settingsListFragment_to_aboutFragment"
-            app:destination="@id/aboutFragment" />
-    </fragment>
     <fragment
         android:id="@+id/aboutFragment"
         android:name="com.example.android.fancup.AboutFragment"
@@ -32,4 +18,18 @@
         android:id="@+id/friendRequestFragment"
         android:name="com.example.android.fancup.FriendRequestFragment"
         android:label="FriendRequestFragment" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.android.fancup.SettingsFragment"
+        android:label="SettingsFragment" >
+        <action
+            android:id="@+id/action_settingsFragment_to_languageFragment"
+            app:destination="@id/languageFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_friendRequestFragment"
+            app:destination="@id/friendRequestFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment" />
+    </fragment>
 </navigation>
