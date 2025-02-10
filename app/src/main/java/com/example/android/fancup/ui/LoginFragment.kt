@@ -9,16 +9,16 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.fancup.R
 import com.example.android.fancup.databinding.FragmentLoginBinding
-import com.example.android.fancup.viewmodel.AuthenticationViewModel
+import com.example.android.fancup.viewmodel.LoginViewModel
 
 
 class LoginFragment : Fragment() {
 
-    private val viewModel: AuthenticationViewModel by lazy {
+    private val viewModel: LoginViewModel by lazy {
         ViewModelProvider(
             this,
-            AuthenticationViewModel.Factory(requireActivity().application)
-        )[AuthenticationViewModel::class.java]
+            LoginViewModel.Factory(requireActivity().application)
+        )[LoginViewModel::class.java]
     }
 
     override fun onCreateView(

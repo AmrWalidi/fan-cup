@@ -2,7 +2,6 @@ package com.example.android.fancup.repository
 
 import com.example.android.fancup.database.FanCupDatabase
 import com.example.android.fancup.domain.User
-import com.example.android.fancup.service.AuthenticationService
 import com.example.android.fancup.service.impl.AuthenticationServiceImpl
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth

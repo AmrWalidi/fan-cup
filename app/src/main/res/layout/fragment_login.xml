@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.android.fancup.viewmodel.AuthenticationViewModel" />
+            type="com.example.android.fancup.viewmodel.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
