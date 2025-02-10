@@ -2,9 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".LoginFragment">
+    tools:context=".ui.LoginFragment">
 
-    <data />
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.android.fancup.viewmodel.AuthenticationViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -128,6 +132,7 @@
             </LinearLayout>
 
             <TextView
+                android:onClick="@{() -> viewModel.toRegisterPage()}"
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -151,6 +156,7 @@
                 android:shadowDy="4"
                 android:shadowRadius="10"
                 android:text="@string/login"
+                android:onClick="@{() -> viewModel.signIn()}"
                 android:textSize="20sp"
                 app:cornerRadius="9dp" />
 

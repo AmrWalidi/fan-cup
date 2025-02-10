@@ -1,10 +1,11 @@
-package com.example.android.fancup
+package com.example.android.fancup.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.android.fancup.R
 
 
 class RegisterFragment : Fragment() {

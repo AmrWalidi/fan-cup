@@ -48,21 +48,34 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+
+    //Retrofit
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.moshi)
+
+    //Moshi
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
+    //Room
     implementation(libs.androidx.room.ktx)
     implementation(libs.room.runtime)
+
+    //Navigation
+    ksp(libs.room.compiler)
+    annotationProcessor(libs.room.compiler)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.navigation.fragment)
-    annotationProcessor(libs.room.compiler)
-    ksp(libs.room.compiler)
+
+    //JUnit
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
+
     androidTestImplementation(libs.androidx.espresso.core)
+
+    //Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth.ktx)
     implementation(libs.firebase.firestore.ktx)
