@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.android.fancup.ui.LoginFragment"
+        android:name="com.example.android.fancup.ui.fragment.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
         <action
-            android:id="@+id/action_loginFragment_to_appActivity2"
-            app:destination="@id/appActivity2" />
+            android:id="@+id/action_loginFragment_to_appActivity"
+            app:destination="@id/appActivity" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.android.fancup.ui.RegisterFragment"
+        android:name="com.example.android.fancup.ui.fragment.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action
@@ -27,8 +27,12 @@
             app:destination="@id/loginFragment" />
     </fragment>
     <activity
-        android:id="@+id/appActivity2"
-        android:name="com.example.android.fancup.AppActivity"
+        android:id="@+id/appActivity"
+        android:name="com.example.android.fancup.ui.activity.AppActivity"
         android:label="activity_app"
-        tools:layout="@layout/activity_app" />
+        tools:layout="@layout/activity_app" >
+        <argument
+            android:name="userId"
+            app:argType="string" />
+    </activity>
 </navigation>

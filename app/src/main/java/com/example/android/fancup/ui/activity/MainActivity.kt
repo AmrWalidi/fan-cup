@@ -1,4 +1,4 @@
-package com.example.android.fancup.ui
+package com.example.android.fancup.ui.activity
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

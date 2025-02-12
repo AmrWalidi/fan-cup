@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.LoginFragment">
+    tools:context=".ui.fragment.LoginFragment">
 
     <data>
         <variable
@@ -82,7 +82,8 @@
                     android:autofillHints="username"
                     android:background="@drawable/input_background"
                     android:ems="10"
-                    android:hint="@string/email_username"
+                    android:text="@={viewModel.emailInput}"
+                    android:hint="@string/email"
                     android:inputType="text"
                     android:paddingStart="13dp"
                     android:paddingEnd="13dp"
@@ -121,6 +122,7 @@
                     android:autofillHints="password"
                     android:background="@drawable/input_background"
                     android:ems="10"
+                    android:text="@={viewModel.passwordInput}"
                     android:hint="@string/password"
                     android:inputType="textPassword"
                     android:paddingStart="13dp"

@@ -13,19 +13,19 @@
         android:theme="@style/Theme.FanCup"
         tools:targetApi="31">
         <activity
-            android:name=".ui.AuthenticationActivity"
+            android:name=".ui.activity.AuthenticationActivity"
             android:exported="false" />
         <activity
-            android:name=".AppActivity"
+            android:name=".ui.activity.AppActivity"
             android:exported="false" />
         <activity
-            android:name=".GameActivity"
+            android:name=".ui.activity.GameActivity"
             android:exported="false" />
         <activity
-            android:name=".OnlineGameActivity"
+            android:name=".ui.activity.OnlineGameActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

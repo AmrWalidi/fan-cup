@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.example.android.fancup.ui.SplashFragment"
+        android:name="com.example.android.fancup.ui.fragment.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
@@ -19,12 +19,12 @@
     </fragment>
     <activity
         android:id="@+id/appActivity"
-        android:name="com.example.android.fancup.AppActivity"
+        android:name="com.example.android.fancup.ui.activity.AppActivity"
         android:label="activity_app"
         tools:layout="@layout/activity_app" />
     <activity
         android:id="@+id/authenticationActivity"
-        android:name="com.example.android.fancup.ui.AuthenticationActivity"
+        android:name="com.example.android.fancup.ui.activity.AuthenticationActivity"
         android:label="activity_authentication"
         tools:layout="@layout/activity_authentication" />
 </navigation>

@@ -1,4 +1,4 @@
-package com.example.android.fancup.ui
+package com.example.android.fancup.ui.fragment
 
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
