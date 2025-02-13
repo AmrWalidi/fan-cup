@@ -5,10 +5,7 @@ import com.example.android.fancup.service.impl.AuthenticationServiceImpl
 import com.example.android.fancup.service.impl.UserServiceImpl
 import com.example.android.fancup.service.model.asDatabaseUser
 import com.google.firebase.auth.FirebaseUser
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
 
 class AuthenticationRepository(private val database: FanCupDatabase) {
     private val authService = AuthenticationServiceImpl()
@@ -43,12 +40,11 @@ class AuthenticationRepository(private val database: FanCupDatabase) {
         }
         if (loggedIn == 1) {
             val userId = authService.register(email, password)
-            userId?.let {
-                userService.getUserById(userId) { user ->
-                    CoroutineScope(Dispatchers.IO).launch {
-                        user.asDatabaseUser()
-                            ?.let { userDB -> database.userDao.insert(userDB) }
-                    }
+            if (!userId.isNullOrEmpty()) {
+                userService.createUser(userId, username, email)
+                val user = userService.getUserById(userId)
+                user?.asDatabaseUser()?.let { userDB ->
+                    database.userDao.insert(userDB)
                 }
             }
             return true

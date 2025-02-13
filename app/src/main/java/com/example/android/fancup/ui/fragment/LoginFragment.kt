@@ -29,7 +29,7 @@ class LoginFragment : Fragment() {
     ): View {
         val binding: FragmentLoginBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
-        binding.viewModel = viewModel
+        binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 
         viewModel.userID.observe(viewLifecycleOwner) {

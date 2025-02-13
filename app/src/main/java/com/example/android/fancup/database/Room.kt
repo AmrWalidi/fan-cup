@@ -7,7 +7,7 @@ import android.content.Context
 import com.example.android.fancup.database.dao.UserDao
 import com.example.android.fancup.database.entity.DatabaseUser
 
-@Database(entities = [DatabaseUser::class], version = 2)
+@Database(entities = [DatabaseUser::class], version = 3)
 abstract class FanCupDatabase : RoomDatabase() {
     abstract val userDao: UserDao
 }

@@ -4,12 +4,12 @@ import com.example.android.fancup.database.entity.DatabaseUser
 import com.example.android.fancup.domain.User
 
 data class UserDoc(
-    val id: Int,
-    val username: String,
-    val email: String,
-    val points: Int,
-    val coins: Int,
-    val level: String
+    val id: String = "",
+    val username: String = "",
+    val email: String = "",
+    val points: Int = 0,
+    val coins: Int = 0,
+    val level: String = ""
 )
 
 fun UserDoc?.asDatabaseUser(): DatabaseUser? {
@@ -20,7 +20,7 @@ fun UserDoc?.asDatabaseUser(): DatabaseUser? {
             email = email,
             points = points,
             coins = coins,
-            level = level
+            level = level,
         )
     }
 }

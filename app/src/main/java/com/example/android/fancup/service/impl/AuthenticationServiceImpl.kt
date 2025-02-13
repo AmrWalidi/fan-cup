@@ -9,6 +9,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -44,17 +45,22 @@ class AuthenticationServiceImpl @Inject constructor() : AuthenticationService {
         }
     }
 
-    override suspend fun register(email: String, password: String) : String? {
-        var userId : String? = ""
-        Firebase.auth.createUserWithEmailAndPassword(email, password)
-            .addOnSuccessListener { authResult ->
-                userId = authResult.user?.uid
-            }
-            .addOnFailureListener { e ->
-                println("Registration failed: ${e.message}")
-            }
-        return userId
+    override suspend fun register(email: String, password: String): String? {
+        return suspendCancellableCoroutine { continuation ->
+            Firebase.auth.createUserWithEmailAndPassword(email, password)
+                .addOnSuccessListener { authResult ->
+                    if (continuation.isActive)
+                        continuation.resumeWith(Result.success(authResult.user?.uid)) // Resume coroutine with userId
+                }
+                .addOnFailureListener { e ->
+                    if (continuation.isActive) {
+                        println("Registration failed: ${e.message}")
+                        continuation.resumeWith(Result.success(null)) // Resume with null if failed
+                    }
+                }
+        }
     }
+
 
     override suspend fun signOut() {
         Firebase.auth.signOut()

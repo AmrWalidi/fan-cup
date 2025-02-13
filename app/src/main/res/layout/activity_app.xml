@@ -4,7 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.activity.AppActivity">
 
-    <data />
+    <data >
+        <variable
+            name="viewmodel"
+            type="com.example.android.fancup.viewmodel.AppViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
@@ -265,7 +269,7 @@
         </LinearLayout>
 
         <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragmentContainerView6"
+            android:id="@+id/mainFragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -304,7 +308,8 @@
                 android:id="@+id/store_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:onClick="@{() -> viewmodel.navigate(5)}">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -322,7 +327,8 @@
                 android:id="@+id/online_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:onClick="@{() -> viewmodel.navigate(3)}">
 
                 <ImageView
                     android:id="@+id/imageView8"
@@ -340,7 +346,8 @@
                 android:id="@+id/home_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:onClick="@{() -> viewmodel.navigate(1)}">
 
                 <ImageView
                     android:id="@+id/imageView9"
@@ -358,7 +365,8 @@
                 android:id="@+id/champion_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:onClick="@{() -> viewmodel.navigate(2)}">
 
                 <ImageView
                     android:id="@+id/imageView10"
@@ -376,7 +384,8 @@
                 android:id="@+id/settings_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:onClick="@{() -> viewmodel.navigate(4)}">
 
                 <ImageView
                     android:id="@+id/imageView11"

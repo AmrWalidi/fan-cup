@@ -19,7 +19,7 @@
             android:id="@+id/logo"
             android:layout_width="123.18dp"
             android:layout_height="132.35dp"
-            android:layout_marginTop="45dp"
+            android:layout_marginTop="55dp"
             android:contentDescription="@string/fan_cup_logo"
             android:src="@drawable/fan_cup_logo"
             app:layout_constraintEnd_toEndOf="parent"

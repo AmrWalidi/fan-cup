@@ -15,9 +15,9 @@ interface UserDao {
     @Update
     suspend fun update(entity: DatabaseUser)
 
-    @Query("select * from databaseuser")
-    suspend fun get(): DatabaseUser?
+    @Query("select * from users ORDER BY timeCreated DESC LIMIT 1")
+    suspend fun getLastUser(): DatabaseUser?
 
-    @Query("DELETE FROM databaseuser WHERE id = :id" )
+    @Query("DELETE FROM users WHERE id = :id" )
     suspend fun delete(id: Int)
 }

@@ -4,15 +4,16 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.android.fancup.domain.User
 
-@Entity
+@Entity(tableName = "users")
 data class DatabaseUser(
     @PrimaryKey
-    val id: Int,
+    val id: String,
     val username: String,
     val email: String,
     val points: Int,
     val coins: Int,
-    val level: String
+    val level: String,
+    val timeCreated: Long = System.currentTimeMillis()
 )
 
 fun DatabaseUser?.asDomainUser(): User? {
