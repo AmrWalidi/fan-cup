@@ -31,5 +31,13 @@
         <action
             android:id="@+id/action_settingsFragment_to_aboutFragment"
             app:destination="@id/aboutFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_authenticationActivity2"
+            app:destination="@id/authenticationActivity2" />
     </fragment>
+    <activity
+        android:id="@+id/authenticationActivity2"
+        android:name="com.example.android.fancup.ui.activity.AuthenticationActivity"
+        android:label="activity_authentication"
+        tools:layout="@layout/activity_authentication" />
 </navigation>

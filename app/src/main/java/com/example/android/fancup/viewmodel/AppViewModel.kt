@@ -13,6 +13,18 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     val page: LiveData<Int>
         get() = _page
 
+    private val _selectedPage = MutableLiveData(arrayOf(true,false,false,false,false))
+    val selectedPage: LiveData<Array<Boolean>>
+        get() = _selectedPage
+
+
+    fun navigate (page : Int) {
+        _page.value = page
+        _selectedPage.value = Array(5) { false }.apply {
+            this[page - 1] = true
+        }
+    }
+
     class Factory(val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(AppViewModel::class.java)) {
@@ -21,9 +33,5 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }
-    }
-
-    fun navigate (page : Int) {
-        _page.value = page
     }
 }

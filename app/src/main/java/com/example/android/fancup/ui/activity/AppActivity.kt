@@ -5,13 +5,9 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.android.fancup.ChallengesFragment
-import com.example.android.fancup.ChampionFragment
-import com.example.android.fancup.HomeFragment
+import androidx.navigation.findNavController
 import com.example.android.fancup.R
-import com.example.android.fancup.SettingsFragment
 import com.example.android.fancup.databinding.ActivityAppBinding
 import com.example.android.fancup.viewmodel.AppViewModel
 
@@ -42,27 +38,22 @@ class AppActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
 
         viewModel.page.observe(this) { value ->
-            val fragment: Fragment = when (value) {
+            val navGraphId: Int = when (value) {
 
-                1 -> HomeFragment()
-                2 -> ChallengesFragment()
-                3 -> ChampionFragment()
-                4 -> SettingsFragment()
+                1 -> R.navigation.home_nav
+                2 -> R.navigation.challenges_nav
+                3 -> R.navigation.champion_nav
+                4 -> R.navigation.settings_nav
                 else -> return@observe
             }
 
-            val transaction = supportFragmentManager.beginTransaction()
 
-            transaction.setCustomAnimations(
-                R.anim.slide_in_right,
-                R.anim.slide_out_left,
-                R.anim.slide_in_left,
-                R.anim.slide_out_right
-            )
+            val navController = findNavController(R.id.mainFragment)
 
-            transaction.replace(binding.mainFragment.id, fragment)
-            transaction.addToBackStack(null)
-            transaction.commit()
+            val navInflater = navController.navInflater
+            val newGraph = navInflater.inflate(navGraphId)
+
+            navController.graph = newGraph
 
         }
     }

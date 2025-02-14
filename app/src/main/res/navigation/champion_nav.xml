@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/online_nav"
-    app:startDestination="@id/onlineFragment">
+    app:startDestination="@id/championFragment">
 
+    <activity
+        android:id="@+id/onlineGameActivity"
+        android:name="com.example.android.fancup.ui.activity.OnlineGameActivity"
+        android:label="activity_online_game"
+        tools:layout="@layout/activity_online_game" />
     <fragment
-        android:id="@+id/onlineFragment"
-        android:name="com.example.android.fancup.OnlineFragment"
-        android:label="OnlineFragment" >
+        android:id="@+id/championFragment"
+        android:name="com.example.android.fancup.ui.fragment.ChampionFragment"
+        android:label="fragment_champion"
+        tools:layout="@layout/fragment_champion" >
         <action
-            android:id="@+id/action_onlineFragment_to_playWithFriendFragment"
+            android:id="@+id/action_championFragment_to_onlineGameActivity"
+            app:destination="@id/onlineGameActivity" />
+        <action
+            android:id="@+id/action_championFragment_to_playWithFriendFragment2"
             app:destination="@id/playWithFriendFragment" />
     </fragment>
     <fragment
