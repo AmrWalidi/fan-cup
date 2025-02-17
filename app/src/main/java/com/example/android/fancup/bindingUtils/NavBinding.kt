@@ -18,8 +18,8 @@ fun ConstraintLayout.setStatus(selected: Boolean) {
     if (selected) {
         setBackgroundResource(R.drawable.selected_page_background)
 
-        layoutParams.height = dpToPx(55,context)
-        layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
+        layoutParams.height = dpToPx(50, context)
+        layoutParams.width =  dpToPx(50, context)
         this.layoutParams = layoutParams
 
         val paddingPx =
@@ -41,16 +41,9 @@ fun ImageView.setStatus(selected: Boolean) {
 
     val layoutParams = layoutParams ?: return
     if (selected) {
-        layoutParams.height = dpToPx(48,context)
-        layoutParams.width = dpToPx(48,context)
-        this.layoutParams = layoutParams
-
         this.drawable?.setTint(ContextCompat.getColor(context, R.color.white))
 
-    } else{
-        layoutParams.height =  ViewGroup.LayoutParams.WRAP_CONTENT
-        layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
-        this.layoutParams = layoutParams
+    } else {
         this.drawable?.setTintList(null)
     }
 }

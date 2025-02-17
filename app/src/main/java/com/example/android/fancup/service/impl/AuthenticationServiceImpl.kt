@@ -50,12 +50,12 @@ class AuthenticationServiceImpl @Inject constructor() : AuthenticationService {
             Firebase.auth.createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener { authResult ->
                     if (continuation.isActive)
-                        continuation.resumeWith(Result.success(authResult.user?.uid)) // Resume coroutine with userId
+                        continuation.resumeWith(Result.success(authResult.user?.uid))
                 }
                 .addOnFailureListener { e ->
                     if (continuation.isActive) {
                         println("Registration failed: ${e.message}")
-                        continuation.resumeWith(Result.success(null)) // Resume with null if failed
+                        continuation.resumeWith(Result.success(null))
                     }
                 }
         }

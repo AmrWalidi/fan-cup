@@ -55,6 +55,7 @@
             android:id="@+id/page_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:fontFamily="@font/poppins_bold"
             android:textColor="#EDEDED"
@@ -62,8 +63,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/bell_notification"
             app:layout_constraintEnd_toStartOf="@+id/bell_notification"
             app:layout_constraintStart_toEndOf="@+id/user_notification"
-            app:layout_constraintTop_toTopOf="@+id/user_notification"
-            tools:text="Home" />
+            app:layout_constraintTop_toTopOf="@+id/bell_notification"
+            tools:text="@{viewmodel.pageName}" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/bell_notification"
@@ -297,8 +298,8 @@
             android:id="@+id/footer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             android:layout_marginBottom="6dp"
             android:baselineAligned="false"
             android:gravity="bottom"
@@ -308,7 +309,7 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="@{() -> viewmodel.navigate(5)}">
@@ -326,7 +327,6 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:contentDescription="@string/store_icon"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -338,7 +338,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="@{() -> viewmodel.navigate(3)}">
@@ -368,7 +368,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="@{() -> viewmodel.navigate(1)}">
@@ -398,7 +398,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="@{() -> viewmodel.navigate(2)}">

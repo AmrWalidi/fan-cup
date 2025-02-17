@@ -13,15 +13,27 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     val page: LiveData<Int>
         get() = _page
 
-    private val _selectedPage = MutableLiveData(arrayOf(true,false,false,false,false))
+    private val _pageName = MutableLiveData("Home")
+    val pageName: LiveData<String>
+        get() = _pageName
+
+    private val _selectedPage = MutableLiveData(arrayOf(true, false, false, false, false))
     val selectedPage: LiveData<Array<Boolean>>
         get() = _selectedPage
 
 
-    fun navigate (page : Int) {
+    fun navigate(page: Int) {
         _page.value = page
         _selectedPage.value = Array(5) { false }.apply {
             this[page - 1] = true
+        }
+        _pageName.value = when (page) {
+            1 -> "Home"
+            2 -> "Challenges"
+            3 -> "Champions"
+            4 -> "Settings"
+            5 -> "Store"
+            else -> return
         }
     }
 
