@@ -272,15 +272,13 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/mainFragment"
-            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:name="com.example.android.fancup.HomeFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:defaultNavHost="true"
             app:layout_constraintBottom_toTopOf="@+id/footer_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/stats_group"
-            app:navGraph="@navigation/home_nav"
             tools:layout="@layout/fragment_home" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -312,7 +310,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:onClick="@{() -> viewmodel.navigate(5)}">
+                android:onClick="@{() -> viewmodel.navigate(1)}">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/store_button"
@@ -322,7 +320,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:setStatus="@{viewmodel.selectedPage[4]}">
+                    app:setStatus="@{viewmodel.selectedPage[0]}">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -332,68 +330,8 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:setStatus="@{viewmodel.selectedPage[4]}"
-                        app:srcCompat="@drawable/store" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="@{() -> viewmodel.navigate(3)}">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/online_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:setStatus="@{viewmodel.selectedPage[2]}">
-
-                    <ImageView
-                        android:id="@+id/imageView8"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/online_icon"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:setStatus="@{viewmodel.selectedPage[2]}"
-                        app:srcCompat="@drawable/champion" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="@{() -> viewmodel.navigate(1)}">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/home_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:setStatus="@{viewmodel.selectedPage[0]}">
-
-                    <ImageView
-                        android:id="@+id/imageView9"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/home_icon"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
                         app:setStatus="@{viewmodel.selectedPage[0]}"
-                        app:srcCompat="@drawable/home" />
+                        app:srcCompat="@drawable/store" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -404,7 +342,7 @@
                 android:onClick="@{() -> viewmodel.navigate(2)}">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/champion_button"
+                    android:id="@+id/online_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -414,16 +352,46 @@
                     app:setStatus="@{viewmodel.selectedPage[1]}">
 
                     <ImageView
-                        android:id="@+id/imageView10"
+                        android:id="@+id/imageView8"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:contentDescription="@string/champion_icon"
+                        android:contentDescription="@string/online_icon"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:setStatus="@{viewmodel.selectedPage[1]}"
-                        app:srcCompat="@drawable/challenges" />
+                        app:srcCompat="@drawable/champion" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="@{() -> viewmodel.navigate(3)}">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/home_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:setStatus="@{viewmodel.selectedPage[2]}">
+
+                    <ImageView
+                        android:id="@+id/imageView9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/home_icon"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:setStatus="@{viewmodel.selectedPage[2]}"
+                        app:srcCompat="@drawable/home" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -434,6 +402,36 @@
                 android:onClick="@{() -> viewmodel.navigate(4)}">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/champion_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:setStatus="@{viewmodel.selectedPage[3]}">
+
+                    <ImageView
+                        android:id="@+id/imageView10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/champion_icon"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:setStatus="@{viewmodel.selectedPage[3]}"
+                        app:srcCompat="@drawable/challenges" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="@{() -> viewmodel.navigate(5)}">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
 
                     android:id="@+id/settings_button"
                     android:layout_width="wrap_content"
@@ -442,7 +440,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:setStatus="@{viewmodel.selectedPage[3]}">
+                    app:setStatus="@{viewmodel.selectedPage[4]}">
 
                     <ImageView
                         android:id="@+id/imageView11"
@@ -453,7 +451,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:setStatus="@{viewmodel.selectedPage[3]}"
+                        app:setStatus="@{viewmodel.selectedPage[4]}"
                         app:srcCompat="@drawable/settings" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
