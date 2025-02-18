@@ -79,4 +79,5 @@
     <string name="result_first_star">result first star</string>
     <string name="result_second_star">result second star</string>
     <string name="result_third_star">result third star</string>
+    <string name="splash_screen_background_image">splash screen background image</string>
 </resources>
