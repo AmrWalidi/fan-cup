@@ -18,6 +18,6 @@ interface UserDao {
     @Query("select * from users ORDER BY timeCreated DESC LIMIT 1")
     suspend fun getLastUser(): DatabaseUser?
 
-    @Query("DELETE FROM users WHERE id = :id" )
-    suspend fun delete(id: Int)
+    @Query("DELETE FROM users " )
+    suspend fun delete()
 }

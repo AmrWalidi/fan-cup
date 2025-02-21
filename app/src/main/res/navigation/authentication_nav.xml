@@ -30,9 +30,5 @@
         android:id="@+id/appActivity"
         android:name="com.example.android.fancup.ui.activity.AppActivity"
         android:label="activity_app"
-        tools:layout="@layout/activity_app" >
-        <argument
-            android:name="userId"
-            app:argType="string" />
-    </activity>
+        tools:layout="@layout/activity_app" />
 </navigation>

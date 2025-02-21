@@ -47,11 +47,10 @@ class LoginFragment : Fragment() {
 
         viewModel.appPage.observe(viewLifecycleOwner) {
             if (it) {
-                viewModel.userID.value?.let { userId ->
                     findNavController().navigate(
-                        LoginFragmentDirections.actionLoginFragmentToAppActivity(userId)
+                        LoginFragmentDirections.actionLoginFragmentToAppActivity()
                     )
-                }
+
             }
         }
         return binding.root

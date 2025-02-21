@@ -1,6 +1,8 @@
 package com.example.android.fancup.repository
 
 import com.example.android.fancup.database.FanCupDatabase
+import com.example.android.fancup.database.entity.asDomainUser
+import com.example.android.fancup.domain.User
 import com.example.android.fancup.service.impl.AuthenticationServiceImpl
 import com.example.android.fancup.service.impl.UserServiceImpl
 import com.example.android.fancup.service.model.asDatabaseUser
@@ -14,13 +16,22 @@ class AuthenticationRepository(private val database: FanCupDatabase) {
     val loggedUser: Flow<FirebaseUser?>
         get() = authService.currentUser
 
+    suspend fun getUser(): User? {
+        return database.userDao.getLastUser().asDomainUser()
+    }
+
 
     fun hasUser(): Boolean {
         return authService.hasUser()
     }
 
     suspend fun signIn(email: String, password: String): String? {
-        return authService.signIn(email, password)?.uid
+        val userId = authService.signIn(email, password)?.uid
+        if (userId != null) {
+            val user = userService.getUserById(userId).asDatabaseUser()
+            user?.apply { database.userDao.insert(this) }
+        }
+        return userId
     }
 
     suspend fun register(username: String, email: String, password: String): Boolean {
@@ -40,16 +51,17 @@ class AuthenticationRepository(private val database: FanCupDatabase) {
         }
         if (loggedIn == 1) {
             val userId = authService.register(email, password)
-            if (!userId.isNullOrEmpty()) {
+            if (!userId.isNullOrEmpty())
                 userService.createUser(userId, username, email)
-                val user = userService.getUserById(userId)
-                user?.asDatabaseUser()?.let { userDB ->
-                    database.userDao.insert(userDB)
-                }
-            }
+
             return true
         }
         return false
 
+    }
+
+    suspend fun signOut() {
+        authService.signOut()
+        database.userDao.delete()
     }
 }

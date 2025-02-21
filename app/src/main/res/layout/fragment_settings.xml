@@ -3,12 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data />
+    <data >
+        <variable
+            name="viewModel"
+            type="com.example.android.fancup.viewmodel.SettingsViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".SettingsFragment">
+        tools:context=".ui.fragment.SettingsFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout2"
@@ -210,7 +214,8 @@
                     android:paddingVertical="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:onClick="@{()-> viewModel.signOut()}">
 
                     <ImageView
                         android:id="@+id/imageView4"
@@ -229,6 +234,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/poppins_bold"
                         android:text="@string/logout"
+
                         android:textColor="@color/white"
                         android:textSize="20sp" />
                 </LinearLayout>

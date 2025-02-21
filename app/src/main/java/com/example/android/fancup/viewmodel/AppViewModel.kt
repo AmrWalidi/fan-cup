@@ -6,8 +6,20 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import com.example.android.fancup.database.getDatabase
+import com.example.android.fancup.domain.User
+import com.example.android.fancup.repository.AuthenticationRepository
+import kotlinx.coroutines.launch
 
 class AppViewModel(application: Application) : AndroidViewModel(application) {
+
+    private val database = getDatabase(application)
+    private val repo = AuthenticationRepository(database)
+
+    private val _user = MutableLiveData<User>()
+    val user: LiveData<User>
+        get() = _user
 
     private val _page = MutableLiveData(1)
     val page: LiveData<Int>
@@ -25,6 +37,18 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     val transitionDirection: LiveData<Int>
         get() = _transitionDirection
 
+    private val _toLoginScreen = MutableLiveData(false)
+    val toLoginScreen: LiveData<Boolean>
+        get() = _toLoginScreen
+
+    init {
+        viewModelScope.launch {
+            repo.loggedUser.collect{ u ->
+                if (u == null) returnToLoginScreen()
+            }
+            _user.value = repo.getUser()
+        }
+    }
 
     fun navigate(newPage: Int) {
         if (newPage - _page.value!! > 0) {
@@ -45,6 +69,15 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
             else -> return
         }
     }
+
+    private fun returnToLoginScreen() {
+        _toLoginScreen.value = true
+    }
+
+    fun resetToLoginScreen() {
+        _toLoginScreen.value = false
+    }
+
 
     class Factory(val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

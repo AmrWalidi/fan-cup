@@ -20,11 +20,11 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         get() = _userID
 
     private val _registerPage = MutableLiveData(false)
-    val registerPage : LiveData<Boolean>
+    val registerPage: LiveData<Boolean>
         get() = _registerPage
 
     private val _appPage = MutableLiveData(false)
-    val appPage : LiveData<Boolean>
+    val appPage: LiveData<Boolean>
         get() = _appPage
 
     val emailInput = MutableLiveData("")
@@ -38,10 +38,9 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
             if (!emailValue.isNullOrBlank() && !passwordValue.isNullOrBlank()) {
                 _userID.value = repo.signIn(emailValue, passwordValue)
-            }
-
-            if (_userID.value != null){
-                toAppPage()
+                if (_userID.value != null) {
+                    toAppPage()
+                }
             }
         }
     }

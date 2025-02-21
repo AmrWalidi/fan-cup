@@ -1,10 +1,15 @@
-package com.example.android.fancup
+package com.example.android.fancup.ui.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import com.example.android.fancup.R
+import com.example.android.fancup.databinding.FragmentSettingsBinding
+import com.example.android.fancup.viewmodel.SettingsViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +26,13 @@ class SettingsFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private val viewModel: SettingsViewModel by lazy {
+        ViewModelProvider(
+            this,
+            SettingsViewModel.Factory(requireActivity().application)
+        )[SettingsViewModel::class.java]
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -32,9 +44,12 @@ class SettingsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false)
+    ): View {
+        val binding: FragmentSettingsBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_settings, container, false)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
+        return binding.root
     }
 
     companion object {

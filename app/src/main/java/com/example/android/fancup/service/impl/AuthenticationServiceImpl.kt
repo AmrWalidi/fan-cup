@@ -36,13 +36,8 @@ class AuthenticationServiceImpl @Inject constructor() : AuthenticationService {
     }
 
     override suspend fun signIn(email: String, password: String): FirebaseUser? {
-        return try {
-            val authResult = Firebase.auth.signInWithEmailAndPassword(email, password).await()
-            authResult.user
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        }
+        return Firebase.auth.signInWithEmailAndPassword(email, password).await().user
+
     }
 
     override suspend fun register(email: String, password: String): String? {
