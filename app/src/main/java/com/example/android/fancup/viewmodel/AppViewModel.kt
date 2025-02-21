@@ -1,5 +1,6 @@
 package com.example.android.fancup.viewmodel
 
+
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -20,6 +21,19 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     private val _user = MutableLiveData<User>()
     val user: LiveData<User>
         get() = _user
+
+
+    private val _formattedCoins = MutableLiveData("0")
+    val formattedCoins: LiveData<String> = _formattedCoins
+
+    private val _formattedPoints = MutableLiveData("0")
+    val formattedPoints: LiveData<String> = _formattedPoints
+
+    private val _userRank = MutableLiveData("0")
+    val userRank: LiveData<String> = _userRank
+
+    private val _userLevel = MutableLiveData("0")
+    val userLevel: LiveData<String> = _userLevel
 
     private val _page = MutableLiveData(1)
     val page: LiveData<Int>
@@ -43,11 +57,19 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         viewModelScope.launch {
-            repo.loggedUser.collect{ u ->
+            repo.loggedUser.collect { u ->
                 if (u == null) returnToLoginScreen()
             }
             _user.value = repo.getUser()
+            _formattedCoins.value = _user.value?.coins?.let { formatInt(it) }
+            _formattedPoints.value = _user.value?.points?.let { formatInt(it) }
+            _userRank.value = _user.value?.rank
+            _userLevel.value = _user.value?.level
         }
+    }
+
+    private fun formatInt(number: Int): String {
+        return "%,d".format(number)
     }
 
     fun navigate(newPage: Int) {
@@ -69,6 +91,7 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
             else -> return
         }
     }
+
 
     private fun returnToLoginScreen() {
         _toLoginScreen.value = true

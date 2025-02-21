@@ -12,8 +12,8 @@ data class DatabaseUser(
     val email: String,
     val points: Int,
     val coins: Int,
-    val level: String,
-    val timeCreated: Long = System.currentTimeMillis()
+    val level: Int,
+    val rank: Int
 )
 
 fun DatabaseUser?.asDomainUser(): User? {
@@ -24,7 +24,8 @@ fun DatabaseUser?.asDomainUser(): User? {
             email = email,
             points = points,
             coins = coins,
-            level = level
+            level = level.toString(),
+            rank = rank.toString()
         )
     }
 }

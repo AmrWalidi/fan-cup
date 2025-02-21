@@ -17,7 +17,8 @@ class UserServiceImpl @Inject constructor() : UserService {
             "email" to email,
             "points" to 0,
             "coins" to 0,
-            "level" to "0"
+            "level" to 0,
+            "rank" to 0
         )
 
         usersRef.document(id)

@@ -17,7 +17,7 @@ class AuthenticationRepository(private val database: FanCupDatabase) {
         get() = authService.currentUser
 
     suspend fun getUser(): User? {
-        return database.userDao.getLastUser().asDomainUser()
+        return database.userDao.getUser().asDomainUser()
     }
 
 
@@ -53,7 +53,6 @@ class AuthenticationRepository(private val database: FanCupDatabase) {
             val userId = authService.register(email, password)
             if (!userId.isNullOrEmpty())
                 userService.createUser(userId, username, email)
-
             return true
         }
         return false
