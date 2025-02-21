@@ -11,4 +11,5 @@ interface AuthenticationService {
     suspend fun register(email: String, password: String) : String?
     suspend fun signOut()
     suspend fun deleteAccount()
+    suspend fun resetPassword(email: String)
 }

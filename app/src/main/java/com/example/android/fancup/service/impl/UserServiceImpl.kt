@@ -53,23 +53,42 @@ class UserServiceImpl @Inject constructor() : UserService {
         }
     }
 
-    override suspend fun getUserByUsername(username: String, callback: (UserDoc?) -> Unit) {
-
-        usersRef.whereEqualTo("username", username)
-            .get()
-            .addOnSuccessListener { querySnapshot ->
-                val user = querySnapshot.firstOrNull()?.toObject(UserDoc::class.java)
-                callback(user)
-            }
+    override suspend fun getUserByUsername(username: String): UserDoc? {
+        return suspendCancellableCoroutine { continuation ->
+            usersRef.whereEqualTo("username", username)
+                .get()
+                .addOnSuccessListener { documents ->
+                    if (continuation.isActive) {
+                        val userDoc = documents.firstOrNull()?.toObject(UserDoc::class.java)
+                        continuation.resumeWith(Result.success(userDoc))
+                    }
+                }
+                .addOnFailureListener { e ->
+                    if (continuation.isActive) {
+                        println("Error fetching user: ${e.message}")
+                        continuation.resumeWith(Result.success(null))
+                    }
+                }
+        }
     }
 
-    override suspend fun getUserByEmail(email: String, callback: (UserDoc?) -> Unit) {
-        usersRef.whereEqualTo("email", email)
-            .get()
-            .addOnSuccessListener { querySnapshot ->
-                val user = querySnapshot.firstOrNull()?.toObject(UserDoc::class.java)
-                callback(user)
-            }
+    override suspend fun getUserByEmail(email: String): UserDoc? {
+        return suspendCancellableCoroutine { continuation ->
+            usersRef.whereEqualTo("email", email)
+                .get()
+                .addOnSuccessListener { documents ->
+                    if (continuation.isActive) {
+                        val userDoc = documents.firstOrNull()?.toObject(UserDoc::class.java)
+                        continuation.resumeWith(Result.success(userDoc))
+                    }
+                }
+                .addOnFailureListener { e ->
+                    if (continuation.isActive) {
+                        println("Error fetching user: ${e.message}")
+                        continuation.resumeWith(Result.success(null))
+                    }
+                }
+        }
     }
 
     override suspend fun deleteAccount(id: String) {

@@ -64,4 +64,8 @@ class AuthenticationServiceImpl @Inject constructor() : AuthenticationService {
     override suspend fun deleteAccount() {
         Firebase.auth.currentUser!!.delete().await()
     }
+
+    override suspend fun resetPassword(email: String) {
+        Firebase.auth.sendPasswordResetEmail(email).await()
+    }
 }

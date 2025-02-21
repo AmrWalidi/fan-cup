@@ -23,6 +23,10 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     val registerPage: LiveData<Boolean>
         get() = _registerPage
 
+    private val _forgetPasswordPage = MutableLiveData(false)
+    val forgetPasswordPage: LiveData<Boolean>
+        get() = _forgetPasswordPage
+
     private val _appPage = MutableLiveData(false)
     val appPage: LiveData<Boolean>
         get() = _appPage
@@ -51,6 +55,18 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
     fun toRegisterPage() {
         _registerPage.value = true
+    }
+
+    fun resetRegisterPage() {
+        _registerPage.value = false
+    }
+
+    fun toForgetPasswordPage() {
+        _forgetPasswordPage.value = true
+    }
+
+    fun resetForgetPasswordPage() {
+        _forgetPasswordPage.value = false
     }
 
     class Factory(val app: Application) : ViewModelProvider.Factory {

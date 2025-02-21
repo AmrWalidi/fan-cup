@@ -5,6 +5,7 @@ import com.example.android.fancup.database.entity.asDomainUser
 import com.example.android.fancup.domain.User
 import com.example.android.fancup.service.impl.AuthenticationServiceImpl
 import com.example.android.fancup.service.impl.UserServiceImpl
+import com.example.android.fancup.service.model.UserDoc
 import com.example.android.fancup.service.model.asDatabaseUser
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.Flow
@@ -20,9 +21,18 @@ class AuthenticationRepository(private val database: FanCupDatabase) {
         return database.userDao.getUser().asDomainUser()
     }
 
-
     fun hasUser(): Boolean {
         return authService.hasUser()
+    }
+
+    suspend fun resetPassword(email: String): Boolean {
+        var success = false
+        val user = userService.getUserByEmail(email)
+        if (user != null) {
+            success = true
+            authService.resetPassword(email)
+        }
+        return success
     }
 
     suspend fun signIn(email: String, password: String): String? {
@@ -36,19 +46,14 @@ class AuthenticationRepository(private val database: FanCupDatabase) {
 
     suspend fun register(username: String, email: String, password: String): Boolean {
         var loggedIn = 1
-        userService.getUserByUsername(username) { user ->
-            if (user == null) {
-                loggedIn = 0
-            }
+        var user: UserDoc? = userService.getUserByEmail(email)
+        if (user == null) loggedIn = 0
 
-        }
 
-        userService.getUserByEmail(email) { user ->
-            if (user == null) {
-                loggedIn = 0
-            }
+        user = userService.getUserByUsername(username)
+        if (user == null) loggedIn = 0
 
-        }
+
         if (loggedIn == 1) {
             val userId = authService.register(email, password)
             if (!userId.isNullOrEmpty())

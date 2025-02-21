@@ -77,7 +77,6 @@ class AppActivity : AppCompatActivity() {
 
         viewModel.toLoginScreen.observe(this) {
             if (it) {
-                viewModel.resetToLoginScreen()
                 val intent = Intent(this, AuthenticationActivity::class.java)
                 startActivity(intent)
             }

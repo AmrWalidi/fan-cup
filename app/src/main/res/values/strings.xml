@@ -4,7 +4,7 @@
     <string name="fan_cup_logo">fan cup logo</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
-    <string name="don_t_have_an_account">Don’t have an account?</string>
+    <string name="don_t_have_an_account">Don’t have an account ?</string>
     <string name="login_screen_title">login screen title</string>
     <string name="email_or_username_icon">email or username icon</string>
     <string name="password_icon">password icon</string>
@@ -78,4 +78,7 @@
     <string name="result_second_star">result second star</string>
     <string name="result_third_star">result third star</string>
     <string name="splash_screen_background_image">splash screen background image</string>
+    <string name="forget_password">Forget Password ?</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="provide_your_account_email_to_reset_your_password">Provide Your Account Email to Reset Your Password</string>
 </resources>

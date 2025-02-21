@@ -42,16 +42,22 @@ class LoginFragment : Fragment() {
         viewModel.registerPage.observe(viewLifecycleOwner) {
             if (it) {
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
+                viewModel.resetRegisterPage()
             }
         }
 
         viewModel.appPage.observe(viewLifecycleOwner) {
-            if (it) {
-                    findNavController().navigate(
-                        LoginFragmentDirections.actionLoginFragmentToAppActivity()
-                    )
+            if (it)
+                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToAppActivity())
 
+        }
+
+        viewModel.forgetPasswordPage.observe(viewLifecycleOwner) {
+            if (it) {
+                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToForgetPasswordFragment())
+                viewModel.resetForgetPasswordPage()
             }
+
         }
         return binding.root
     }

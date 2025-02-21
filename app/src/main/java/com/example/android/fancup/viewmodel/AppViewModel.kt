@@ -97,10 +97,6 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         _toLoginScreen.value = true
     }
 
-    fun resetToLoginScreen() {
-        _toLoginScreen.value = false
-    }
-
 
     class Factory(val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
