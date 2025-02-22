@@ -3,12 +3,14 @@ package com.example.android.fancup.repository
 import com.example.android.fancup.database.FanCupDatabase
 import com.example.android.fancup.database.entity.asDomainUser
 import com.example.android.fancup.domain.User
+import com.example.android.fancup.service.Response
 import com.example.android.fancup.service.impl.AuthenticationServiceImpl
 import com.example.android.fancup.service.impl.UserServiceImpl
-import com.example.android.fancup.service.model.UserDoc
 import com.example.android.fancup.service.model.asDatabaseUser
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import java.lang.Exception
 
 class AuthenticationRepository(private val database: FanCupDatabase) {
     private val authService = AuthenticationServiceImpl()
@@ -18,7 +20,8 @@ class AuthenticationRepository(private val database: FanCupDatabase) {
         get() = authService.currentUser
 
     suspend fun getUser(): User? {
-        return database.userDao.getUser().asDomainUser()
+        val u =  database.userDao.getUser().asDomainUser()
+        return u
     }
 
     fun hasUser(): Boolean {
@@ -35,33 +38,30 @@ class AuthenticationRepository(private val database: FanCupDatabase) {
         return success
     }
 
-    suspend fun signIn(email: String, password: String): String? {
-        val userId = authService.signIn(email, password)?.uid
-        if (userId != null) {
-            val user = userService.getUserById(userId).asDatabaseUser()
-            user?.apply { database.userDao.insert(this) }
+    fun signIn(email: String, password: String): Flow<Response> = flow {
+        authService.signIn(email, password).collect { res ->
+            if (res is Response.Success) {
+                val user = userService.getUserById(res.data.toString()).asDatabaseUser()
+                user?.let { database.userDao.insert(it) }
+            }
+            emit(res)
         }
-        return userId
+
     }
 
-    suspend fun register(username: String, email: String, password: String): Boolean {
-        var loggedIn = 1
-        var user: UserDoc? = userService.getUserByEmail(email)
-        if (user == null) loggedIn = 0
-
-
-        user = userService.getUserByUsername(username)
-        if (user == null) loggedIn = 0
-
-
-        if (loggedIn == 1) {
-            val userId = authService.register(email, password)
-            if (!userId.isNullOrEmpty())
-                userService.createUser(userId, username, email)
-            return true
+    fun register(username: String, email: String, password: String): Flow<Response> = flow {
+        val existingUser = userService.getUserByUsername(username)
+        if (existingUser != null) {
+            emit(Response.Failure(Exception("This username has been taken")))
+            return@flow
         }
-        return false
 
+        authService.register(email, password).collect { res ->
+            if (res is Response.Success) {
+                userService.createUser(res.data.toString(), username, email)
+            }
+            emit(res)
+        }
     }
 
     suspend fun signOut() {

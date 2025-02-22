@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.android.fancup.database.getDatabase
 import com.example.android.fancup.repository.AuthenticationRepository
+import com.example.android.fancup.service.Response
 import kotlinx.coroutines.launch
 
 class RegisterViewModel(application: Application) : AndroidViewModel(application) {
@@ -24,6 +25,15 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
     val loginPage: LiveData<Boolean>
         get() = _loginPage
 
+    private val _errorMessage = MutableLiveData("")
+    val errorMessage: LiveData<String>
+        get() = _errorMessage
+
+    private val _isLoading = MutableLiveData(false)
+    val isLoading: LiveData<Boolean>
+        get() = _isLoading
+
+
     fun register() {
         viewModelScope.launch {
             val emailValue = emailInput.value
@@ -31,14 +41,38 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
             val usernameValue = usernameInput.value
             val repeatedPasswordValue = repeatedPasswordInput.value
 
-            if (!emailValue.isNullOrBlank() && !passwordValue.isNullOrBlank() && !usernameValue.isNullOrBlank() && !repeatedPasswordValue.isNullOrBlank()) {
-                if (passwordValue.length > 6 && passwordValue.matches("^(?=.*[A-Za-z])(?=.*\\d).+$".toRegex())) {
-                    if (passwordValue == repeatedPasswordValue) {
-                        val isRegistered = repo.register(usernameValue, emailValue, passwordValue)
-                        if (isRegistered) toLoginPage()
+            if (emailValue.isNullOrEmpty() || passwordValue.isNullOrEmpty() || usernameValue.isNullOrEmpty() || repeatedPasswordValue.isNullOrEmpty()) {
+                _errorMessage.value = "Fill the Fields"
+                return@launch
+            }
+
+            if (passwordValue.length <= 6 || !passwordValue.matches("^(?=.*[A-Za-z])(?=.*\\d).+$".toRegex())) {
+                _errorMessage.value =
+                    "Password must be between 6 and 25 characters long and must contain at least 1 number, 1 uppercase letter, and one lowercase letter"
+                return@launch
+            }
+
+            if (passwordValue != repeatedPasswordValue) {
+                _errorMessage.value = "Password and repeated password do not match"
+                return@launch
+            }
+
+            repo.register(usernameValue, emailValue, passwordValue).collect { res ->
+                when (res) {
+                    is Response.Success -> {
+                        _isLoading.value = false
+                        toLoginPage()
                     }
+
+                    is Response.Failure -> {
+                        _isLoading.value = false
+                        _errorMessage.value = res.e.message
+                    }
+
+                    is Response.Loading -> _isLoading.value = true
                 }
             }
+
         }
     }
 

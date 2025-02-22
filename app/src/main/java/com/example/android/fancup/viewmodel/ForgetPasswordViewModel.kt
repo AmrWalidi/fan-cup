@@ -21,10 +21,15 @@ class ForgetPasswordViewModel(application: Application) : AndroidViewModel(appli
     val loginPage: LiveData<Boolean>
         get() = _loginPage
 
+    private val _errorMessage = MutableLiveData("")
+    val errorMessage: LiveData<String>
+        get() = _errorMessage
+
     fun resetPassword() {
         viewModelScope.launch {
             val success = emailInput.value?.let { repo.resetPassword(it) }
             if (success == true) toLoginPage()
+            else _errorMessage.value = "This email is not valid"
         }
     }
 

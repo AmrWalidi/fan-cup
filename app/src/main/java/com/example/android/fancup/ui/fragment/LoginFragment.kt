@@ -32,9 +32,9 @@ class LoginFragment : Fragment() {
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 
-        viewModel.userID.observe(viewLifecycleOwner) {
-            if (it == null) {
-                Toast.makeText(requireActivity(), "Incorrect email or password", Toast.LENGTH_SHORT)
+        viewModel.errorMessage.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT)
                     .show()
             }
         }

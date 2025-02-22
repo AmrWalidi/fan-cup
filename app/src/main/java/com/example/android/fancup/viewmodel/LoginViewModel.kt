@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.android.fancup.database.getDatabase
 import com.example.android.fancup.repository.AuthenticationRepository
+import com.example.android.fancup.service.Response
 import kotlinx.coroutines.launch
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
@@ -31,6 +32,14 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     val appPage: LiveData<Boolean>
         get() = _appPage
 
+    private val _errorMessage = MutableLiveData("")
+    val errorMessage: LiveData<String>
+        get() = _errorMessage
+
+    private val _isLoading = MutableLiveData(false)
+    val isLoading: LiveData<Boolean>
+        get() = _isLoading
+
     val emailInput = MutableLiveData("")
     val passwordInput = MutableLiveData("")
 
@@ -40,11 +49,26 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
             val emailValue = emailInput.value
             val passwordValue = passwordInput.value
 
-            if (!emailValue.isNullOrBlank() && !passwordValue.isNullOrBlank()) {
-                _userID.value = repo.signIn(emailValue, passwordValue)
-                if (_userID.value != null) {
-                    toAppPage()
+            if (!emailValue.isNullOrEmpty() && !passwordValue.isNullOrEmpty()) {
+                repo.signIn(emailValue, passwordValue).collect { res ->
+                    when (res) {
+                        is Response.Failure -> {
+                            _isLoading.value = false
+                            _errorMessage.value = res.e.message
+                        }
+
+                        is Response.Success -> {
+                            _isLoading.value = false
+                            toAppPage()
+                        }
+
+                        is Response.Loading -> _isLoading.value = true
+
+                    }
                 }
+
+            } else {
+                _errorMessage.value = "Fill the Fields"
             }
         }
     }

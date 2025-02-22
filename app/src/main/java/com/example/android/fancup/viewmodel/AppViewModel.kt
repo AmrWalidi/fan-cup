@@ -57,8 +57,10 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         viewModelScope.launch {
-            repo.loggedUser.collect { u ->
-                if (u == null) returnToLoginScreen()
+            launch {
+                repo.loggedUser.collect { u ->
+                    if (u == null) returnToLoginScreen()
+                }
             }
             _user.value = repo.getUser()
             _formattedCoins.value = _user.value?.coins?.let { formatInt(it) }
