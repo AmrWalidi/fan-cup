@@ -7,12 +7,12 @@
 
     <activity
         android:id="@+id/onlineGameActivity"
-        android:name="com.example.android.fancup.ui.activity.OnlineGameActivity"
+        android:name="com.amrwalidi.android.fancup.ui.activity.OnlineGameActivity"
         android:label="activity_online_game"
         tools:layout="@layout/activity_online_game" />
     <fragment
         android:id="@+id/championFragment"
-        android:name="com.example.android.fancup.ui.fragment.ChampionFragment"
+        android:name="com.amrwalidi.android.fancup.ui.fragment.ChampionFragment"
         android:label="fragment_champion"
         tools:layout="@layout/fragment_champion" >
         <action
@@ -24,6 +24,6 @@
     </fragment>
     <fragment
         android:id="@+id/playWithFriendFragment"
-        android:name="com.example.android.fancup.PlayWithFriendFragment"
+        android:name="com.amrwalidi.android.fancup.PlayWithFriendFragment"
         android:label="PlayWithFriendFragment" />
 </navigation>

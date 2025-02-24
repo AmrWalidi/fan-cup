@@ -6,6 +6,6 @@
 
     <fragment
         android:id="@+id/challengesFragment"
-        android:name="com.example.android.fancup.ChallengesFragment"
+        android:name="com.amrwalidi.android.fancup.ChallengesFragment"
         android:label="ChallengesFragment" />
 </navigation>

@@ -6,7 +6,7 @@
     <data >
         <variable
             name="viewModel"
-            type="com.example.android.fancup.viewmodel.SettingsViewModel" />
+            type="com.amrwalidi.android.fancup.viewmodel.SettingsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

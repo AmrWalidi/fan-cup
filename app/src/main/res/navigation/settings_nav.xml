@@ -7,20 +7,20 @@
 
     <fragment
         android:id="@+id/languageFragment"
-        android:name="com.example.android.fancup.LanguageFragment"
+        android:name="com.amrwalidi.android.fancup.LanguageFragment"
         android:label="LanguageFragment" />
     <fragment
         android:id="@+id/aboutFragment"
-        android:name="com.example.android.fancup.AboutFragment"
+        android:name="com.amrwalidi.android.fancup.AboutFragment"
         android:label="fragment_about"
         tools:layout="@layout/fragment_about" />
     <fragment
         android:id="@+id/friendRequestFragment"
-        android:name="com.example.android.fancup.FriendRequestFragment"
+        android:name="com.amrwalidi.android.fancup.FriendRequestFragment"
         android:label="FriendRequestFragment" />
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.example.android.fancup.ui.fragment.SettingsFragment"
+        android:name="com.amrwalidi.android.fancup.ui.fragment.SettingsFragment"
         android:label="SettingsFragment" >
         <action
             android:id="@+id/action_settingsFragment_to_languageFragment"

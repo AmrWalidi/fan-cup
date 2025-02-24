@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.android.fancup.ui.fragment.LoginFragment"
+        android:name="com.amrwalidi.android.fancup.ui.fragment.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.android.fancup.ui.fragment.RegisterFragment"
+        android:name="com.amrwalidi.android.fancup.ui.fragment.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action
@@ -31,12 +31,12 @@
     </fragment>
     <activity
         android:id="@+id/appActivity"
-        android:name="com.example.android.fancup.ui.activity.AppActivity"
+        android:name="com.amrwalidi.android.fancup.ui.activity.AppActivity"
         android:label="activity_app"
         tools:layout="@layout/activity_app" />
     <fragment
         android:id="@+id/forgetPasswordFragment"
-        android:name="com.example.android.fancup.ui.fragment.ForgetPasswordFragment"
+        android:name="com.amrwalidi.android.fancup.ui.fragment.ForgetPasswordFragment"
         android:label="fragment_forget_password"
         tools:layout="@layout/fragment_forget_password" >
         <action

@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.android.fancup"
+    namespace = "com.amrwalidi.android.fancup"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.android.fancup"
+        applicationId = "com.amrwalidi.android.fancup"
         minSdk = 26
         targetSdk = 35
         versionCode = 1

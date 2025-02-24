@@ -5,7 +5,7 @@
     app:startDestination="@id/homeFragment">
     <fragment
         android:id="@+id/gameLevelFragment"
-        android:name="com.example.android.fancup.GameLevelFragment"
+        android:name="com.amrwalidi.android.fancup.GameLevelFragment"
         android:label="GameLevelFragment" >
         <action
             android:id="@+id/action_gameLevelFragment_to_homeFragment"
@@ -13,7 +13,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.android.fancup.HomeFragment"
+        android:name="com.amrwalidi.android.fancup.HomeFragment"
         android:label="HomeFragment" >
         <action
             android:id="@+id/action_homeFragment_to_gameLevelFragment"
