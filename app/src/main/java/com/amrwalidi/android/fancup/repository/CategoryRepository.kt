@@ -21,7 +21,7 @@ class CategoryRepository(private val database: FanCupDatabase) {
 
         val categories = categoryService.getCategories()
 
-        val processedCategories = categories.map { category ->
+        categories.map { category ->
             async {
                 val banner = categoryService.getCategoryBanner(category!!.name)
                 val image = categoryService.getCategoryImage(category.name)

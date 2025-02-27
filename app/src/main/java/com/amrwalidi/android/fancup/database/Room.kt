@@ -24,7 +24,7 @@ fun getDatabase(context: Context): FanCupDatabase {
                 context.applicationContext,
                 FanCupDatabase::class.java,
                 "fan_cup"
-            ).fallbackToDestructiveMigrationFrom().build()
+            ).fallbackToDestructiveMigration().build()
         }
     }
     return INSTANCE

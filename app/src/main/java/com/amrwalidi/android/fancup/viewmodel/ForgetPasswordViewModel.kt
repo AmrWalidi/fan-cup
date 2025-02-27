@@ -9,11 +9,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.amrwalidi.android.fancup.database.getDatabase
 import com.amrwalidi.android.fancup.repository.AuthenticationRepository
+import com.amrwalidi.android.fancup.repository.UserRepository
 import kotlinx.coroutines.launch
 
 class ForgetPasswordViewModel(application: Application) : AndroidViewModel(application) {
     private val database = getDatabase(application)
-    private val repo = AuthenticationRepository(database)
+    private val authRepo = AuthenticationRepository()
+    private val userRepo = UserRepository(database)
 
     val emailInput = MutableLiveData("")
 
@@ -27,9 +29,14 @@ class ForgetPasswordViewModel(application: Application) : AndroidViewModel(appli
 
     fun resetPassword() {
         viewModelScope.launch {
-            val success = emailInput.value?.let { repo.resetPassword(it) }
-            if (success == true) toLoginPage()
-            else _errorMessage.value = "This email is not valid"
+            emailInput.value?.let {
+                if (userRepo.getUserByEmail(it) != null) {
+                    authRepo.resetPassword(it)
+                    toLoginPage()
+                } else {
+                    _errorMessage.value = "This email is not valid"
+                }
+            }
         }
     }
 

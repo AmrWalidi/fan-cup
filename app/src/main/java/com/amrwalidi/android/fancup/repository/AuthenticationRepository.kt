@@ -1,71 +1,34 @@
 package com.amrwalidi.android.fancup.repository
 
-import com.amrwalidi.android.fancup.database.FanCupDatabase
-import com.amrwalidi.android.fancup.database.entity.asDomainUser
-import com.amrwalidi.android.fancup.domain.User
 import com.amrwalidi.android.fancup.service.Response
 import com.amrwalidi.android.fancup.service.impl.AuthenticationServiceImpl
-import com.amrwalidi.android.fancup.service.impl.UserServiceImpl
-import com.amrwalidi.android.fancup.service.model.asDatabaseUser
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import java.lang.Exception
 
-class AuthenticationRepository(private val database: FanCupDatabase) {
+class AuthenticationRepository() {
     private val authService = AuthenticationServiceImpl()
-    private val userService = UserServiceImpl()
 
     val loggedUser: Flow<FirebaseUser?>
         get() = authService.currentUser
 
-    suspend fun getUser(): User? {
-        val u =  database.userDao.getUser().asDomainUser()
-        return u
-    }
 
     fun hasUser(): Boolean {
         return authService.hasUser()
     }
 
-    suspend fun resetPassword(email: String): Boolean {
-        var success = false
-        val user = userService.getUserByEmail(email)
-        if (user != null) {
-            success = true
-            authService.resetPassword(email)
-        }
-        return success
+    suspend fun resetPassword(email: String) {
+        authService.resetPassword(email)
     }
 
-    fun signIn(email: String, password: String): Flow<Response> = flow {
-        authService.signIn(email, password).collect { res ->
-            if (res is Response.Success) {
-                val user = userService.getUserById(res.data.toString()).asDatabaseUser()
-                user?.let { database.userDao.insert(it) }
-            }
-            emit(res)
-        }
+    suspend fun signIn(email: String, password: String): Flow<Response> =
+        authService.signIn(email, password)
 
-    }
 
-    fun register(username: String, email: String, password: String): Flow<Response> = flow {
-        val existingUser = userService.getUserByUsername(username)
-        if (existingUser != null) {
-            emit(Response.Failure(Exception("This username has been taken")))
-            return@flow
-        }
+    suspend fun register(email: String, password: String): Flow<Response> =
+        authService.register(email, password)
 
-        authService.register(email, password).collect { res ->
-            if (res is Response.Success) {
-                userService.createUser(res.data.toString(), username, email)
-            }
-            emit(res)
-        }
-    }
 
     suspend fun signOut() {
         authService.signOut()
-        database.userDao.delete()
     }
 }

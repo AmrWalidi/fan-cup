@@ -20,14 +20,14 @@ class CategoryServiceImpl @Inject constructor() : CategoryService {
 
     override suspend fun getCategories(): List<CategoryDoc?> {
         return suspendCancellableCoroutine { continuation ->
-            categoryRef.get().addOnSuccessListener { documents ->
+            categoryRef.get().addOnCompleteListener { task ->
                 if (continuation.isActive) {
-                    if (!documents.isEmpty) {
-                        val categories = documents.documents.map { document ->
-                            document.toObject(CategoryDoc::class.java)
-                        }
-                        continuation.resumeWith(Result.success(categories))
+                    val categories = mutableListOf<CategoryDoc>()
+                    task.result.forEach { category ->
+                        categories.add((category.toObject(CategoryDoc::class.java)))
                     }
+                    continuation.resumeWith(Result.success(categories))
+
                 }
             }.addOnFailureListener { e ->
                 if (continuation.isActive) {
@@ -39,7 +39,8 @@ class CategoryServiceImpl @Inject constructor() : CategoryService {
     }
 
     override suspend fun getCategoryBanner(name: String): ByteArray? {
-        val storageCategoryBannerRef = storage.reference.child("category banners/${name}.jpg")
+        val storageCategoryBannerRef =
+            storage.reference.child("category-banners/${name.trim().replace(" ", "-")}.jpg")
         val file = withContext(Dispatchers.IO) {
             File.createTempFile(name, "jpg")
         }
@@ -66,7 +67,7 @@ class CategoryServiceImpl @Inject constructor() : CategoryService {
     }
 
     override suspend fun getCategoryImage(name: String): ByteArray? {
-        val storageCategoryImageRef = storage.reference.child("category image/${name}.jpg")
+        val storageCategoryImageRef = storage.reference.child("category-images/${name.trim().replace(" ", "-")}.jpg")
         val file = withContext(Dispatchers.IO) {
             File.createTempFile(name, "jpg")
         }
