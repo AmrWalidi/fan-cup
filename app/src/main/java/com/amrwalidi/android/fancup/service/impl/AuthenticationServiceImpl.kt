@@ -70,7 +70,6 @@ class AuthenticationServiceImpl @Inject constructor() : AuthenticationService {
             close()
         }
         awaitClose()
-
     }
 
 

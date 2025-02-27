@@ -31,7 +31,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/RoundedChallengeImage"
-            app:srcCompat="@drawable/copa_america_paner" />
+            tools:srcCompat="@drawable/copa_america_paner" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

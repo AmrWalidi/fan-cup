@@ -46,8 +46,8 @@ class UserServiceImpl @Inject constructor() : UserService {
                 }
                 .addOnFailureListener { e ->
                     if (continuation.isActive) {
-                        println("Registration failed: ${e.message}")
-                        continuation.resumeWith(Result.success(null))
+                        println("Unable to retrieve user data")
+                        continuation.resumeWith(Result.failure(e))
                     }
                 }
         }
