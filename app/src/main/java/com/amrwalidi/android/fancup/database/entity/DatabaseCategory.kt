@@ -11,6 +11,7 @@ data class DatabaseCategory(
     val name: String,
     val bannerImage: ByteArray,
     val image: ByteArray,
+    val selected: Boolean = id == 1
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -45,4 +46,15 @@ fun List<DatabaseCategory>?.asDomainCategories(): List<Category>? {
         )
     }
     return categories
+}
+
+fun DatabaseCategory?.asDomainCategories(): Category? {
+    return this?.let {
+        Category(
+            id = id,
+            name = name,
+            bannerImage = bannerImage,
+            image = image
+        )
+    }
 }

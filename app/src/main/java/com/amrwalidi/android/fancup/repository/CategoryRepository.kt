@@ -17,6 +17,15 @@ class CategoryRepository(private val database: FanCupDatabase) {
         return database.categoryDao.getCategories().asDomainCategories()
     }
 
+    suspend fun selectCategory(id :Int) {
+        database.categoryDao.unselectCategories()
+        database.categoryDao.selectCategory(id)
+    }
+
+    suspend fun getSelectedCategory(): Category? {
+        return database.categoryDao.getSelectedCategory().asDomainCategories()
+    }
+
     suspend fun fetchCategories() = coroutineScope {
 
         val categories = categoryService.getCategories()

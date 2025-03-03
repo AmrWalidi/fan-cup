@@ -12,6 +12,16 @@ interface CategoryDao {
     @Query("SELECT * FROM categories")
     suspend fun getCategories() : List<DatabaseCategory>
 
+    @Query("UPDATE categories SET selected = 1 WHERE id =:id")
+    suspend fun selectCategory(id : Int)
+
+    @Query("UPDATE categories SET selected = 0")
+    suspend fun unselectCategories()
+
+    @Query("SELECT * FROM categories WHERE selected = 1 LIMIT 1")
+    suspend fun getSelectedCategory() : DatabaseCategory
+
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity : DatabaseCategory)
 }

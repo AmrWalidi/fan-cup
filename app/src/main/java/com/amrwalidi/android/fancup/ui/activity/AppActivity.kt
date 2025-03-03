@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.amrwalidi.android.fancup.ui.fragment.ChallengesFragment
-import com.amrwalidi.android.fancup.HomeFragment
+import com.amrwalidi.android.fancup.ui.fragment.HomeFragment
 import com.amrwalidi.android.fancup.R
 import com.amrwalidi.android.fancup.ui.fragment.SettingsFragment
 import com.amrwalidi.android.fancup.databinding.ActivityAppBinding

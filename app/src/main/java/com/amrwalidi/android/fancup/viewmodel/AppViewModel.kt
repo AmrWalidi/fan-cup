@@ -9,10 +9,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.amrwalidi.android.fancup.database.getDatabase
-import com.amrwalidi.android.fancup.domain.Category
 import com.amrwalidi.android.fancup.domain.User
 import com.amrwalidi.android.fancup.repository.AuthenticationRepository
-import com.amrwalidi.android.fancup.repository.CategoryRepository
 import com.amrwalidi.android.fancup.repository.UserRepository
 import kotlinx.coroutines.launch
 
@@ -21,7 +19,6 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     private val database = getDatabase(application)
     private val authRepo = AuthenticationRepository()
     private val userRepo = UserRepository(database)
-    private val categoryRepo = CategoryRepository(database)
 
     private val _user = MutableLiveData<User>()
     val user: LiveData<User>
@@ -42,10 +39,6 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     private val _page = MutableLiveData(1)
     val page: LiveData<Int>
         get() = _page
-
-    private val _categories = MutableLiveData<List<Category>>()
-    val categories: LiveData<List<Category>>
-        get() = _categories
 
     private val _pageName = MutableLiveData("Home")
     val pageName: LiveData<String>
@@ -75,7 +68,6 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
             _formattedPoints.value = _user.value?.points?.let { formatInt(it) }
             _userRank.value = _user.value?.rank
             _userLevel.value = _user.value?.level
-            _categories.value = categoryRepo.getCategories()
         }
     }
 

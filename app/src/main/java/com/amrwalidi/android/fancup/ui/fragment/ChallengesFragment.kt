@@ -1,5 +1,6 @@
 package com.amrwalidi.android.fancup.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.amrwalidi.android.fancup.R
 import com.amrwalidi.android.fancup.adapters.CategoryAdapter
 import com.amrwalidi.android.fancup.databinding.FragmentChallengesBinding
+import com.amrwalidi.android.fancup.ui.activity.AppActivity
 import com.amrwalidi.android.fancup.viewmodel.ChallengeViewModel
 
 
@@ -34,6 +36,11 @@ class ChallengesFragment : Fragment() {
         binding.challengesList.adapter = adapter
         viewModel.categories.observe(viewLifecycleOwner) { categoryList ->
             adapter.submitList(categoryList)
+        }
+
+        viewModel.selectedCategory.observe(viewLifecycleOwner) {
+            val intent = Intent(requireActivity(), AppActivity::class.java)
+            startActivity(intent)
         }
 
         return binding.root

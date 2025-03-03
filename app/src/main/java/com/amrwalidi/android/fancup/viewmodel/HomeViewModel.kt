@@ -12,38 +12,26 @@ import com.amrwalidi.android.fancup.domain.Category
 import com.amrwalidi.android.fancup.repository.CategoryRepository
 import kotlinx.coroutines.launch
 
-class ChallengeViewModel(application: Application) : AndroidViewModel(application) {
+class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     private val database = getDatabase(application)
-    private val repo = CategoryRepository(database)
+    private val categoryRepo = CategoryRepository(database)
 
-    private val _categories = MutableLiveData<List<Category>>()
-    val categories: LiveData<List<Category>>
-        get() = _categories
-
-    private val _selectedCategory = MutableLiveData<Int>()
-    val selectedCategory: LiveData<Int>
+    private val _selectedCategory = MutableLiveData<Category>()
+    val selectedCategory: LiveData<Category>
         get() = _selectedCategory
 
     init {
         viewModelScope.launch {
-            _categories.value = repo.getCategories()
+            _selectedCategory.value = categoryRepo.getSelectedCategory()
         }
     }
-
-    fun selectChallenge(id: Int) {
-        _selectedCategory.value = id
-        viewModelScope.launch {
-            repo.selectCategory(id)
-        }
-    }
-
 
     class Factory(val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(ChallengeViewModel::class.java)) {
+            if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return ChallengeViewModel(app) as T
+                return HomeViewModel(app) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }

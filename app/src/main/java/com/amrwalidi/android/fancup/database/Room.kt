@@ -8,14 +8,21 @@ import com.amrwalidi.android.fancup.database.dao.CategoryDao
 import com.amrwalidi.android.fancup.database.dao.UserDao
 import com.amrwalidi.android.fancup.database.entity.DatabaseCategory
 import com.amrwalidi.android.fancup.database.entity.DatabaseUser
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
-@Database(entities = [DatabaseUser::class, DatabaseCategory::class], version = 4)
+@Database(entities = [DatabaseUser::class, DatabaseCategory::class], version = 5)
 abstract class FanCupDatabase : RoomDatabase() {
     abstract val userDao: UserDao
     abstract val categoryDao : CategoryDao
+
+    suspend fun clearAllData() = withContext(Dispatchers.IO) {
+        clearAllTables()
+    }
 }
 
 private lateinit var INSTANCE: FanCupDatabase
+
 
 fun getDatabase(context: Context): FanCupDatabase {
     synchronized(FanCupDatabase::class.java) {
