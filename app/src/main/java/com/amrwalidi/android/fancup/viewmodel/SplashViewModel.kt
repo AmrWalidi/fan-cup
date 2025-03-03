@@ -6,13 +6,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.amrwalidi.android.fancup.database.getDatabase
 import com.amrwalidi.android.fancup.repository.AuthenticationRepository
 
 class SplashViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val database = getDatabase(application)
-    private val repo = AuthenticationRepository(database)
+    private val repo = AuthenticationRepository()
 
     private val _hasUser = MutableLiveData(false)
     val hasUser: LiveData<Boolean>
