@@ -2,7 +2,6 @@ package com.amrwalidi.android.fancup.service.impl
 
 import com.amrwalidi.android.fancup.service.CategoryService
 import com.amrwalidi.android.fancup.service.model.CategoryDoc
-import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.Dispatchers
@@ -14,9 +13,8 @@ import kotlin.coroutines.resumeWithException
 
 class CategoryServiceImpl @Inject constructor() : CategoryService {
 
-    private val adminApp = FirebaseApp.getInstance("admin")
-    private val categoryRef = FirebaseFirestore.getInstance(adminApp).collection("Category")
-    private val storage = FirebaseStorage.getInstance(adminApp)
+    private val categoryRef = FirebaseFirestore.getInstance().collection("Category")
+    private val storage = FirebaseStorage.getInstance()
 
     override suspend fun getCategories(): List<CategoryDoc?> {
         return suspendCancellableCoroutine { continuation ->
