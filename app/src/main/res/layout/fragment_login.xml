@@ -5,6 +5,7 @@
     tools:context=".ui.fragment.LoginFragment">
 
     <data>
+
         <variable
             name="viewmodel"
             type="com.amrwalidi.android.fancup.viewmodel.LoginViewModel" />
@@ -82,11 +83,11 @@
                     android:autofillHints="username"
                     android:background="@drawable/input_background"
                     android:ems="10"
-                    android:text="@={viewmodel.emailInput}"
                     android:hint="@string/email"
                     android:inputType="text"
                     android:paddingStart="13dp"
                     android:paddingEnd="13dp"
+                    android:text="@={viewmodel.emailInput}"
                     android:textColor="#7C7C7C"
                     android:textColorHint="#595959" />
             </LinearLayout>
@@ -122,11 +123,11 @@
                     android:autofillHints="password"
                     android:background="@drawable/input_background"
                     android:ems="10"
-                    android:text="@={viewmodel.passwordInput}"
                     android:hint="@string/password"
                     android:inputType="textPassword"
                     android:paddingStart="13dp"
                     android:paddingEnd="13dp"
+                    android:text="@={viewmodel.passwordInput}"
                     android:textColor="#7C7C7C"
                     android:textColorHint="#595959" />
 
@@ -134,14 +135,14 @@
             </LinearLayout>
 
             <TextView
-                android:onClick="@{() -> viewmodel.toForgetPasswordPage()}"
                 android:id="@+id/forget_password_text"
                 android:layout_width="wrap_content"
-                android:layout_gravity="start"
                 android:layout_height="wrap_content"
+                android:layout_gravity="start"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:fontFamily="@font/inter_medium"
+                android:onClick="@{() -> viewmodel.toForgetPasswordPage()}"
                 android:text="@string/forget_password"
                 android:textColor="@color/white" />
 
@@ -153,23 +154,24 @@
                 android:contentDescription="@string/login"
                 android:elevation="4dp"
                 android:fontFamily="@font/poppins_semibold"
+                android:onClick="@{() -> viewmodel.signIn()}"
                 android:paddingStart="60dp"
                 android:paddingEnd="60dp"
                 android:shadowColor="#000000"
                 android:shadowDy="4"
                 android:shadowRadius="10"
                 android:text="@string/login"
-                android:onClick="@{() -> viewmodel.signIn()}"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 app:cornerRadius="9dp" />
 
             <TextView
-                android:onClick="@{() -> viewmodel.toRegisterPage()}"
                 android:id="@+id/dont_have_an_account"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/inter_medium"
+                android:onClick="@{() -> viewmodel.toRegisterPage()}"
                 android:text="@string/don_t_have_an_account"
                 android:textColor="@color/white" />
 

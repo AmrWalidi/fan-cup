@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.fragment.RegisterFragment">
 
-    <data >
+    <data>
+
         <variable
             name="viewmodel"
             type="com.amrwalidi.android.fancup.viewmodel.RegisterViewModel" />
@@ -82,11 +83,11 @@
                     android:autofillHints="username"
                     android:background="@drawable/input_background"
                     android:ems="10"
-                    android:text="@={viewmodel.usernameInput}"
                     android:hint="@string/username"
                     android:inputType="text"
                     android:paddingStart="13dp"
                     android:paddingEnd="13dp"
+                    android:text="@={viewmodel.usernameInput}"
                     android:textColor="#7C7C7C"
                     android:textColorHint="#595959" />
             </LinearLayout>
@@ -122,11 +123,11 @@
                     android:autofillHints="emailAddress"
                     android:background="@drawable/input_background"
                     android:ems="10"
-                    android:text="@={viewmodel.emailInput}"
                     android:hint="@string/email"
                     android:inputType="textEmailAddress"
                     android:paddingStart="13dp"
                     android:paddingEnd="13dp"
+                    android:text="@={viewmodel.emailInput}"
                     android:textColor="#7C7C7C"
                     android:textColorHint="#595959" />
             </LinearLayout>
@@ -163,10 +164,10 @@
                     android:background="@drawable/input_background"
                     android:ems="10"
                     android:hint="@string/password"
-                    android:text="@={viewmodel.passwordInput}"
                     android:inputType="textPassword"
                     android:paddingStart="13dp"
                     android:paddingEnd="13dp"
+                    android:text="@={viewmodel.passwordInput}"
                     android:textColor="#7C7C7C"
                     android:textColorHint="#595959" />
             </LinearLayout>
@@ -203,10 +204,10 @@
                     android:background="@drawable/input_background"
                     android:ems="10"
                     android:hint="@string/repeat_password"
-                    android:text="@={viewmodel.repeatedPasswordInput}"
                     android:inputType="textPassword"
                     android:paddingStart="13dp"
                     android:paddingEnd="13dp"
+                    android:text="@={viewmodel.repeatedPasswordInput}"
                     android:textColor="#7C7C7C"
                     android:textColorHint="#595959" />
             </LinearLayout>
@@ -220,13 +221,14 @@
                 android:contentDescription="@string/login"
                 android:elevation="4dp"
                 android:fontFamily="@font/poppins_semibold"
+                android:onClick="@{() -> viewmodel.register()}"
                 android:paddingStart="46dp"
                 android:paddingEnd="46dp"
                 android:shadowColor="#000000"
                 android:shadowDy="4"
-                android:onClick="@{() -> viewmodel.register()}"
                 android:shadowRadius="10"
                 android:text="@string/register"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 app:cornerRadius="9dp" />
         </LinearLayout>

@@ -13,6 +13,7 @@
 
         <LinearLayout
             android:id="@+id/linearLayout"
+            style="?android:attr/buttonBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="58dp"
@@ -23,6 +24,7 @@
 
             <Button
                 android:id="@+id/one_vs_one_button"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="174dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="17dp"
@@ -34,11 +36,13 @@
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:text="@string/_1v1"
+                android:textColor="@color/white"
                 android:textSize="24sp"
                 app:cornerRadius="9dp" />
 
             <Button
                 android:id="@+id/with_friend_button"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="174dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -47,6 +51,7 @@
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:text="@string/with_friend"
+                android:textColor="@color/white"
                 android:textSize="24sp"
                 app:cornerRadius="9dp" />
         </LinearLayout>
