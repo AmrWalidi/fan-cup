@@ -9,6 +9,9 @@ import com.amrwalidi.android.fancup.database.entity.DatabaseCategory
 @Dao
 interface CategoryDao {
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(entity : DatabaseCategory)
+
     @Query("SELECT * FROM categories")
     suspend fun getCategories() : List<DatabaseCategory>
 
@@ -21,7 +24,4 @@ interface CategoryDao {
     @Query("SELECT * FROM categories WHERE selected = 1 LIMIT 1")
     suspend fun getSelectedCategory() : DatabaseCategory
 
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(entity : DatabaseCategory)
 }

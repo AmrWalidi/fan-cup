@@ -8,42 +8,34 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.amrwalidi.android.fancup.database.getDatabase
-import com.amrwalidi.android.fancup.domain.Category
+import com.amrwalidi.android.fancup.domain.Question
 import com.amrwalidi.android.fancup.repository.CategoryRepository
+import com.amrwalidi.android.fancup.repository.QuestionRepository
 import kotlinx.coroutines.launch
 
-class ChallengeViewModel(application: Application) : AndroidViewModel(application) {
+class GameLevelViewModel(application: Application) : AndroidViewModel(application) {
 
     private val database = getDatabase(application)
-    private val repo = CategoryRepository(database)
+    private val questionRepo = QuestionRepository(database)
+    private val categoryRepo = CategoryRepository(database)
 
-    private val _categories = MutableLiveData<List<Category>>()
-    val categories: LiveData<List<Category>>
-        get() = _categories
+    private val _question = MutableLiveData<List<Question>>()
+    val question: LiveData<List<Question>>
+        get() = _question
 
-    private val _selectedCategory = MutableLiveData<Int>()
-    val selectedCategory: LiveData<Int>
-        get() = _selectedCategory
 
     init {
         viewModelScope.launch {
-            _categories.value = repo.getCategories()
+            val categoryId = categoryRepo.getSelectedCategory()?.id
+            _question.value = categoryId?.let { questionRepo.getQuestionsByCategory(it) }
         }
     }
-
-    fun selectChallenge(id: Int) {
-        viewModelScope.launch {
-            repo.selectCategory(id)
-            _selectedCategory.value = id
-        }
-    }
-
 
     class Factory(val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(ChallengeViewModel::class.java)) {
+            if (modelClass.isAssignableFrom(GameLevelViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return ChallengeViewModel(app) as T
+                return GameLevelViewModel(app) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }

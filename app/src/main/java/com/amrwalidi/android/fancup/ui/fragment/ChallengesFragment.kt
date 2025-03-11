@@ -1,28 +1,32 @@
 package com.amrwalidi.android.fancup.ui.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.amrwalidi.android.fancup.R
 import com.amrwalidi.android.fancup.adapters.CategoryAdapter
 import com.amrwalidi.android.fancup.databinding.FragmentChallengesBinding
-import com.amrwalidi.android.fancup.ui.activity.AppActivity
+import com.amrwalidi.android.fancup.viewmodel.AppViewModel
 import com.amrwalidi.android.fancup.viewmodel.ChallengeViewModel
 
 
 class ChallengesFragment : Fragment() {
 
-    private val viewModel: ChallengeViewModel by lazy {
+    private val challengeViewModel: ChallengeViewModel by lazy {
         ViewModelProvider(
             this,
             ChallengeViewModel.Factory(requireActivity().application)
         )[ChallengeViewModel::class.java]
     }
+
+    private val appViewModel: AppViewModel by activityViewModels()
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,15 +36,14 @@ class ChallengesFragment : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_challenges, container, false)
         binding.lifecycleOwner = this
 
-        val adapter = CategoryAdapter(viewModel)
+        val adapter = CategoryAdapter(challengeViewModel)
         binding.challengesList.adapter = adapter
-        viewModel.categories.observe(viewLifecycleOwner) { categoryList ->
+        challengeViewModel.categories.observe(viewLifecycleOwner) { categoryList ->
             adapter.submitList(categoryList)
         }
 
-        viewModel.selectedCategory.observe(viewLifecycleOwner) {
-            val intent = Intent(requireActivity(), AppActivity::class.java)
-            startActivity(intent)
+        challengeViewModel.selectedCategory.observe(viewLifecycleOwner) {
+            appViewModel.navigate(3)
         }
 
         return binding.root

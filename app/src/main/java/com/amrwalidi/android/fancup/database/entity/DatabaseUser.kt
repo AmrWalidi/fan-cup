@@ -17,7 +17,7 @@ data class DatabaseUser(
 )
 
 fun DatabaseUser?.asDomainUser(): User? {
-    return this?.let {
+    return this?.run {
         User(
             id = id,
             username = username,

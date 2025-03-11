@@ -5,11 +5,14 @@
     app:startDestination="@id/homeFragment">
     <fragment
         android:id="@+id/gameLevelFragment"
-        android:name="com.amrwalidi.android.fancup.GameLevelFragment"
+        android:name="com.amrwalidi.android.fancup.ui.fragment.GameLevelFragment"
         android:label="GameLevelFragment" >
         <action
             android:id="@+id/action_gameLevelFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <argument
+            android:name="category"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -17,6 +20,10 @@
         android:label="HomeFragment" >
         <action
             android:id="@+id/action_homeFragment_to_gameLevelFragment"
-            app:destination="@id/gameLevelFragment" />
+            app:destination="@id/gameLevelFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 </navigation>

@@ -162,7 +162,7 @@
                     android:textSize="11sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/level_icon"
+                    app:layout_constraintStart_toStartOf="@+id/level_icon"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="6,464"/>
 
@@ -208,19 +208,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
-                    android:layout_marginEnd="30dp"
+                    android:layout_marginEnd="15dp"
                     android:fontFamily="@font/poppins_bold"
                     android:shadowColor="#000000"
                     android:shadowDx="2"
                     android:shadowDy="2"
                     android:shadowRadius="3"
+                    android:text="@{viewmodel.formattedCoins}"
                     android:textColor="@color/white"
                     android:textSize="11sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/coins_icon"
+                    app:layout_constraintStart_toStartOf="@+id/coins_icon"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:text="@{viewmodel.formattedCoins}"
                     tools:text="2,500" />
 
 
@@ -258,20 +258,20 @@
                     android:id="@+id/current_rank"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="9dp"
-                    android:layout_marginEnd="13dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
                     android:fontFamily="@font/poppins_bold"
                     android:shadowColor="#000000"
                     android:shadowDx="2"
                     android:shadowDy="2"
                     android:shadowRadius="3"
+                    android:text="@{viewmodel.userRank}"
                     android:textColor="@color/white"
                     android:textSize="11sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/rank_icon"
+                    app:layout_constraintStart_toStartOf="@+id/rank_icon"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:text="@{viewmodel.userRank}"
                     tools:text="245" />
 
 
@@ -297,7 +297,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout

@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.amrwalidi.android.fancup.ui.fragment.GameLevelFragment
 import com.amrwalidi.android.fancup.ui.fragment.ChallengesFragment
 import com.amrwalidi.android.fancup.ui.fragment.HomeFragment
 import com.amrwalidi.android.fancup.R
@@ -50,6 +51,7 @@ class AppActivity : AppCompatActivity() {
                 3 -> HomeFragment()
                 4 -> ChallengesFragment()
                 5 -> SettingsFragment()
+                6 -> GameLevelFragment()
                 else -> return@observe
             }
 
@@ -61,7 +63,7 @@ class AppActivity : AppCompatActivity() {
                         R.anim.slide_in_left,
                         R.anim.slide_out_right
                     )
-                } else {
+                } else if (viewModel.transitionDirection.value == -1) {
                     setCustomAnimations(
                         R.anim.slide_in_left,
                         R.anim.slide_out_right,

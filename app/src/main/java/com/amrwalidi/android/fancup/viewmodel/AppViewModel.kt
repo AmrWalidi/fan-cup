@@ -36,7 +36,7 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     private val _userLevel = MutableLiveData("0")
     val userLevel: LiveData<String> = _userLevel
 
-    private val _page = MutableLiveData(1)
+    private val _page = MutableLiveData(3)
     val page: LiveData<Int>
         get() = _page
 
@@ -78,21 +78,27 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     fun navigate(newPage: Int) {
         if (newPage - _page.value!! > 0) {
             _transitionDirection.value = 1
-        } else {
+        } else if (newPage - _page.value!! < 0) {
             _transitionDirection.value = -1
         }
-        _page.value = newPage
-        _selectedPage.value = Array(5) { false }.apply {
-            this[newPage - 1] = true
+
+        if (newPage != _page.value) {
+            _page.value = newPage
         }
-        _pageName.value = when (newPage) {
-            1 -> "Store"
-            2 -> "Champions"
-            3 -> "Home"
-            4 -> "Challenges"
-            5 -> "Settings"
-            else -> return
+        if (newPage <= 5) {
+            _selectedPage.value = Array(5) { false }.apply {
+                this[newPage - 1] = true
+            }
+            _pageName.value = when (newPage) {
+                1 -> "Store"
+                2 -> "Champions"
+                3 -> "Home"
+                4 -> "Challenges"
+                5 -> "Settings"
+                else -> return
+            }
         }
+
     }
 
 

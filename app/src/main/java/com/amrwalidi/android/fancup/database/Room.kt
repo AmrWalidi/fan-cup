@@ -4,17 +4,26 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import android.content.Context
+import androidx.room.TypeConverters
 import com.amrwalidi.android.fancup.database.dao.CategoryDao
+import com.amrwalidi.android.fancup.database.dao.QuestionDao
 import com.amrwalidi.android.fancup.database.dao.UserDao
 import com.amrwalidi.android.fancup.database.entity.DatabaseCategory
+import com.amrwalidi.android.fancup.database.entity.DatabaseQuestion
 import com.amrwalidi.android.fancup.database.entity.DatabaseUser
+import com.amrwalidi.android.fancup.database.entity.QuestionCategoryCrossRef
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-@Database(entities = [DatabaseUser::class, DatabaseCategory::class], version = 5)
+@Database(
+    entities = [DatabaseUser::class, DatabaseCategory::class, DatabaseQuestion::class, QuestionCategoryCrossRef::class],
+    version = 6
+)
+@TypeConverters(Converters::class)
 abstract class FanCupDatabase : RoomDatabase() {
     abstract val userDao: UserDao
-    abstract val categoryDao : CategoryDao
+    abstract val categoryDao: CategoryDao
+    abstract val questionDao: QuestionDao
 
     suspend fun clearAllData() = withContext(Dispatchers.IO) {
         clearAllTables()

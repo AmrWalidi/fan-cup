@@ -13,7 +13,7 @@ data class UserDoc(
 )
 
 fun UserDoc?.asDatabaseUser(): DatabaseUser? {
-    return this?.let {
+    return this?.run {
         DatabaseUser(
             id = id,
             username = username,

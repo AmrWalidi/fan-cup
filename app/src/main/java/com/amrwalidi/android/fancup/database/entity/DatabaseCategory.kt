@@ -49,7 +49,7 @@ fun List<DatabaseCategory>?.asDomainCategories(): List<Category>? {
 }
 
 fun DatabaseCategory?.asDomainCategories(): Category? {
-    return this?.let {
+    return this?.run {
         Category(
             id = id,
             name = name,

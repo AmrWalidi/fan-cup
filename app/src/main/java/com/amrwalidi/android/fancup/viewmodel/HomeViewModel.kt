@@ -21,10 +21,18 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     val selectedCategory: LiveData<Category>
         get() = _selectedCategory
 
+    private val _toGameLevel = MutableLiveData<Boolean>()
+    val toGameLevel: LiveData<Boolean>
+        get() = _toGameLevel
+
     init {
         viewModelScope.launch {
             _selectedCategory.value = categoryRepo.getSelectedCategory()
         }
+    }
+
+    fun navigateToGameLevel(){
+        _toGameLevel.value = true
     }
 
     class Factory(val app: Application) : ViewModelProvider.Factory {

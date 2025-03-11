@@ -11,7 +11,7 @@ fun CategoryDoc?.asDatabaseCategory(
     bannerImage: ByteArray,
     image: ByteArray
 ): DatabaseCategory? {
-    return this?.let {
+    return this?.run {
         DatabaseCategory(
             id = id, name = name, bannerImage = bannerImage, image = image
         )
