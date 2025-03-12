@@ -11,8 +11,8 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/imageView23"
@@ -24,7 +24,7 @@
             app:layout_constraintEnd_toStartOf="@+id/level_list"
             app:layout_constraintTop_toTopOf="@+id/level_list"
             app:srcCompat="@drawable/arrow_left"
-            app:setLeftArrowVisible="@{viewModel.page}"
+            app:setVisible="@{viewModel.firstPage}"
             android:onClick="@{() -> viewModel.prevQuestions()}"/>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -51,6 +51,7 @@
             app:layout_constraintStart_toEndOf="@+id/level_list"
             app:layout_constraintTop_toTopOf="@+id/level_list"
             app:srcCompat="@drawable/arrow_right"
+            app:setVisible="@{viewModel.lastPage}"
             android:onClick="@{() -> viewModel.nextQuestions()}"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

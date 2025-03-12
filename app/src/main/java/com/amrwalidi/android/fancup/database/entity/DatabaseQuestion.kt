@@ -7,7 +7,7 @@ import com.amrwalidi.android.fancup.domain.Question
 @Entity(tableName = "questions")
 data class DatabaseQuestion(
     @PrimaryKey(autoGenerate = true)
-    val id: Long = 0 ,
+    val id: Long = 0,
     val text: String,
     val answers: List<String>,
     val options: List<String>,
@@ -17,9 +17,10 @@ data class DatabaseQuestion(
 
 
 fun List<DatabaseQuestion>?.asDomainQuestion(): List<Question>? {
-    return this?.map { databaseQuestion ->
+    return this?.mapIndexed { idx, databaseQuestion ->
         Question(
             id = databaseQuestion.id,
+            listId = idx.plus(1).toString(),
             text = databaseQuestion.text,
             answers = databaseQuestion.answers,
             options = databaseQuestion.options,

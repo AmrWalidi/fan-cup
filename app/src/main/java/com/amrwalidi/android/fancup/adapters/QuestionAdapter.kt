@@ -18,7 +18,7 @@ class QuestionAdapter :
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: QuestionViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item, position + 1)
+        holder.bind(item)
     }
 
     class QuestionViewHolder private constructor(
@@ -27,11 +27,9 @@ class QuestionAdapter :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(
-            item: Question,
-            position: Int
+            item: Question
         ) {
             binding.question = item
-            binding.num = position.toString()
         }
 
         companion object {

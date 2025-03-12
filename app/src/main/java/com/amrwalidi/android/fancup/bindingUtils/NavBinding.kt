@@ -54,8 +54,9 @@ fun dpToPx(dp: Int, context: Context): Int {
     ).toInt()
 }
 
-@BindingAdapter("setLeftArrowVisible")
-fun ImageView.setLeftArrowVisible(page: Int) {
-    this.visibility = if (page == 1) View.INVISIBLE else View.VISIBLE
-
+@BindingAdapter("setVisible")
+fun ImageView.setVisible(visible: Boolean) {
+    this.visibility = if (visible) View.INVISIBLE else View.VISIBLE
 }
+
+

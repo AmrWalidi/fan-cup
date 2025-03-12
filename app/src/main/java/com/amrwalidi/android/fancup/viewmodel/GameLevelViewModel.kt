@@ -21,7 +21,15 @@ class GameLevelViewModel(application: Application) : AndroidViewModel(applicatio
 
     private lateinit var questions: List<Question>
 
-    var page = 1
+    private var page = 1
+
+    private val _firstPage = MutableLiveData(true)
+    val firstPage: LiveData<Boolean>
+        get() = _firstPage
+
+    private val _lastPage = MutableLiveData(false)
+    val lastPage: LiveData<Boolean>
+        get() = _lastPage
 
     private val _displayedQuestions = MutableLiveData<List<Question>>()
     val displayedQuestions: LiveData<List<Question>>
@@ -33,18 +41,35 @@ class GameLevelViewModel(application: Application) : AndroidViewModel(applicatio
             val categoryId = categoryRepo.getSelectedCategory()?.id
             questions = categoryId?.let { questionRepo.getQuestionsByCategory(it) }!!
 
-            if (questions.isNotEmpty()) _displayedQuestions.value = questions.subList(0, 9)
+            if (questions.size < 9) {
+                _displayedQuestions.value = questions.subList(0, questions.size)
+                _lastPage.value = true
+            } else _displayedQuestions.value = questions.subList(0, 9)
         }
     }
 
     fun nextQuestions() {
-        page += 9
-        _displayedQuestions.value = questions.subList((page - 1), (page -1) + 9)
+        page++
+        if (questions.size < page * 9) {
+            _displayedQuestions.value = questions.subList((page - 1) * 9, questions.size)
+            _lastPage.value = true
+        } else{
+            _displayedQuestions.value = questions.subList((page - 1) * 9, page * 9)
+            _firstPage.value = false
+            _lastPage.value = false
+        }
     }
 
     fun prevQuestions() {
-        page -= 9
-        _displayedQuestions.value = questions.subList(page, page - 9)
+        page--
+        _displayedQuestions.value = questions.subList((page - 1) * 9, page * 9)
+        if (page == 1)
+            _firstPage.value = true
+
+        else {
+            _lastPage.value = false
+            _firstPage.value = false
+        }
     }
 
     class Factory(val app: Application) : ViewModelProvider.Factory {
