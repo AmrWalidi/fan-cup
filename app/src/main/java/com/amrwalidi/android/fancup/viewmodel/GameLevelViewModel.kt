@@ -19,16 +19,32 @@ class GameLevelViewModel(application: Application) : AndroidViewModel(applicatio
     private val questionRepo = QuestionRepository(database)
     private val categoryRepo = CategoryRepository(database)
 
-    private val _question = MutableLiveData<List<Question>>()
-    val question: LiveData<List<Question>>
-        get() = _question
+    private lateinit var questions: List<Question>
+
+    var page = 1
+
+    private val _displayedQuestions = MutableLiveData<List<Question>>()
+    val displayedQuestions: LiveData<List<Question>>
+        get() = _displayedQuestions
 
 
     init {
         viewModelScope.launch {
             val categoryId = categoryRepo.getSelectedCategory()?.id
-            _question.value = categoryId?.let { questionRepo.getQuestionsByCategory(it) }
+            questions = categoryId?.let { questionRepo.getQuestionsByCategory(it) }!!
+
+            if (questions.isNotEmpty()) _displayedQuestions.value = questions.subList(0, 9)
         }
+    }
+
+    fun nextQuestions() {
+        page += 9
+        _displayedQuestions.value = questions.subList((page - 1), (page -1) + 9)
+    }
+
+    fun prevQuestions() {
+        page -= 9
+        _displayedQuestions.value = questions.subList(page, page - 9)
     }
 
     class Factory(val app: Application) : ViewModelProvider.Factory {

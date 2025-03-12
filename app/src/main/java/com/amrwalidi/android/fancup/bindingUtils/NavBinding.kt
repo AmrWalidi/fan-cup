@@ -2,6 +2,7 @@ package com.amrwalidi.android.fancup.bindingUtils
 
 import android.content.Context
 import android.util.TypedValue
+import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.ActionBar.LayoutParams
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +19,7 @@ fun ConstraintLayout.setStatus(selected: Boolean) {
         setBackgroundResource(R.drawable.selected_page_background)
 
         layoutParams.height = dpToPx(50, context)
-        layoutParams.width =  dpToPx(50, context)
+        layoutParams.width = dpToPx(50, context)
         this.layoutParams = layoutParams
 
         val paddingPx =
@@ -51,4 +52,10 @@ fun dpToPx(dp: Int, context: Context): Int {
         dp.toFloat(),
         context.resources.displayMetrics
     ).toInt()
+}
+
+@BindingAdapter("setLeftArrowVisible")
+fun ImageView.setLeftArrowVisible(page: Int) {
+    this.visibility = if (page == 1) View.INVISIBLE else View.VISIBLE
+
 }

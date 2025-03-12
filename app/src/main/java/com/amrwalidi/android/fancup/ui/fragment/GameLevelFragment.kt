@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.amrwalidi.android.fancup.R
+import com.amrwalidi.android.fancup.adapters.QuestionAdapter
 import com.amrwalidi.android.fancup.databinding.FragmentGameLevelBinding
 import com.amrwalidi.android.fancup.viewmodel.GameLevelViewModel
 
@@ -29,6 +30,13 @@ class GameLevelFragment : Fragment() {
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+
+        val adapter = QuestionAdapter()
+        binding.levelList.adapter = adapter
+
+        viewModel.displayedQuestions.observe(viewLifecycleOwner){
+            adapter.submitList(it)
+        }
 
         return binding.root
     }
