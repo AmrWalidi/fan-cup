@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.amrwalidi.android.fancup.EnterAnswersFragment
-import com.amrwalidi.android.fancup.EnterNumberFragment
 import com.amrwalidi.android.fancup.MultipleChoiceFragment
 import com.amrwalidi.android.fancup.R
 import com.amrwalidi.android.fancup.databinding.FragmentQuestionBinding

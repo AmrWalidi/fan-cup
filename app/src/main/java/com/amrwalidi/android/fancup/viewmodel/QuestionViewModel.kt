@@ -39,8 +39,9 @@ class QuestionViewModel(application: Application, questionId: Long) :
 
         countDownTimer = object : CountDownTimer(31000L, 1000L) {
             override fun onTick(millisUntilFinished: Long) {
-                if (millisUntilFinished < 10000L) _timeRemaining.value = "00:0${millisUntilFinished / 1000}"
-                _timeRemaining.value = "00:${millisUntilFinished / 1000}"
+                println(millisUntilFinished)
+                if (millisUntilFinished < 10000) _timeRemaining.value = "00:0${millisUntilFinished / 1000}"
+                else _timeRemaining.value = "00:${millisUntilFinished / 1000}"
             }
 
             override fun onFinish() {
