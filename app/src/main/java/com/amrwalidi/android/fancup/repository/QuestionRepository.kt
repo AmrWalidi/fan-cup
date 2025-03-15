@@ -33,4 +33,8 @@ class QuestionRepository(private val database: FanCupDatabase) {
     suspend fun getQuestionsByCategory(id: Int): List<Question>? {
         return database.questionDao.getQuestionsByCategory(id).asDomainQuestion()
     }
+
+    suspend fun getQuestionsById(id: Long): Question? {
+        return database.questionDao.getQuestionById(id).asDomainQuestion()
+    }
 }

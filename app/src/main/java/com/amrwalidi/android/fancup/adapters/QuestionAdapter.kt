@@ -8,11 +8,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.amrwalidi.android.fancup.databinding.LevelContainerBinding
 import com.amrwalidi.android.fancup.domain.Question
+import com.amrwalidi.android.fancup.viewmodel.GameLevelViewModel
 
-class QuestionAdapter :
+class QuestionAdapter(val viewModel: GameLevelViewModel) :
     ListAdapter<Question, QuestionAdapter.QuestionViewHolder>(ItemDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuestionViewHolder {
-        return QuestionViewHolder.from(parent)
+        return QuestionViewHolder.from(parent, viewModel)
     }
 
     @SuppressLint("SetTextI18n")
@@ -22,21 +23,23 @@ class QuestionAdapter :
     }
 
     class QuestionViewHolder private constructor(
-        private val binding: LevelContainerBinding
+        private val binding: LevelContainerBinding,
+        private val viewModel: GameLevelViewModel
     ) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(
             item: Question
         ) {
+            binding.viewModel = viewModel
             binding.question = item
         }
 
         companion object {
-            fun from(parent: ViewGroup): QuestionViewHolder {
+            fun from(parent: ViewGroup, viewModel: GameLevelViewModel): QuestionViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = LevelContainerBinding.inflate(layoutInflater, parent, false)
-                return QuestionViewHolder(binding)
+                return QuestionViewHolder(binding, viewModel)
             }
         }
     }

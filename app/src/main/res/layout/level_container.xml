@@ -9,6 +9,10 @@
             name="question"
             type="com.amrwalidi.android.fancup.domain.Question" />
 
+        <variable
+            name="viewModel"
+            type="com.amrwalidi.android.fancup.viewmodel.GameLevelViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,6 +32,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:onClick="@{() -> viewModel.selectQuestion(question.id)}"
             app:srcCompat="@drawable/one_star_level" />
 
         <TextView

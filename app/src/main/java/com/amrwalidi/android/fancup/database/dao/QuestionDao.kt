@@ -18,7 +18,7 @@ interface QuestionDao {
     suspend fun insertQuestionCategoryCrossRef(crossRef: QuestionCategoryCrossRef)
 
     @Query("SELECT * FROM questions WHERE id=:id")
-    suspend fun getQuestionById(id: Int) : DatabaseQuestion
+    suspend fun getQuestionById(id: Long) : DatabaseQuestion
 
     @Transaction
     @Query(

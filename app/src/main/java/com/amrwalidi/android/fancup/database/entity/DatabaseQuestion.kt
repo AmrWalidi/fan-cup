@@ -29,3 +29,17 @@ fun List<DatabaseQuestion>?.asDomainQuestion(): List<Question>? {
         )
     }
 }
+
+fun DatabaseQuestion?.asDomainQuestion(): Question? {
+    return this?.run {
+        Question(
+            id = id,
+            text = text,
+            answers = answers,
+            options = options,
+            type = type,
+            difficulty = difficulty
+        )
+    }
+
+}

@@ -27,6 +27,10 @@ class GameLevelViewModel(application: Application) : AndroidViewModel(applicatio
     val firstPage: LiveData<Boolean>
         get() = _firstPage
 
+    private val _selectedQuestion = MutableLiveData<Long>()
+    val selectedQuestion: LiveData<Long>
+        get() = _selectedQuestion
+
     private val _lastPage = MutableLiveData(false)
     val lastPage: LiveData<Boolean>
         get() = _lastPage
@@ -53,7 +57,7 @@ class GameLevelViewModel(application: Application) : AndroidViewModel(applicatio
         if (questions.size < page * 9) {
             _displayedQuestions.value = questions.subList((page - 1) * 9, questions.size)
             _lastPage.value = true
-        } else{
+        } else {
             _displayedQuestions.value = questions.subList((page - 1) * 9, page * 9)
             _firstPage.value = false
             _lastPage.value = false
@@ -65,11 +69,15 @@ class GameLevelViewModel(application: Application) : AndroidViewModel(applicatio
         _displayedQuestions.value = questions.subList((page - 1) * 9, page * 9)
         if (page == 1)
             _firstPage.value = true
-
         else {
             _lastPage.value = false
             _firstPage.value = false
         }
+    }
+
+    fun selectQuestion(id: Long) {
+        _selectedQuestion.value = id
+
     }
 
     class Factory(val app: Application) : ViewModelProvider.Factory {

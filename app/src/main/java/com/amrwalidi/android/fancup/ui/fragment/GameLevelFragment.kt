@@ -1,5 +1,6 @@
 package com.amrwalidi.android.fancup.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,11 +11,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.amrwalidi.android.fancup.R
 import com.amrwalidi.android.fancup.adapters.QuestionAdapter
 import com.amrwalidi.android.fancup.databinding.FragmentGameLevelBinding
+import com.amrwalidi.android.fancup.ui.activity.GameActivity
 import com.amrwalidi.android.fancup.viewmodel.GameLevelViewModel
 
 class GameLevelFragment : Fragment() {
 
-    private val viewModel : GameLevelViewModel by lazy {
+    private val viewModel: GameLevelViewModel by lazy {
         ViewModelProvider(
             this,
             GameLevelViewModel.Factory(requireActivity().application)
@@ -31,11 +33,17 @@ class GameLevelFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-        val adapter = QuestionAdapter()
+        val adapter = QuestionAdapter(viewModel)
         binding.levelList.adapter = adapter
 
-        viewModel.displayedQuestions.observe(viewLifecycleOwner){
+        viewModel.displayedQuestions.observe(viewLifecycleOwner) {
             adapter.submitList(it)
+        }
+
+        viewModel.selectedQuestion.observe(viewLifecycleOwner) {
+            val intent = Intent(requireActivity(), GameActivity::class.java)
+            intent.putExtra("QUESTION_ID", it)
+            startActivity(intent)
         }
 
         return binding.root

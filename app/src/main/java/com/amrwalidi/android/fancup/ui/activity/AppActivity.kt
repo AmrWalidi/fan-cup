@@ -5,6 +5,8 @@ import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -31,6 +33,18 @@ class AppActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        val binding: ActivityAppBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_app)
+        binding.viewmodel = viewModel
+        binding.lifecycleOwner = this
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
+            insets
+        }
+
         onBackPressedDispatcher.addCallback(
             this,
             object : OnBackPressedCallback(true) {
@@ -39,11 +53,6 @@ class AppActivity : AppCompatActivity() {
                 }
             }
         )
-
-        val binding: ActivityAppBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_app)
-        binding.viewmodel = viewModel
-        binding.lifecycleOwner = this
 
         viewModel.page.observe(this) { value ->
             val destination: Fragment = when (value) {
