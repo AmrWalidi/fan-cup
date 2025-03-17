@@ -27,7 +27,7 @@ interface QuestionDao {
     WHERE id IN (
         SELECT questionId FROM question_category_cross_ref
         WHERE categoryId = :categoryId
-    )
+    ) ORDER BY difficulty ASC
     """
     )
     suspend fun getQuestionsByCategory(categoryId: Int): List<DatabaseQuestion>
