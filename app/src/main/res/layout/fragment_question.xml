@@ -23,7 +23,8 @@
             android:contentDescription="@string/return_to_main_menu_icon"
             android:src="@drawable/arrow_left"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/hearts" />
+            app:layout_constraintTop_toTopOf="@+id/hearts"
+            android:onClick="@{() -> viewModel.exitGamePopup()}"/>
 
 
         <LinearLayout

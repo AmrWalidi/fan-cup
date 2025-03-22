@@ -23,8 +23,22 @@ class QuestionViewModel(application: Application, questionId: Long) :
     val question: LiveData<Question>
         get() = _question
 
+    private var timeLeftInMillis: Long = 31000L
+
     private val _timeRemaining = MutableLiveData<String>()
     val timeRemaining: LiveData<String> get() = _timeRemaining
+
+    private val _showPopup = MutableLiveData(false)
+    val showPopup: LiveData<Boolean>
+        get() = _showPopup
+
+    private var _hasExitGamePopup = false
+    val hasExitGamePopup: Boolean
+        get() = _hasExitGamePopup
+
+    private val _hasExitGame = MutableLiveData(false)
+    val hasExitGame: LiveData<Boolean>
+        get() = _hasExitGame
 
     private var countDownTimer: CountDownTimer? = null
 
@@ -37,11 +51,19 @@ class QuestionViewModel(application: Application, questionId: Long) :
 
     private fun startCountdown() {
 
-        countDownTimer = object : CountDownTimer(31000L, 1000L) {
+        countDownTimer = object : CountDownTimer(timeLeftInMillis, 1000L) {
             override fun onTick(millisUntilFinished: Long) {
-                println(millisUntilFinished)
-                if (millisUntilFinished < 10000) _timeRemaining.value = "00:0${millisUntilFinished / 1000}"
-                else _timeRemaining.value = "00:${millisUntilFinished / 1000}"
+                if (_showPopup.value == true) {
+                    cancel()
+                    return
+                }
+
+                timeLeftInMillis = millisUntilFinished
+
+                _timeRemaining.value = if (millisUntilFinished < 10000)
+                    "00:0${millisUntilFinished / 1000}"
+                else
+                    "00:${millisUntilFinished / 1000}"
             }
 
             override fun onFinish() {
@@ -56,6 +78,22 @@ class QuestionViewModel(application: Application, questionId: Long) :
         super.onCleared()
         countDownTimer?.cancel()
     }
+
+    fun exitGamePopup() {
+        _hasExitGamePopup = true
+        _showPopup.value = true
+    }
+
+    fun dismissPopup() {
+        _hasExitGamePopup = false
+        _showPopup.value = false
+        startCountdown()
+    }
+
+    fun exitGame() {
+        _hasExitGame.value = true
+    }
+
 
     class Factory(val app: Application, val id: Long) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

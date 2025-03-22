@@ -80,4 +80,8 @@
     <string name="forget_password">Forget Password ?</string>
     <string name="reset_password">Reset Password</string>
     <string name="provide_your_account_email_to_reset_your_password">Provide Your Account Email to Reset Your Password</string>
+    <string name="popup_close_icon">popup close icon</string>
+    <string name="exit_game">Exit Game</string>
+    <string name="Are_you_sure_you_want_to_exit_the_game">Are you sure you want to exit the game ?</string>
+    <string name="exit">Exit</string>
 </resources>
