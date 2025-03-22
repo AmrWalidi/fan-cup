@@ -39,11 +39,11 @@
 
             <ImageView
                 android:id="@+id/imageView31"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
-                android:contentDescription="@string/broken_heart"
+                android:contentDescription="@string/heart"
                 android:src="@drawable/heart_broken" />
 
             <ImageView

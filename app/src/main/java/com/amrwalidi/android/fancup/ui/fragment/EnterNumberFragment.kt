@@ -12,20 +12,21 @@ import com.amrwalidi.android.fancup.R
 import com.amrwalidi.android.fancup.databinding.FragmentEnterNumberBinding
 import com.amrwalidi.android.fancup.domain.Question
 import com.amrwalidi.android.fancup.viewmodel.EnterNumberViewModel
+import com.amrwalidi.android.fancup.viewmodel.QuestionViewModel
 
 
 private const val QUESTION = "QUESTION"
 
-class EnterNumberFragment : Fragment() {
+class EnterNumberFragment(private val questionViewModel: QuestionViewModel) : Fragment() {
     private var question: Question? = null
-    private var viewModel: EnterNumberViewModel? = null
+    private var enterNumberViewModel: EnterNumberViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             question = it.getParcelable(QUESTION)
         }
-        viewModel = ViewModelProvider(
+        enterNumberViewModel = ViewModelProvider(
             this,
             EnterNumberViewModel.Factory(requireActivity().application, question)
         )[EnterNumberViewModel::class.java]
@@ -37,15 +38,22 @@ class EnterNumberFragment : Fragment() {
     ): View {
         val binding: FragmentEnterNumberBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_enter_number, container, false)
-        binding.viewModel = viewModel
+        binding.viewModel = enterNumberViewModel
         binding.lifecycleOwner = this
 
         binding.questionText.text = question?.text ?: ""
 
-        viewModel?.message?.observe(viewLifecycleOwner) {
+        enterNumberViewModel?.message?.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT)
                     .show()
+            }
+        }
+
+        enterNumberViewModel?.wrongAnswer?.observe(viewLifecycleOwner) {
+            if (it) {
+                questionViewModel.wrongAnswer()
+                enterNumberViewModel!!.removeWrongAnswer()
             }
         }
         return binding.root

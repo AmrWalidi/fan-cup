@@ -23,7 +23,6 @@ class QuestionViewModel(application: Application, questionId: Long) :
     val question: LiveData<Question>
         get() = _question
 
-    private var timeLeftInMillis: Long = 31000L
 
     private val _timeRemaining = MutableLiveData<String>()
     val timeRemaining: LiveData<String> get() = _timeRemaining
@@ -40,6 +39,14 @@ class QuestionViewModel(application: Application, questionId: Long) :
     val hasExitGame: LiveData<Boolean>
         get() = _hasExitGame
 
+    private val _hearts = MutableLiveData(4)
+    val hearts: LiveData<Int>
+        get() = _hearts
+
+    private val _deletedHearts = MutableLiveData(0)
+    val deletedHearts: LiveData<Int>
+        get() = _deletedHearts
+
     private var countDownTimer: CountDownTimer? = null
 
     init {
@@ -51,14 +58,8 @@ class QuestionViewModel(application: Application, questionId: Long) :
 
     private fun startCountdown() {
 
-        countDownTimer = object : CountDownTimer(timeLeftInMillis, 1000L) {
+        countDownTimer = object : CountDownTimer(31000L, 1000L) {
             override fun onTick(millisUntilFinished: Long) {
-                if (_showPopup.value == true) {
-                    cancel()
-                    return
-                }
-
-                timeLeftInMillis = millisUntilFinished
 
                 _timeRemaining.value = if (millisUntilFinished < 10000)
                     "00:0${millisUntilFinished / 1000}"
@@ -87,11 +88,16 @@ class QuestionViewModel(application: Application, questionId: Long) :
     fun dismissPopup() {
         _hasExitGamePopup = false
         _showPopup.value = false
-        startCountdown()
     }
 
     fun exitGame() {
         _hasExitGame.value = true
+    }
+
+    fun wrongAnswer(){
+        if (_deletedHearts.value!! < _hearts.value!!){
+            _deletedHearts.value = _deletedHearts.value!! + 1
+        }
     }
 
 

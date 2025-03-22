@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.ImageView
+import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.amrwalidi.android.fancup.EnterAnswersFragment
@@ -49,7 +51,7 @@ class QuestionFragment : Fragment() {
             }
 
             val fragment = when (it.type) {
-                1 -> EnterNumberFragment().apply { arguments = bundle }
+                1 -> EnterNumberFragment(viewModel).apply { arguments = bundle }
                 2 -> MultipleChoiceFragment().apply { arguments = bundle }
                 3 -> EnterAnswersFragment().apply { arguments = bundle }
                 else -> return@observe
@@ -73,6 +75,16 @@ class QuestionFragment : Fragment() {
         viewModel.hasExitGame.observe(viewLifecycleOwner) {
             if (it) {
                 requireActivity().finish()
+            }
+        }
+
+        viewModel.deletedHearts.observe(viewLifecycleOwner){ deletedHearts ->
+            var index = 0
+            binding.hearts.children.iterator().forEach { child ->
+                if (index < deletedHearts && child is ImageView){
+                    child.setImageResource(R.drawable.heart_broken)
+                }
+                index ++
             }
         }
         return binding.root

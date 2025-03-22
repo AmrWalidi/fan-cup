@@ -17,9 +17,20 @@ class EnterNumberViewModel(application: Application, val question: Question?) :
     val message: LiveData<String>
         get() = _message
 
+    private val _wrongAnswer = MutableLiveData(false)
+    val wrongAnswer: LiveData<Boolean>
+        get() = _wrongAnswer
+
     fun submit(){
         if (answer.value == question?.answers?.get(0)) _message.value = "CORRECT ANSWER"
-        else _message.value = "WRONG ANSWER"
+        else {
+            _message.value = "WRONG ANSWER"
+            _wrongAnswer.value = true
+        }
+    }
+
+    fun removeWrongAnswer(){
+        _wrongAnswer.value = false
     }
 
     class Factory(val app: Application, val question: Question?) : ViewModelProvider.Factory {
