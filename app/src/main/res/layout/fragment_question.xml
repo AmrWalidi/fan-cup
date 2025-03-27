@@ -37,14 +37,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/imageView31"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_weight="1"
-                android:contentDescription="@string/heart"
-                android:src="@drawable/heart_broken" />
 
             <ImageView
                 android:id="@+id/imageView28"
@@ -59,18 +51,10 @@
                 android:id="@+id/imageView29"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:contentDescription="@string/heart"
                 android:src="@drawable/heart" />
 
-            <ImageView
-                android:id="@+id/imageView30"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:contentDescription="@string/heart"
-                android:src="@drawable/heart" />
         </LinearLayout>
 
         <TextView
@@ -87,17 +71,44 @@
             app:layout_constraintTop_toBottomOf="@+id/hearts"
             tools:text="00:30"/>
 
-        <androidx.fragment.app.FragmentContainerView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/question_container"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="120dp"
+            android:layout_marginHorizontal="12dp"
             android:layout_marginTop="100dp"
+            android:background="@drawable/default_answer_container"
+            android:backgroundTint="#BBB"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/timer">
+
+            <TextView
+                android:id="@+id/question_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semibold"
+                android:padding="10dp"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@{viewModel.question.text}"
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. " />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/question_type_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_marginBottom="47dp"
             app:layout_constraintBottom_toTopOf="@+id/helpers"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/timer"
-            tools:layout="@layout/fragment_multiple_choice" />
+            app:layout_constraintTop_toBottomOf="@+id/question_container"
+            tools:layout="@layout/fragment_enter_number" />
 
         <LinearLayout
             android:id="@+id/helpers"
@@ -115,7 +126,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:layout_marginEnd="50dp">
+                android:layout_marginEnd="50dp"
+                android:onClick="@{() -> viewModel.extraHeart()}">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="70dp"
@@ -145,12 +157,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
                     android:fontFamily="@font/protest_strike"
-                    android:text="@string/helper_count"
+                    android:text="@string/extra"
                     android:textColor="#C0B627"
                     android:textSize="32sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:text="x1" />
+                    app:layout_constraintStart_toStartOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -183,17 +194,6 @@
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <TextView
-                    android:id="@+id/textView20"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/protest_strike"
-                    android:text="@string/helper_count"
-                    android:textColor="#C0B627"
-                    android:textSize="32sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:text="x2" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -211,7 +211,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:onClick="@{() -> viewModel.extraTime()}">
 
                     <ImageView
                         android:id="@+id/imageView27"
@@ -224,18 +225,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <TextView
-                    android:id="@+id/textView21"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/protest_strike"
-                    android:text="@string/helper_count"
-                    android:textColor="#C0B627"
-                    android:textSize="32sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:text="x1" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

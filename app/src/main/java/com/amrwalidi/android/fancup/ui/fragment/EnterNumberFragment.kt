@@ -41,8 +41,6 @@ class EnterNumberFragment(private val questionViewModel: QuestionViewModel) : Fr
         binding.viewModel = enterNumberViewModel
         binding.lifecycleOwner = this
 
-        binding.questionText.text = question?.text ?: ""
-
         enterNumberViewModel?.message?.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT)

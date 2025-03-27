@@ -11,8 +11,6 @@ import android.widget.ImageView
 import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.amrwalidi.android.fancup.EnterAnswersFragment
-import com.amrwalidi.android.fancup.MultipleChoiceFragment
 import com.amrwalidi.android.fancup.R
 import com.amrwalidi.android.fancup.databinding.FragmentQuestionBinding
 import com.amrwalidi.android.fancup.databinding.PopupMessageBinding
@@ -42,6 +40,7 @@ class QuestionFragment : Fragment() {
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+
         val exitGamePopUp = exitGamePopup(viewModel)
 
         viewModel.question.observe(viewLifecycleOwner) {
@@ -52,13 +51,13 @@ class QuestionFragment : Fragment() {
 
             val fragment = when (it.type) {
                 1 -> EnterNumberFragment(viewModel).apply { arguments = bundle }
-                2 -> MultipleChoiceFragment().apply { arguments = bundle }
-                3 -> EnterAnswersFragment().apply { arguments = bundle }
+                2 -> MultipleChoiceFragment(viewModel).apply { arguments = bundle }
+                3 -> EnterAnswersFragment(viewModel).apply { arguments = bundle }
                 else -> return@observe
             }
 
             childFragmentManager.beginTransaction().apply {
-                replace(binding.questionContainer.id, fragment)
+                replace(binding.questionTypeContainer.id, fragment)
                     .commit()
             }
         }
@@ -78,13 +77,13 @@ class QuestionFragment : Fragment() {
             }
         }
 
-        viewModel.deletedHearts.observe(viewLifecycleOwner){ deletedHearts ->
+        viewModel.deletedHearts.observe(viewLifecycleOwner) { deletedHearts ->
             var index = 0
             binding.hearts.children.iterator().forEach { child ->
-                if (index < deletedHearts && child is ImageView){
+                if (index < deletedHearts && child is ImageView) {
                     child.setImageResource(R.drawable.heart_broken)
                 }
-                index ++
+                index++
             }
         }
         return binding.root

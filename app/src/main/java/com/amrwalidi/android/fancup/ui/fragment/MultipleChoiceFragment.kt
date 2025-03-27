@@ -1,59 +1,76 @@
-package com.amrwalidi.android.fancup
+package com.amrwalidi.android.fancup.ui.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import com.amrwalidi.android.fancup.R
+import com.amrwalidi.android.fancup.databinding.FragmentMultipleChoiceBinding
+import com.amrwalidi.android.fancup.domain.Question
+import com.amrwalidi.android.fancup.viewmodel.MultipleChoiceViewModel
+import com.amrwalidi.android.fancup.viewmodel.QuestionViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private const val QUESTION = "QUESTION"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [MultipleChoiceFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class MultipleChoiceFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class MultipleChoiceFragment(private val questionViewModel: QuestionViewModel) : Fragment() {
+    private var question: Question? = null
+    private var multipleChoiceViewModel: MultipleChoiceViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            question = it.getParcelable(QUESTION)
         }
+        multipleChoiceViewModel = ViewModelProvider(
+            this,
+            MultipleChoiceViewModel.Factory(requireActivity().application, question)
+        )[MultipleChoiceViewModel::class.java]
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_multiple_choice, container, false)
+    ): View {
+        val binding: FragmentMultipleChoiceBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_multiple_choice, container, false)
+
+        binding.viewModel = multipleChoiceViewModel
+        binding.lifecycleOwner = this
+
+        multipleChoiceViewModel?.message?.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                if (it.equals("CORRECT ANSWER")) {
+                    when (multipleChoiceViewModel!!.selectedAnswer.value) {
+                        0 -> binding.answer1.setBackgroundResource(R.drawable.correct_answer_container)
+                        1 -> binding.answer2.setBackgroundResource(R.drawable.correct_answer_container)
+                        2 -> binding.answer3.setBackgroundResource(R.drawable.correct_answer_container)
+                        3 -> binding.answer4.setBackgroundResource(R.drawable.correct_answer_container)
+                    }
+                } else {
+                    when (multipleChoiceViewModel!!.selectedAnswer.value) {
+                        0 -> binding.answer1.setBackgroundResource(R.drawable.wrong_answer_container)
+                        1 -> binding.answer2.setBackgroundResource(R.drawable.wrong_answer_container)
+                        2 -> binding.answer3.setBackgroundResource(R.drawable.wrong_answer_container)
+                        3 -> binding.answer4.setBackgroundResource(R.drawable.wrong_answer_container)
+                    }
+                }
+                Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+
+        multipleChoiceViewModel?.wrongAnswer?.observe(viewLifecycleOwner) {
+            if (it) {
+                questionViewModel.wrongAnswer()
+                multipleChoiceViewModel!!.removeWrongAnswer()
+            }
+        }
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MultipleAnswersFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MultipleChoiceFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }

@@ -56,7 +56,7 @@
     <string name="question_spinner">question spinner</string>
     <string name="question_picker">question picker</string>
     <string name="level_container">level_container</string>
-    <string name="helper_count">x%1$d</string>
+    <string name="extra">x1</string>
     <string name="more_heart">more heart</string>
     <string name="give_hint">give hint</string>
     <string name="more_time">more time</string>

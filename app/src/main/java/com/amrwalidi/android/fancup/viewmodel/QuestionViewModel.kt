@@ -19,10 +19,11 @@ class QuestionViewModel(application: Application, questionId: Long) :
     private val database = getDatabase(application)
     private val repo = QuestionRepository(database)
 
+    private var startingTime = 31000L
+    private var reachedTime = 0L
     private val _question = MutableLiveData<Question>()
     val question: LiveData<Question>
         get() = _question
-
 
     private val _timeRemaining = MutableLiveData<String>()
     val timeRemaining: LiveData<String> get() = _timeRemaining
@@ -39,7 +40,7 @@ class QuestionViewModel(application: Application, questionId: Long) :
     val hasExitGame: LiveData<Boolean>
         get() = _hasExitGame
 
-    private val _hearts = MutableLiveData(4)
+    private val _hearts = MutableLiveData(2)
     val hearts: LiveData<Int>
         get() = _hearts
 
@@ -58,13 +59,15 @@ class QuestionViewModel(application: Application, questionId: Long) :
 
     private fun startCountdown() {
 
-        countDownTimer = object : CountDownTimer(31000L, 1000L) {
+        countDownTimer = object : CountDownTimer(startingTime, 1000L) {
             override fun onTick(millisUntilFinished: Long) {
 
                 _timeRemaining.value = if (millisUntilFinished < 10000)
                     "00:0${millisUntilFinished / 1000}"
                 else
                     "00:${millisUntilFinished / 1000}"
+
+                reachedTime = millisUntilFinished
             }
 
             override fun onFinish() {
@@ -94,10 +97,19 @@ class QuestionViewModel(application: Application, questionId: Long) :
         _hasExitGame.value = true
     }
 
-    fun wrongAnswer(){
-        if (_deletedHearts.value!! < _hearts.value!!){
+    fun wrongAnswer() {
+        if (_deletedHearts.value!! < _hearts.value!!) {
             _deletedHearts.value = _deletedHearts.value!! + 1
         }
+    }
+
+    fun extraTime() {
+        startingTime = reachedTime + 10000L
+        startCountdown()
+    }
+
+    fun extraHeart(){
+//        _deletedHearts.value = _deletedHearts.value!! - 1
     }
 
 
