@@ -12,7 +12,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".ui.fragment.EnterAnswersFragment">
 
 
@@ -30,7 +30,7 @@
 
             <EditText
                 android:id="@+id/answer"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
                 android:autofillHints="answer"
@@ -40,9 +40,9 @@
                 android:hint="@string/answer"
                 android:inputType="text"
                 android:paddingHorizontal="10dp"
+                android:text="@={viewModel.answer}"
                 android:textColor="@color/white"
-                android:textSize="20sp"
-                android:text="@={viewModel.answer}"/>
+                android:textSize="20sp" />
 
             <Button
                 android:id="@+id/submit_button"
@@ -51,13 +51,13 @@
                 android:layout_marginStart="13dp"
                 android:backgroundTint="#419E39"
                 android:fontFamily="@font/rethink_sans_bold"
+                android:onClick="@{() -> viewModel.addAnswer()}"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:text="@string/submit"
                 android:textSize="24sp"
                 app:cornerRadius="10dp"
-                app:iconPadding="0dp"
-                android:onClick="@{() -> viewModel.addAnswer()}"/>
+                app:iconPadding="0dp" />
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -73,13 +73,13 @@
                 android:id="@+id/answer_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="3"
                 tools:itemCount="12"
-                tools:listitem="@layout/text_item"/>
+                tools:listitem="@layout/text_item" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.amrwalidi.android.fancup.R
@@ -41,10 +40,9 @@ class EnterNumberFragment(private val questionViewModel: QuestionViewModel) : Fr
         binding.viewModel = enterNumberViewModel
         binding.lifecycleOwner = this
 
-        enterNumberViewModel?.message?.observe(viewLifecycleOwner) {
-            if (it.isNotEmpty()) {
-                Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT)
-                    .show()
+        enterNumberViewModel?.correctAnswer?.observe(viewLifecycleOwner) {
+            if (it) {
+                questionViewModel.successfulCompletion()
             }
         }
 

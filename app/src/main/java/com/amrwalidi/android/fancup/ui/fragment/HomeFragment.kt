@@ -39,7 +39,6 @@ class HomeFragment : Fragment() {
         binding.viewModel = homeViewModel
 
         homeViewModel.toGameLevel.observe(viewLifecycleOwner) {
-
             appViewModel.navigate(6)
         }
         return binding.root

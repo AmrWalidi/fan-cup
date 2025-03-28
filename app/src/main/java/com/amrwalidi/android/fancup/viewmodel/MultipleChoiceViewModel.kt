@@ -15,9 +15,9 @@ class MultipleChoiceViewModel(application: Application, val question: Question?)
     val selectedAnswer: LiveData<Int>
         get() = _selectedAnswer
 
-    private val _message = MutableLiveData("")
-    val message: LiveData<String>
-        get() = _message
+    private val _correctAnswer = MutableLiveData(false)
+    val correctAnswer: LiveData<Boolean>
+        get() = _correctAnswer
 
     private val _wrongAnswer = MutableLiveData(false)
     val wrongAnswer: LiveData<Boolean>
@@ -26,10 +26,8 @@ class MultipleChoiceViewModel(application: Application, val question: Question?)
 
     fun selectAnswer(index: Int) {
         _selectedAnswer.value = index
-        if (question?.options?.get(index) == question?.answers?.get(0)) _message.value =
-            "CORRECT ANSWER"
+        if (question?.options?.get(index) == question?.answers?.get(0)) _correctAnswer.value = true
         else {
-            _message.value = "WRONG ANSWER"
             _wrongAnswer.value = true
         }
     }

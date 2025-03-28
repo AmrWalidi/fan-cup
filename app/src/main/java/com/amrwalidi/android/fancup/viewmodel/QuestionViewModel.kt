@@ -19,14 +19,23 @@ class QuestionViewModel(application: Application, questionId: Long) :
     private val database = getDatabase(application)
     private val repo = QuestionRepository(database)
 
+    private var countDownTimer: CountDownTimer? = null
+
     private var startingTime = 31000L
-    private var reachedTime = 0L
-    private val _question = MutableLiveData<Question>()
-    val question: LiveData<Question>
-        get() = _question
+    private var _reachedTime = 0L
+    val reachedTime: Long
+        get() = _reachedTime
 
     private val _timeRemaining = MutableLiveData<String>()
     val timeRemaining: LiveData<String> get() = _timeRemaining
+
+    private val _clickedHelpers = MutableLiveData(arrayOf(false, false, false))
+    val clickedHelpers: LiveData<Array<Boolean>>
+        get() = _clickedHelpers
+
+    private val _question = MutableLiveData<Question>()
+    val question: LiveData<Question>
+        get() = _question
 
     private val _showPopup = MutableLiveData(false)
     val showPopup: LiveData<Boolean>
@@ -48,7 +57,9 @@ class QuestionViewModel(application: Application, questionId: Long) :
     val deletedHearts: LiveData<Int>
         get() = _deletedHearts
 
-    private var countDownTimer: CountDownTimer? = null
+    private val _completionMessage = MutableLiveData("")
+    val completionMessage: LiveData<String>
+        get() = _completionMessage
 
     init {
         viewModelScope.launch {
@@ -67,11 +78,16 @@ class QuestionViewModel(application: Application, questionId: Long) :
                 else
                     "00:${millisUntilFinished / 1000}"
 
-                reachedTime = millisUntilFinished
+                _reachedTime = millisUntilFinished / 1000
+
+                if (_completionMessage.value?.isNotEmpty() == true) {
+                    countDownTimer?.cancel()
+                }
             }
 
             override fun onFinish() {
                 _timeRemaining.value = "00:00"
+                _completionMessage.value = "Time Out"
             }
         }
 
@@ -99,17 +115,40 @@ class QuestionViewModel(application: Application, questionId: Long) :
 
     fun wrongAnswer() {
         if (_deletedHearts.value!! < _hearts.value!!) {
-            _deletedHearts.value = _deletedHearts.value!! + 1
+            _deletedHearts.value = _deletedHearts.value?.plus(1)
+        } else {
+            _completionMessage.value = "Game Over"
         }
     }
 
-    fun extraTime() {
-        startingTime = reachedTime + 10000L
-        startCountdown()
+    fun successfulCompletion() {
+        _completionMessage.value = "Congratulation"
     }
 
-    fun extraHeart(){
-//        _deletedHearts.value = _deletedHearts.value!! - 1
+    fun extraTime() {
+        if (_clickedHelpers.value?.get(2) == false) {
+            startingTime = reachedTime + 10000L
+            countDownTimer?.cancel()
+            startCountdown()
+            _clickedHelpers.value?.let { currentArray ->
+                val updatedArray = currentArray.copyOf()
+                updatedArray[2] = true
+                _clickedHelpers.value = updatedArray
+            }
+        }
+    }
+
+    fun extraHeart() {
+        if (_clickedHelpers.value?.get(0) == false) {
+            if (_deletedHearts.value == 0)
+                _hearts.value = _hearts.value?.plus(1)
+            else _deletedHearts.value = _deletedHearts.value!! - 1
+            _clickedHelpers.value?.let { currentArray ->
+                val updatedArray = currentArray.copyOf()
+                updatedArray[0] = true
+                _clickedHelpers.value = updatedArray
+            }
+        }
     }
 
 

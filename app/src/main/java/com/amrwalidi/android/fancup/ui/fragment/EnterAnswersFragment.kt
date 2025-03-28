@@ -50,6 +50,12 @@ class EnterAnswersFragment(private val questionViewModel: QuestionViewModel) : F
             adapter.submitList(it.toList())
         }
 
+        enterAnswersViewModel?.correctAnswer?.observe(viewLifecycleOwner) {
+            if (it) {
+                questionViewModel.successfulCompletion()
+            }
+        }
+
         enterAnswersViewModel?.message?.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT)

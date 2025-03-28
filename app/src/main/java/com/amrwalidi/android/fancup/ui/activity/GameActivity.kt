@@ -6,9 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.amrwalidi.android.fancup.R
+import com.amrwalidi.android.fancup.domain.Question
 import com.amrwalidi.android.fancup.ui.fragment.QuestionFragment
 
 class GameActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -20,15 +22,17 @@ class GameActivity : AppCompatActivity() {
         }
 
         val questionId = intent?.getLongExtra("QUESTION_ID", -1L)
+        val questionList = intent.getParcelableArrayListExtra<Question>("QUESTION_LIST")
 
         val questionFragment = QuestionFragment()
 
         val bundle = Bundle()
-        questionId?.let { bundle.putLong("QUESTION_ID", it)}
+        questionId?.let { bundle.putLong("QUESTION_ID", it) }
+        questionList.let { bundle.putParcelableArrayList("QUESTION_LIST", it) }
         questionFragment.arguments = bundle
 
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainerView2, questionFragment)
+            .replace(R.id.game_container, questionFragment)
             .commit()
     }
 }

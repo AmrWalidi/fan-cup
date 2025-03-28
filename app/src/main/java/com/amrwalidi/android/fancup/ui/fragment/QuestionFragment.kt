@@ -1,28 +1,39 @@
 package com.amrwalidi.android.fancup.ui.fragment
 
 import android.app.Dialog
+import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.amrwalidi.android.fancup.R
 import com.amrwalidi.android.fancup.databinding.FragmentQuestionBinding
 import com.amrwalidi.android.fancup.databinding.PopupMessageBinding
+import com.amrwalidi.android.fancup.ui.activity.AppActivity
 import com.amrwalidi.android.fancup.viewmodel.QuestionViewModel
+import androidx.core.graphics.drawable.toDrawable
+import com.amrwalidi.android.fancup.databinding.GameResultPopupMessageBinding
+import com.amrwalidi.android.fancup.domain.Question
 
 class QuestionFragment : Fragment() {
 
     private var questionId: Long = 0
+    private lateinit var questionList: ArrayList<Question>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         questionId = arguments?.getLong("QUESTION_ID") ?: 0
+        questionList = arguments?.getParcelableArrayList("QUESTION_LIST") ?: arrayListOf()
     }
 
     override fun onCreateView(
@@ -73,19 +84,55 @@ class QuestionFragment : Fragment() {
 
         viewModel.hasExitGame.observe(viewLifecycleOwner) {
             if (it) {
-                requireActivity().finish()
+                val intent = Intent(requireActivity(), AppActivity::class.java)
+                startActivity(intent)
             }
         }
 
         viewModel.deletedHearts.observe(viewLifecycleOwner) { deletedHearts ->
-            var index = 0
+            var index = -1
+            if (viewModel.hearts.value == 3) {
+                index = 0
+            }
             binding.hearts.children.iterator().forEach { child ->
-                if (index < deletedHearts && child is ImageView) {
-                    child.setImageResource(R.drawable.heart_broken)
+                if (child is ImageView) {
+                    if (index in 0..<deletedHearts) {
+                        child.setImageResource(R.drawable.heart_broken)
+                    } else child.setImageResource(R.drawable.heart)
                 }
                 index++
             }
         }
+
+        viewModel.hearts.observe(viewLifecycleOwner) {
+            if (it == 3)
+                binding.hiddenHeart.visibility = View.VISIBLE
+        }
+
+        viewModel.completionMessage.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                val completionMessagePopup = completionMessagePopup(it)
+                completionMessagePopup.show()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    completionMessagePopup.dismiss()
+                    val points = if (it.equals(getString(R.string.congratulation))) 10 else 0
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(
+                            R.id.game_container,
+                            GameResultFragment(
+                                viewModel.reachedTime,
+                                questionId,
+                                questionList,
+                                points
+                            )
+                        )
+                        .commit()
+
+                }, 2500)
+
+            }
+        }
+
         return binding.root
     }
 
@@ -103,7 +150,7 @@ class QuestionFragment : Fragment() {
 
         dialog.setContentView(binding.root)
 
-        dialog.window?.setBackgroundDrawableResource(R.drawable.popup_message_background)
+        dialog.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
 
         dialog.window?.setLayout(
             ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -118,6 +165,50 @@ class QuestionFragment : Fragment() {
 
         binding.viewModel = viewModel
 
+        return dialog
+
+    }
+
+    private fun completionMessagePopup(message: String): Dialog {
+        val dialog = Dialog(requireContext())
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        val binding: GameResultPopupMessageBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(requireContext()),
+            R.layout.game_result_popup_message,
+            null,
+            false
+        )
+
+        dialog.setContentView(binding.root)
+
+        dialog.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
+
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
+        dialog.setCancelable(true)
+
+        binding.message.text = message
+
+        if (message == getString(R.string.congratulation)) {
+            binding.message.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.congratulation
+                )
+            )
+        } else {
+            binding.message.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.game_over
+                )
+            )
+        }
         return dialog
 
     }

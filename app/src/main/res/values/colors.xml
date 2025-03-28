@@ -3,4 +3,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="background">#272424</color>
+    <color name="congratulation">#12870B</color>
+    <color name="game_over">#E51D1D</color>
 </resources>

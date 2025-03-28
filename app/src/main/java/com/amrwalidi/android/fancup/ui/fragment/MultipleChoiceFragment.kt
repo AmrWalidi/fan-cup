@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.amrwalidi.android.fancup.R
@@ -41,30 +40,26 @@ class MultipleChoiceFragment(private val questionViewModel: QuestionViewModel) :
         binding.viewModel = multipleChoiceViewModel
         binding.lifecycleOwner = this
 
-        multipleChoiceViewModel?.message?.observe(viewLifecycleOwner) {
-            if (it.isNotEmpty()) {
-                if (it.equals("CORRECT ANSWER")) {
-                    when (multipleChoiceViewModel!!.selectedAnswer.value) {
-                        0 -> binding.answer1.setBackgroundResource(R.drawable.correct_answer_container)
-                        1 -> binding.answer2.setBackgroundResource(R.drawable.correct_answer_container)
-                        2 -> binding.answer3.setBackgroundResource(R.drawable.correct_answer_container)
-                        3 -> binding.answer4.setBackgroundResource(R.drawable.correct_answer_container)
-                    }
-                } else {
-                    when (multipleChoiceViewModel!!.selectedAnswer.value) {
-                        0 -> binding.answer1.setBackgroundResource(R.drawable.wrong_answer_container)
-                        1 -> binding.answer2.setBackgroundResource(R.drawable.wrong_answer_container)
-                        2 -> binding.answer3.setBackgroundResource(R.drawable.wrong_answer_container)
-                        3 -> binding.answer4.setBackgroundResource(R.drawable.wrong_answer_container)
-                    }
+        multipleChoiceViewModel?.correctAnswer?.observe(viewLifecycleOwner) {
+            if (it) {
+                when (multipleChoiceViewModel!!.selectedAnswer.value) {
+                    0 -> binding.answer1.setBackgroundResource(R.drawable.correct_answer_container)
+                    1 -> binding.answer2.setBackgroundResource(R.drawable.correct_answer_container)
+                    2 -> binding.answer3.setBackgroundResource(R.drawable.correct_answer_container)
+                    3 -> binding.answer4.setBackgroundResource(R.drawable.correct_answer_container)
                 }
-                Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT)
-                    .show()
+                questionViewModel.successfulCompletion()
             }
         }
 
         multipleChoiceViewModel?.wrongAnswer?.observe(viewLifecycleOwner) {
             if (it) {
+                when (multipleChoiceViewModel!!.selectedAnswer.value) {
+                    0 -> binding.answer1.setBackgroundResource(R.drawable.wrong_answer_container)
+                    1 -> binding.answer2.setBackgroundResource(R.drawable.wrong_answer_container)
+                    2 -> binding.answer3.setBackgroundResource(R.drawable.wrong_answer_container)
+                    3 -> binding.answer4.setBackgroundResource(R.drawable.wrong_answer_container)
+                }
                 questionViewModel.wrongAnswer()
                 multipleChoiceViewModel!!.removeWrongAnswer()
             }

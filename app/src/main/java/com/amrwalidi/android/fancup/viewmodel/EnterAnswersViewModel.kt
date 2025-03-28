@@ -21,6 +21,10 @@ class EnterAnswersViewModel(application: Application, val question: Question?) :
     val message: LiveData<String>
         get() = _message
 
+    private val _correctAnswer = MutableLiveData(false)
+    val correctAnswer: LiveData<Boolean>
+        get() = _correctAnswer
+
     private val _wrongAnswer = MutableLiveData(false)
     val wrongAnswer: LiveData<Boolean>
         get() = _wrongAnswer
@@ -34,12 +38,10 @@ class EnterAnswersViewModel(application: Application, val question: Question?) :
                 answer.value?.let { currentList.add(it) }
                 _answerList.value = currentList
                 if (_answerList.value?.size == question.answers.size) {
-                    _message.value = "AWESOME!, ALL ANSWERS HAVE BEEN ADDED"
-                } else
-                    _message.value = "CORRECT ANSWER"
+                    _correctAnswer.value = true
+                }
             }
         } else {
-            _message.value = "WRONG ANSWER"
             _wrongAnswer.value = true
         }
     }

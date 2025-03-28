@@ -19,7 +19,7 @@ class GameLevelViewModel(application: Application) : AndroidViewModel(applicatio
     private val questionRepo = QuestionRepository(database)
     private val categoryRepo = CategoryRepository(database)
 
-    private lateinit var questions: List<Question>
+    lateinit var questions: List<Question>
 
     private var page = 1
 
