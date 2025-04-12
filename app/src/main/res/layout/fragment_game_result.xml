@@ -17,15 +17,17 @@
         android:background="@color/background">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="13dp"
+            android:layout_marginEnd="13dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
-                android:id="@+id/linearLayout7"
+                android:id="@+id/stars_list"
                 android:layout_width="wrap_content"
                 android:layout_height="77dp"
                 android:orientation="horizontal"
@@ -62,15 +64,15 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout12"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="33dp"
                 android:background="@drawable/result_board"
                 android:paddingHorizontal="73dp"
                 android:paddingVertical="20dp"
-                app:layout_constraintEnd_toEndOf="@+id/linearLayout7"
-                app:layout_constraintStart_toStartOf="@+id/linearLayout7"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/stars_list">
 
 
                 <LinearLayout
@@ -78,7 +80,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
+                    app:layout_constraintBottom_toTopOf="@+id/heart_list"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -106,7 +108,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/linearLayout6"
+                    android:id="@+id/heart_list"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
@@ -116,15 +118,6 @@
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
-
-                    <ImageView
-                        android:id="@+id/imageView35"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="20dp"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/heart"
-                        tools:src="@drawable/empty_heart" />
 
                     <ImageView
                         android:id="@+id/imageView22"
@@ -139,11 +132,18 @@
                         android:id="@+id/imageView33"
                         android:layout_width="44dp"
                         android:layout_height="44dp"
-                        android:layout_marginEnd="20dp"
                         android:layout_weight="1"
                         android:contentDescription="@string/heart"
                         tools:src="@drawable/heart" />
 
+                    <ImageView
+                        android:id="@+id/imageView35"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/heart"
+                        tools:src="@drawable/empty_heart" />
 
                 </LinearLayout>
 
@@ -170,6 +170,7 @@
                     android:backgroundTint="#797979"
                     android:elevation="4dp"
                     android:fontFamily="@font/poppins_bold"
+                    android:onClick="@{() -> viewModel.toMenu()}"
                     android:paddingLeft="0dp"
                     android:paddingTop="0dp"
                     android:paddingRight="0dp"
@@ -177,7 +178,6 @@
                     android:text="@string/menu"
                     android:textColor="@color/white"
                     android:textSize="24sp"
-                    android:onClick="@{() -> viewModel.toMenu()}"
 
                     app:cornerRadius="3dp" />
 
@@ -190,6 +190,7 @@
                     android:backgroundTint="#419E39"
                     android:elevation="4dp"
                     android:fontFamily="@font/poppins_bold"
+                    android:onClick="@{() -> viewModel.nextQuestion()}"
                     android:paddingLeft="0dp"
                     android:paddingTop="0dp"
                     android:paddingRight="0dp"
@@ -198,7 +199,6 @@
                     android:textColor="@color/white"
                     android:textSize="24sp"
                     app:cornerRadius="3dp"
-                    android:onClick="@{() -> viewModel.nextQuestion()}"
                     app:iconTint="@color/white" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

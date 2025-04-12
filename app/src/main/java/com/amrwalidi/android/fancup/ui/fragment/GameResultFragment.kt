@@ -5,30 +5,31 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.amrwalidi.android.fancup.R
 import com.amrwalidi.android.fancup.databinding.FragmentGameResultBinding
 import com.amrwalidi.android.fancup.domain.Question
 import com.amrwalidi.android.fancup.viewmodel.GameResultViewModel
+import com.amrwalidi.android.fancup.viewmodel.QuestionViewModel
 
 
 class GameResultFragment(
-    private val reachedTime: Long,
+    private val questionViewModel: QuestionViewModel,
     questionId: Long,
-    private val questionList: ArrayList<Question>,
-    points: Int
+    private val questionList: ArrayList<Question>
 ) : Fragment() {
 
-    private val viewModel: GameResultViewModel by lazy {
+    private val gameResultViewModel: GameResultViewModel by lazy {
         ViewModelProvider(
             this,
             GameResultViewModel.Factory(
-                reachedTime,
+                questionViewModel,
                 questionId,
                 questionList,
-                points,
-                requireActivity().application
+                requireActivity().application,
             )
         )[GameResultViewModel::class.java]
 
@@ -42,15 +43,43 @@ class GameResultFragment(
         val binding: FragmentGameResultBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_game_result, container, false)
 
-        binding.viewModel = viewModel
+        binding.viewModel = gameResultViewModel
         binding.lifecycleOwner = this
 
+        var index = 0
+        binding.starsList.children.iterator().forEach { star ->
+            val stars = questionViewModel.stars
+            println(stars)
+            if (star is ImageView) {
+                if (index < stars)
+                    star.setImageResource(R.drawable.filled_star)
+                else
+                    star.setImageResource(R.drawable.star)
+            }
+            index++
+        }
+
+        index = 0
+        binding.heartList.children.iterator().forEach { heart ->
+            val hearts: Int = questionViewModel.hearts.value!!
+            val deletedHearts: Int = questionViewModel.deletedHearts.value!!
+
+            if (heart is ImageView) {
+                if (index < (hearts - deletedHearts))
+                    heart.setImageResource(R.drawable.heart)
+                else if (index < hearts) {
+                    heart.setImageResource(R.drawable.empty_heart)
+                }
+                index++
+            }
+        }
+
         val bundle = Bundle()
-        viewModel.nextQuestion.value?.let { bundle.putLong("QUESTION_ID", it) }
+        gameResultViewModel.nextQuestion.value?.let { bundle.putLong("QUESTION_ID", it) }
         bundle.putParcelableArrayList("QUESTION_LIST", questionList)
         val questionFragment = QuestionFragment().apply { arguments = bundle }
 
-        viewModel.toNextQuestion.observe(viewLifecycleOwner) {
+        gameResultViewModel.toNextQuestion.observe(viewLifecycleOwner) {
             if (it) {
                 requireActivity().supportFragmentManager.beginTransaction()
                     .replace(
@@ -61,7 +90,7 @@ class GameResultFragment(
             }
         }
 
-        viewModel.toMenu.observe(viewLifecycleOwner) {
+        gameResultViewModel.toMenu.observe(viewLifecycleOwner) {
             if (it) {
                 requireActivity().finish()
             }

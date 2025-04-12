@@ -111,19 +111,18 @@ class QuestionFragment : Fragment() {
 
         viewModel.completionMessage.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
+                viewModel.calculateStars()
                 val completionMessagePopup = completionMessagePopup(it)
                 completionMessagePopup.show()
                 Handler(Looper.getMainLooper()).postDelayed({
                     completionMessagePopup.dismiss()
-                    val points = if (it.equals(getString(R.string.congratulation))) 10 else 0
                     requireActivity().supportFragmentManager.beginTransaction()
                         .replace(
                             R.id.game_container,
                             GameResultFragment(
-                                viewModel.reachedTime,
+                                viewModel,
                                 questionId,
-                                questionList,
-                                points
+                                questionList
                             )
                         )
                         .commit()

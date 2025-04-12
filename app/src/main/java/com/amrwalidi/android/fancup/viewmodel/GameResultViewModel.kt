@@ -9,19 +9,18 @@ import androidx.lifecycle.ViewModelProvider
 import com.amrwalidi.android.fancup.domain.Question
 
 class GameResultViewModel(
-    reachedTime: Long,
+    private val questionViewModel: QuestionViewModel,
     private val questionId: Long,
     private val questionList: ArrayList<Question>,
-    points: Int,
     application: Application
 ) :
     AndroidViewModel(application) {
 
-    private var _time: Long = reachedTime
+    private var _time: Long = questionViewModel.reachedTime
     val time: Long
         get() = _time
 
-    private var _points: Int = points
+    private var _points: Int = questionViewModel.points
     val points: Int
         get() = _points
 
@@ -55,17 +54,16 @@ class GameResultViewModel(
     }
 
     class Factory(
-        private val time: Long,
+        val viewModel: QuestionViewModel,
         val id: Long,
         val list: ArrayList<Question>,
-        val points: Int,
         val app: Application
     ) :
         ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(GameResultViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return GameResultViewModel(time, id, list, points, app) as T
+                return GameResultViewModel(viewModel, id, list, app) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }

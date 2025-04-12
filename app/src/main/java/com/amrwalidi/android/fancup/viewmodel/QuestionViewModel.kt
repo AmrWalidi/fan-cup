@@ -61,6 +61,15 @@ class QuestionViewModel(application: Application, questionId: Long) :
     val completionMessage: LiveData<String>
         get() = _completionMessage
 
+    private var _points = 0
+    val points: Int
+        get() = _points
+
+    private var _stars = 3
+    val stars: Int
+        get() = _stars
+
+
     init {
         viewModelScope.launch {
             _question.value = repo.getQuestionsById(questionId)
@@ -122,7 +131,17 @@ class QuestionViewModel(application: Application, questionId: Long) :
     }
 
     fun successfulCompletion() {
+        _points = 10
         _completionMessage.value = "Congratulation"
+    }
+
+    fun calculateStars() {
+        if (_deletedHearts.value!! > 0)
+            _stars--
+        if (_reachedTime < 15)
+            _stars--
+        if (_completionMessage.value == "Game Over")
+            _stars = 0
     }
 
     fun extraTime() {

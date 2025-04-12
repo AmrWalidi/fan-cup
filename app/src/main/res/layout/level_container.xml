@@ -30,18 +30,21 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
+                android:id="@+id/first_star"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:contentDescription="@string/first_level_star"
                 tools:srcCompat="@drawable/filled_level_star" />
 
             <ImageView
+                android:id="@+id/second_star"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/second_level_star"
                 tools:srcCompat="@drawable/filled_level_star" />
 
             <ImageView
+                android:id="@+id/third_star"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:contentDescription="@string/third_level_star"
