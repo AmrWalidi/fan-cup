@@ -1,5 +1,6 @@
 package com.amrwalidi.android.fancup.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,13 +13,13 @@ import androidx.lifecycle.ViewModelProvider
 import com.amrwalidi.android.fancup.R
 import com.amrwalidi.android.fancup.databinding.FragmentGameResultBinding
 import com.amrwalidi.android.fancup.domain.Question
+import com.amrwalidi.android.fancup.ui.activity.AppActivity
 import com.amrwalidi.android.fancup.viewmodel.GameResultViewModel
 import com.amrwalidi.android.fancup.viewmodel.QuestionViewModel
 
 
 class GameResultFragment(
     private val questionViewModel: QuestionViewModel,
-    questionId: Long,
     private val questionList: ArrayList<Question>
 ) : Fragment() {
 
@@ -27,7 +28,6 @@ class GameResultFragment(
             this,
             GameResultViewModel.Factory(
                 questionViewModel,
-                questionId,
                 questionList,
                 requireActivity().application,
             )
@@ -65,9 +65,10 @@ class GameResultFragment(
             val deletedHearts: Int = questionViewModel.deletedHearts.value!!
 
             if (heart is ImageView) {
-                if (index < (hearts - deletedHearts))
+                if (index < (hearts - deletedHearts)) {
                     heart.setImageResource(R.drawable.heart)
-                else if (index < hearts) {
+                    heart.visibility = View.VISIBLE
+                } else if (index < hearts) {
                     heart.setImageResource(R.drawable.empty_heart)
                 }
                 index++
@@ -75,7 +76,7 @@ class GameResultFragment(
         }
 
         val bundle = Bundle()
-        gameResultViewModel.nextQuestion.value?.let { bundle.putLong("QUESTION_ID", it) }
+        gameResultViewModel.nextQuestion.value?.let { bundle.putString("QUESTION_ID", it) }
         bundle.putParcelableArrayList("QUESTION_LIST", questionList)
         val questionFragment = QuestionFragment().apply { arguments = bundle }
 
@@ -92,7 +93,8 @@ class GameResultFragment(
 
         gameResultViewModel.toMenu.observe(viewLifecycleOwner) {
             if (it) {
-                requireActivity().finish()
+                val intent = Intent(requireContext(), AppActivity::class.java)
+                startActivity(intent)
             }
         }
 

@@ -17,7 +17,7 @@ import kotlinx.coroutines.withContext
 
 @Database(
     entities = [DatabaseUser::class, DatabaseCategory::class, DatabaseQuestion::class, QuestionCategoryCrossRef::class],
-    version = 7
+    version = 9
 )
 @TypeConverters(Converters::class)
 abstract class FanCupDatabase : RoomDatabase() {

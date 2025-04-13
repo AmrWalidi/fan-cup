@@ -141,7 +141,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:text="@{viewmodel.userLevel}"
+                        android:text="@{viewmodel.user.level}"
                         tools:text="10" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -157,7 +157,7 @@
                     android:shadowDx="2"
                     android:shadowDy="2"
                     android:shadowRadius="3"
-                    android:text="@{viewmodel.formattedPoints}"
+                    android:text="@{viewmodel.formatInt(viewmodel.user.points)}"
                     android:textColor="@color/white"
                     android:textSize="11sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -214,7 +214,7 @@
                     android:shadowDx="2"
                     android:shadowDy="2"
                     android:shadowRadius="3"
-                    android:text="@{viewmodel.formattedCoins}"
+                    android:text="@{viewmodel.formatInt(viewmodel.user.coins)}"
                     android:textColor="@color/white"
                     android:textSize="11sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -265,7 +265,7 @@
                     android:shadowDx="2"
                     android:shadowDy="2"
                     android:shadowRadius="3"
-                    android:text="@{viewmodel.userRank}"
+                    android:text="@{viewmodel.user.rank}"
                     android:textColor="@color/white"
                     android:textSize="11sp"
                     app:layout_constraintBottom_toBottomOf="parent"

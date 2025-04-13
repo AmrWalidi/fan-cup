@@ -5,7 +5,7 @@ import com.amrwalidi.android.fancup.service.impl.AuthenticationServiceImpl
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.Flow
 
-class AuthenticationRepository() {
+class AuthenticationRepository {
     private val authService = AuthenticationServiceImpl()
 
     val loggedUser: Flow<FirebaseUser?>

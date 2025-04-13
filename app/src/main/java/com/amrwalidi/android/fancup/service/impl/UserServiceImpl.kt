@@ -11,15 +11,11 @@ class UserServiceImpl @Inject constructor() : UserService {
 
     private val usersRef = FirebaseFirestore.getInstance().collection("Users")
     override suspend fun createUser(id: String, username: String, email: String) {
-        val user = mapOf(
-            "id" to id,
-            "username" to username,
-            "email" to email,
-            "points" to 0,
-            "coins" to 0,
-            "level" to 0,
-            "rank" to 0
-        )
+        val user = UserDoc()
+
+        user.id = id
+        user.username = username
+        user.email = email
 
         usersRef.document(id)
             .set(user)

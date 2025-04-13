@@ -13,7 +13,10 @@ import com.amrwalidi.android.fancup.domain.Question
 import com.amrwalidi.android.fancup.repository.QuestionRepository
 import kotlinx.coroutines.launch
 
-class QuestionViewModel(application: Application, questionId: Long) :
+class QuestionViewModel(
+    application: Application,
+    val questionId: String,
+) :
     AndroidViewModel(application) {
 
     private val database = getDatabase(application)
@@ -72,7 +75,7 @@ class QuestionViewModel(application: Application, questionId: Long) :
 
     init {
         viewModelScope.launch {
-            _question.value = repo.getQuestionsById(questionId)
+            _question.value = repo.getQuestionById(questionId)
             startCountdown()
         }
     }
@@ -87,7 +90,7 @@ class QuestionViewModel(application: Application, questionId: Long) :
                 else
                     "00:${millisUntilFinished / 1000}"
 
-                _reachedTime = millisUntilFinished / 1000
+                _reachedTime = millisUntilFinished
 
                 if (_completionMessage.value?.isNotEmpty() == true) {
                     countDownTimer?.cancel()
@@ -136,10 +139,14 @@ class QuestionViewModel(application: Application, questionId: Long) :
     }
 
     fun calculateStars() {
+        if (_clickedHelpers.value?.contains(true) == true)
+            _stars--
         if (_deletedHearts.value!! > 0)
             _stars--
         if (_reachedTime < 15)
             _stars--
+        if (_stars < 1)
+            _stars = 1
         if (_completionMessage.value == "Game Over")
             _stars = 0
     }
@@ -171,7 +178,8 @@ class QuestionViewModel(application: Application, questionId: Long) :
     }
 
 
-    class Factory(val app: Application, val id: Long) : ViewModelProvider.Factory {
+    class Factory(val app: Application, val id: String) :
+        ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(QuestionViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")

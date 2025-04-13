@@ -27,12 +27,12 @@ import com.amrwalidi.android.fancup.domain.Question
 
 class QuestionFragment : Fragment() {
 
-    private var questionId: Long = 0
+    private var questionId: String = ""
     private lateinit var questionList: ArrayList<Question>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        questionId = arguments?.getLong("QUESTION_ID") ?: 0
+        questionId = arguments?.getString("QUESTION_ID") ?: ""
         questionList = arguments?.getParcelableArrayList("QUESTION_LIST") ?: arrayListOf()
     }
 
@@ -121,7 +121,6 @@ class QuestionFragment : Fragment() {
                             R.id.game_container,
                             GameResultFragment(
                                 viewModel,
-                                questionId,
                                 questionList
                             )
                         )

@@ -11,6 +11,7 @@ import com.amrwalidi.android.fancup.database.getDatabase
 import com.amrwalidi.android.fancup.domain.Question
 import com.amrwalidi.android.fancup.repository.CategoryRepository
 import com.amrwalidi.android.fancup.repository.QuestionRepository
+import com.amrwalidi.android.fancup.repository.UserRepository
 import kotlinx.coroutines.launch
 
 class GameLevelViewModel(application: Application) : AndroidViewModel(application) {
@@ -18,6 +19,7 @@ class GameLevelViewModel(application: Application) : AndroidViewModel(applicatio
     private val database = getDatabase(application)
     private val questionRepo = QuestionRepository(database)
     private val categoryRepo = CategoryRepository(database)
+    private val userRepo = UserRepository(database)
 
     lateinit var questions: List<Question>
 
@@ -27,8 +29,8 @@ class GameLevelViewModel(application: Application) : AndroidViewModel(applicatio
     val firstPage: LiveData<Boolean>
         get() = _firstPage
 
-    private val _selectedQuestion = MutableLiveData<Long>()
-    val selectedQuestion: LiveData<Long>
+    private val _selectedQuestion = MutableLiveData<String>()
+    val selectedQuestion: LiveData<String>
         get() = _selectedQuestion
 
     private val _lastPage = MutableLiveData(false)
@@ -44,7 +46,11 @@ class GameLevelViewModel(application: Application) : AndroidViewModel(applicatio
         viewModelScope.launch {
             val categoryId = categoryRepo.getSelectedCategory()?.id
             questions = categoryId?.let { questionRepo.getQuestionsByCategory(it) }!!
-
+            if (questions.isNotEmpty() && !questions.first().playable) {
+                userRepo.getUser()
+                    ?.let { questionRepo.updatePlayability(it.id, questions.first().id) }
+                questions.first().playable = true
+            }
             if (questions.size < 9) {
                 _displayedQuestions.value = questions.subList(0, questions.size)
                 _lastPage.value = true
@@ -75,8 +81,12 @@ class GameLevelViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    fun selectQuestion(id: Long) {
-        _selectedQuestion.value = id
+    fun selectQuestion(id: String) {
+        val question = displayedQuestions.value?.filter {
+            it.id == id
+        }
+        if (question?.first()?.playable == true)
+            _selectedQuestion.value = id
 
     }
 

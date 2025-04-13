@@ -9,17 +9,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.amrwalidi.android.fancup.database.getDatabase
 import com.amrwalidi.android.fancup.repository.AuthenticationRepository
-import com.amrwalidi.android.fancup.repository.CategoryRepository
 import com.amrwalidi.android.fancup.repository.QuestionRepository
-import com.amrwalidi.android.fancup.repository.UserRepository
 import com.amrwalidi.android.fancup.service.Response
 import kotlinx.coroutines.launch
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
     private val database = getDatabase(application)
     private val authRepo = AuthenticationRepository()
-    private val userRepo = UserRepository(database)
-    private val categoryRepo = CategoryRepository(database)
     private val questionRepo = QuestionRepository(database)
 
     private val _registerPage = MutableLiveData(false)
@@ -61,9 +57,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
                         is Response.Success -> {
                             _isLoading.value = false
-                            userRepo.setUser(res.data.toString())
-                            categoryRepo.fetchCategories()
-                            questionRepo.fetchQuestions()
+                            questionRepo.retrieveUserQuestions(res.data.toString())
                             toAppPage()
                         }
 

@@ -27,6 +27,6 @@ import androidx.room.Index
     ]
 )
 data class QuestionCategoryCrossRef(
-    val questionId: Long,
+    val questionId: String,
     val categoryId: Int
 )

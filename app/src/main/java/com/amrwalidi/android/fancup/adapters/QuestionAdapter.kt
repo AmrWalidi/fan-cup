@@ -1,8 +1,12 @@
 package com.amrwalidi.android.fancup.adapters
 
 import android.annotation.SuppressLint
+import com.amrwalidi.android.fancup.R
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.core.view.children
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -33,6 +37,26 @@ class QuestionAdapter(val viewModel: GameLevelViewModel) :
         ) {
             binding.viewModel = viewModel
             binding.question = item
+
+            if (!item.playable) {
+                binding.gameLevelContainer.alpha = 0.5f
+                binding.levelNumber.alpha = 0.5f
+            } else {
+                binding.gameLevelContainer.alpha = 1.0f
+                binding.levelNumber.alpha = 1.0f
+            }
+
+            var index = 0
+            binding.starsList.children.iterator().forEach { star ->
+                val stars = item.stars
+                if (star is ImageView) {
+                    if (index < stars) {
+                        star.setImageResource(R.drawable.filled_level_star)
+                    } else
+                        star.visibility = View.INVISIBLE
+                }
+                index++
+            }
         }
 
         companion object {

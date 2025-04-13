@@ -6,13 +6,16 @@ import com.amrwalidi.android.fancup.domain.Question
 
 @Entity(tableName = "questions")
 data class DatabaseQuestion(
-    @PrimaryKey(autoGenerate = true)
-    val id: Long = 0,
+    @PrimaryKey
+    val id: String,
+    val rowID: Long,
     val text: String,
     val answers: List<String>,
     val options: List<String>,
     val type: Int,
-    val difficulty: Int
+    val difficulty: Int,
+    val stars: Int,
+    val playable: Boolean
 )
 
 
@@ -25,7 +28,9 @@ fun List<DatabaseQuestion>?.asDomainQuestion(): List<Question>? {
             answers = databaseQuestion.answers,
             options = databaseQuestion.options,
             type = databaseQuestion.type,
-            difficulty = databaseQuestion.difficulty
+            difficulty = databaseQuestion.difficulty,
+            stars = databaseQuestion.stars,
+            playable = databaseQuestion.playable
         )
     }
 }
@@ -38,8 +43,9 @@ fun DatabaseQuestion?.asDomainQuestion(): Question? {
             answers = answers,
             options = options,
             type = type,
-            difficulty = difficulty
+            difficulty = difficulty,
+            stars = stars,
+            playable = playable
         )
     }
-
 }

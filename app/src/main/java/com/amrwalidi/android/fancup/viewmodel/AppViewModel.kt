@@ -24,18 +24,6 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     val user: LiveData<User>
         get() = _user
 
-    private val _formattedCoins = MutableLiveData("0")
-    val formattedCoins: LiveData<String> = _formattedCoins
-
-    private val _formattedPoints = MutableLiveData("0")
-    val formattedPoints: LiveData<String> = _formattedPoints
-
-    private val _userRank = MutableLiveData("0")
-    val userRank: LiveData<String> = _userRank
-
-    private val _userLevel = MutableLiveData("0")
-    val userLevel: LiveData<String> = _userLevel
-
     private val _page = MutableLiveData(3)
     val page: LiveData<Int>
         get() = _page
@@ -64,14 +52,10 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
                 }
             }
             _user.value = userRepo.getUser()
-            _formattedCoins.value = _user.value?.coins?.let { formatInt(it) }
-            _formattedPoints.value = _user.value?.points?.let { formatInt(it) }
-            _userRank.value = _user.value?.rank
-            _userLevel.value = _user.value?.level
         }
     }
 
-    private fun formatInt(number: Int): String {
+    fun formatInt(number: Int): String {
         return "%,d".format(number)
     }
 

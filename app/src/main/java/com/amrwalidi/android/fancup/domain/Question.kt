@@ -4,32 +4,38 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Question(
-    val id: Long,
+    val id: String,
     val listId: String = "",
     val text: String,
     val answers: List<String>,
     val options: List<String>,
     val type: Int,
-    val difficulty: Int
+    val difficulty: Int,
+    val stars: Int,
+    var playable: Boolean
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readLong(),
+        parcel.readString() ?: "",
         parcel.readString() ?: "",
         parcel.readString() ?: "",
         parcel.createStringArrayList() ?: emptyList(),
         parcel.createStringArrayList() ?: emptyList(),
         parcel.readInt(),
-        parcel.readInt()
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readByte() != 0.toByte()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeLong(id)
+        parcel.writeString(id)
         parcel.writeString(listId)
         parcel.writeString(text)
         parcel.writeStringList(answers)
         parcel.writeStringList(options)
         parcel.writeInt(type)
         parcel.writeInt(difficulty)
+        parcel.writeInt(stars)
+        parcel.writeByte(if (playable) 1 else 0)
     }
 
     override fun describeContents(): Int {

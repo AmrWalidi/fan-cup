@@ -14,11 +14,6 @@ class UserRepository(private val database: FanCupDatabase) {
         return database.userDao.getUser().asDomainUser()
     }
 
-    suspend fun setUser(id: String) {
-        val user = userService.getUserById(id).asDatabaseUser()
-        user?.let { database.userDao.insert(it) }
-    }
-
     suspend fun getUserByUsername(username: String): String? {
         return userService.getUserByUsername(username)?.id
     }
@@ -29,6 +24,8 @@ class UserRepository(private val database: FanCupDatabase) {
 
     suspend fun createUser(id : String, username: String, email: String) {
         userService.createUser(id, username, email)
+        val user = userService.getUserById(id).asDatabaseUser()
+        user?.let { database.userDao.insert(it) }
     }
 
     suspend fun delete(){

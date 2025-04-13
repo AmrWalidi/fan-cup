@@ -21,13 +21,13 @@ class GameActivity : AppCompatActivity() {
             insets
         }
 
-        val questionId = intent?.getLongExtra("QUESTION_ID", -1L)
+        val questionId = intent?.getStringExtra("QUESTION_ID")
         val questionList = intent.getParcelableArrayListExtra<Question>("QUESTION_LIST")
 
         val questionFragment = QuestionFragment()
 
         val bundle = Bundle()
-        questionId?.let { bundle.putLong("QUESTION_ID", it) }
+        questionId?.let { bundle.putString("QUESTION_ID", it) }
         questionList.let { bundle.putParcelableArrayList("QUESTION_LIST", it) }
         questionFragment.arguments = bundle
 
