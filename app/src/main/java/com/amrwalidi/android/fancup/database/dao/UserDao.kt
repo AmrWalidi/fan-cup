@@ -18,6 +18,15 @@ interface UserDao {
     @Query("select * from users LIMIT 1")
     suspend fun getUser(): DatabaseUser?
 
-    @Query("DELETE FROM users " )
+    @Query("UPDATE users SET points = :points WHERE id = :id")
+    suspend fun updatePoints(id: String, points: Int)
+
+    @Query("UPDATE users SET coins = :coins WHERE id = :id")
+    suspend fun updateCoins(id: String, coins: Int)
+
+    @Query("UPDATE users SET level = level + 1 WHERE id = :id")
+    suspend fun updateLevel(id: String)
+
+    @Query("DELETE FROM users ")
     suspend fun delete()
 }

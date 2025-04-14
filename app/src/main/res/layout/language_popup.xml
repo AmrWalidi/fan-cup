@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.amrwalidi.android.fancup.viewmodel.SettingsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/popup_message_background">
+
+
+        <ImageView
+            android:id="@+id/close_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="10dp"
+            android:contentDescription="@string/popup_close_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/close" />
+
+        <TextView
+            android:id="@+id/message_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/inter_bold"
+            android:text="@string/language"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout7"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/confirm_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/message_title">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/arabic_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:backgroundTint="#545454"
+                android:fontFamily="@font/inter_bold"
+                android:paddingLeft="40dp"
+                android:paddingTop="0dp"
+                android:paddingRight="40dp"
+                android:paddingBottom="0dp"
+                android:text="@string/arabic"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:cornerRadius="2dp"
+                app:iconPadding="0dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/english_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:backgroundTint="#545454"
+                android:fontFamily="@font/inter_bold"
+                android:paddingLeft="40dp"
+                android:paddingTop="0dp"
+                android:paddingRight="40dp"
+                android:paddingBottom="0dp"
+                android:text="@string/english"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:cornerRadius="2dp"
+                app:iconPadding="0dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/turkish_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:backgroundTint="#545454"
+                android:fontFamily="@font/inter_bold"
+                android:paddingLeft="40dp"
+                android:paddingTop="0dp"
+                android:paddingRight="40dp"
+                android:paddingBottom="0dp"
+                android:text="@string/turkish"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:cornerRadius="2dp"
+                app:iconPadding="0dp" />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/confirm_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/message_button_background"
+            android:fontFamily="@font/inter_bold"
+            android:paddingLeft="40dp"
+            android:paddingTop="0dp"
+            android:paddingRight="40dp"
+            android:paddingBottom="0dp"
+            android:text="@string/confirm"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:cornerRadius="2dp"
+            app:iconPadding="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/linearLayout7"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout7" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

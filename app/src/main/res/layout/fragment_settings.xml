@@ -69,6 +69,7 @@
                     android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/white"
                     android:textSize="24sp"
+                    android:text="@{viewModel.user.username}"
                     tools:text="username" />
 
                 <TextView
@@ -78,6 +79,7 @@
                     android:fontFamily="@font/pontano_sans_bold"
                     android:textColor="#B9B9B9"
                     android:textSize="20sp"
+                    android:text="@{viewModel.user.email}"
                     tools:text="username@gmail.com" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -104,7 +106,8 @@
                     android:paddingVertical="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:onClick="@{()-> viewModel.showPopUp(1)}">
 
                     <ImageView
                         android:id="@+id/imageView6"
@@ -215,7 +218,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:onClick="@{()-> viewModel.signOut()}">
+                    android:onClick="@{()-> viewModel.showPopUp(2)}">
 
                     <ImageView
                         android:id="@+id/imageView4"
@@ -253,7 +256,8 @@
                     android:paddingVertical="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:onClick="@{()-> viewModel.showPopUp(3)}">
 
                     <ImageView
                         android:id="@+id/imageView5"

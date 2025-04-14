@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 class ForgetPasswordViewModel(application: Application) : AndroidViewModel(application) {
     private val database = getDatabase(application)
-    private val authRepo = AuthenticationRepository()
+    private val authRepo = AuthenticationRepository(database)
     private val userRepo = UserRepository(database)
 
     val emailInput = MutableLiveData("")

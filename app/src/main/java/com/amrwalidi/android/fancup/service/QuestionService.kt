@@ -13,4 +13,5 @@ interface QuestionService {
         userId: String,
         questionId: String
     ): Flow<Response>
+    suspend fun deleteUserQuestions(id: String): Flow<Response>
 }

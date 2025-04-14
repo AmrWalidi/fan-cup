@@ -82,11 +82,17 @@
     <string name="popup_close_icon">popup close icon</string>
     <string name="exit_game">Exit Game</string>
     <string name="Are_you_sure_you_want_to_exit_the_game">Are you sure you want to exit the game ?</string>
+    <string name="Are_you_sure_you_want_to_logout">Are you sure you want to logout ?</string>
+    <string name="This_account_will_be_deleted">This account will be deleted</string>
+    <string name="All_your_account_data_will_be_deleted_permanently">All your account data will be deleted permanently</string>
     <string name="exit">Exit</string>
+    <string name="delete">Delete</string>
     <string name="game_over">Game Over</string>
     <string name="congratulation">Congratulation</string>
     <string name="time_out">Time Out</string>
     <string name="first_level_star">first level star</string>
     <string name="second_level_star">second level star</string>
     <string name="third_level_star">third level star</string>
+    <string name="language">Language</string>
+    <string name="confirm">Confirm</string>
 </resources>

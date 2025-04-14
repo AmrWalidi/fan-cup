@@ -52,7 +52,7 @@ class QuestionFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-        val exitGamePopUp = exitGamePopup(viewModel)
+        val exitGamePopUp = exitGamePopup { viewModel.exitGame() }
 
         viewModel.question.observe(viewLifecycleOwner) {
 
@@ -74,10 +74,8 @@ class QuestionFragment : Fragment() {
         }
 
         viewModel.showPopup.observe(viewLifecycleOwner) {
-            if (it == true && viewModel.hasExitGamePopup) {
+            if (it) {
                 exitGamePopUp.show()
-            } else {
-                exitGamePopUp.dismiss()
             }
 
         }
@@ -86,6 +84,7 @@ class QuestionFragment : Fragment() {
             if (it) {
                 val intent = Intent(requireActivity(), AppActivity::class.java)
                 startActivity(intent)
+
             }
         }
 
@@ -111,7 +110,7 @@ class QuestionFragment : Fragment() {
 
         viewModel.completionMessage.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
-                viewModel.calculateStars()
+                viewModel.calculatePoints()
                 val completionMessagePopup = completionMessagePopup(it)
                 completionMessagePopup.show()
                 Handler(Looper.getMainLooper()).postDelayed({
@@ -134,7 +133,7 @@ class QuestionFragment : Fragment() {
         return binding.root
     }
 
-    private fun exitGamePopup(viewModel: QuestionViewModel): Dialog {
+    private fun exitGamePopup(action: () -> Unit): Dialog {
         val dialog = Dialog(requireContext())
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -160,8 +159,12 @@ class QuestionFragment : Fragment() {
         binding.messageTitle.text = getString(R.string.exit_game)
         binding.detailedMessage.text = getString(R.string.Are_you_sure_you_want_to_exit_the_game)
         binding.messageButton.text = getString(R.string.exit)
-
-        binding.viewModel = viewModel
+        binding.messageButton.setOnClickListener {
+            action()
+        }
+        binding.closeIcon.setOnClickListener {
+            dialog.dismiss()
+        }
 
         return dialog
 

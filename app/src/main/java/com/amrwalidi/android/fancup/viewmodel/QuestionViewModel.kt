@@ -44,10 +44,6 @@ class QuestionViewModel(
     val showPopup: LiveData<Boolean>
         get() = _showPopup
 
-    private var _hasExitGamePopup = false
-    val hasExitGamePopup: Boolean
-        get() = _hasExitGamePopup
-
     private val _hasExitGame = MutableLiveData(false)
     val hasExitGame: LiveData<Boolean>
         get() = _hasExitGame
@@ -64,7 +60,7 @@ class QuestionViewModel(
     val completionMessage: LiveData<String>
         get() = _completionMessage
 
-    private var _points = 0
+    private var _points = 100
     val points: Int
         get() = _points
 
@@ -112,13 +108,7 @@ class QuestionViewModel(
     }
 
     fun exitGamePopup() {
-        _hasExitGamePopup = true
         _showPopup.value = true
-    }
-
-    fun dismissPopup() {
-        _hasExitGamePopup = false
-        _showPopup.value = false
     }
 
     fun exitGame() {
@@ -134,21 +124,28 @@ class QuestionViewModel(
     }
 
     fun successfulCompletion() {
-        _points = 10
         _completionMessage.value = "Congratulation"
     }
 
-    fun calculateStars() {
-        if (_clickedHelpers.value?.contains(true) == true)
+    fun calculatePoints() {
+        if (_clickedHelpers.value?.contains(true) == true) {
             _stars--
-        if (_deletedHearts.value!! > 0)
+            _points -= 30
+        }
+        if (_deletedHearts.value!! > 0) {
             _stars--
-        if (_reachedTime < 15)
+            _points -= 20
+        }
+        if (_reachedTime < 15000L) {
             _stars--
+            _points -= 10
+        }
         if (_stars < 1)
             _stars = 1
-        if (_completionMessage.value == "Game Over")
+        if (_completionMessage.value == "Game Over") {
+            _points = 0
             _stars = 0
+        }
     }
 
     fun extraTime() {

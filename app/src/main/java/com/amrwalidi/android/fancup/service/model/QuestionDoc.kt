@@ -12,6 +12,8 @@ data class QuestionDoc(
     val question_type: Int = 0,
     val categories: List<Int> = listOf(),
     val difficulty_level: String = "",
+    var stars: Int = 0,
+    var playable: Boolean = false
 )
 
 fun QuestionDoc?.asDatabaseQuestion(): DatabaseQuestion? {
@@ -30,8 +32,8 @@ fun QuestionDoc?.asDatabaseQuestion(): DatabaseQuestion? {
                 else -> 2
             },
             type = question_type,
-            stars = 0,
-            playable = false
+            stars = stars,
+            playable = playable
         )
     }
 

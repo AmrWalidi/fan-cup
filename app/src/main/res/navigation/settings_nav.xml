@@ -6,10 +6,6 @@
     app:startDestination="@id/settingsFragment">
 
     <fragment
-        android:id="@+id/languageFragment"
-        android:name="com.amrwalidi.android.fancup.LanguageFragment"
-        android:label="LanguageFragment" />
-    <fragment
         android:id="@+id/aboutFragment"
         android:name="com.amrwalidi.android.fancup.AboutFragment"
         android:label="fragment_about"
@@ -22,9 +18,6 @@
         android:id="@+id/settingsFragment"
         android:name="com.amrwalidi.android.fancup.ui.fragment.SettingsFragment"
         android:label="SettingsFragment" >
-        <action
-            android:id="@+id/action_settingsFragment_to_languageFragment"
-            app:destination="@id/languageFragment" />
         <action
             android:id="@+id/action_settingsFragment_to_friendRequestFragment"
             app:destination="@id/friendRequestFragment" />

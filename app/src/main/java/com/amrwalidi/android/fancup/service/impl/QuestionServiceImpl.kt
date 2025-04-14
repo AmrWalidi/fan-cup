@@ -87,7 +87,12 @@ class QuestionServiceImpl @Inject constructor() : QuestionService {
 
             userDocs.map { doc ->
                 val questionId = doc.getString("question_id")
-                questionId?.let { getQuestionById(it) }
+                val stars = doc.getLong("stars")?.toInt() ?: 0
+                val playable = doc.getBoolean("playable") ?: false
+                val question = questionId?.let { getQuestionById(it) }
+                question?.stars = stars
+                question?.playable = playable
+                question
             }
         } catch (e: Exception) {
             emptyList()
@@ -137,5 +142,21 @@ class QuestionServiceImpl @Inject constructor() : QuestionService {
         awaitClose()
     }
 
+    override suspend fun deleteUserQuestions(id: String): Flow<Response> = callbackFlow {
+        try {
+            val userDocs = userQuestionRef
+                .whereEqualTo("user_id", id)
+                .get()
+                .await()
+
+            for (doc in userDocs) {
+                userQuestionRef.document(doc.id).delete().await()
+            }
+
+            trySend(Response.Success("All user questions deleted successfully."))
+        } catch (e: Exception) {
+            trySend(Response.Failure(e))
+        }
+    }
 
 }

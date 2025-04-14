@@ -1,44 +1,29 @@
 package com.amrwalidi.android.fancup.ui.fragment
 
+import android.app.Dialog
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import androidx.core.graphics.drawable.toDrawable
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.amrwalidi.android.fancup.R
 import com.amrwalidi.android.fancup.databinding.FragmentSettingsBinding
+import com.amrwalidi.android.fancup.databinding.LanguagePopupBinding
+import com.amrwalidi.android.fancup.databinding.PopupMessageBinding
 import com.amrwalidi.android.fancup.viewmodel.SettingsViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [SettingsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SettingsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
     private val viewModel: SettingsViewModel by lazy {
         ViewModelProvider(
             this,
             SettingsViewModel.Factory(requireActivity().application)
         )[SettingsViewModel::class.java]
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
@@ -49,26 +34,109 @@ class SettingsFragment : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_settings, container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+
+
+        viewModel.popup.observe(viewLifecycleOwner) {
+            val popUpPanel = when (it) {
+                1 -> languagePanel { }
+                2 -> popUp(
+                    getString(R.string.logout),
+                    getString(R.string.Are_you_sure_you_want_to_logout),
+                    getString(R.string.logout)
+                ) {
+                    viewModel.signOut()
+                }
+
+                3 -> popUp(
+                    getString(R.string.This_account_will_be_deleted),
+                    getString(R.string.All_your_account_data_will_be_deleted_permanently),
+                    getString(R.string.delete)
+                ) {
+                    viewModel.deleteAccount()
+                }
+
+                else -> return@observe
+            }
+
+            popUpPanel.show()
+        }
+
+
         return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SettingsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SettingsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun languagePanel(action: () -> Unit): Dialog {
+        val dialog = Dialog(requireContext())
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        val binding: LanguagePopupBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(requireContext()),
+            R.layout.language_popup,
+            null,
+            false
+        )
+
+        dialog.setContentView(binding.root)
+
+        dialog.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
+
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
+        dialog.setCancelable(true)
+
+        binding.confirmButton.setOnClickListener { action() }
+        binding.closeIcon.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        binding.viewModel = viewModel
+
+        return dialog
+
+    }
+
+
+    private fun popUp(
+        title: String,
+        message: String,
+        buttonText: String,
+        action: () -> Unit
+    ): Dialog {
+        val dialog = Dialog(requireContext())
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        val binding: PopupMessageBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(requireContext()),
+            R.layout.popup_message,
+            null,
+            false
+        )
+
+        dialog.setContentView(binding.root)
+
+        dialog.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
+
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
+        dialog.setCancelable(true)
+
+        binding.messageTitle.text = title
+        binding.detailedMessage.text = message
+        binding.messageButton.text = buttonText
+        binding.messageButton.setOnClickListener { action() }
+        binding.closeIcon.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        return dialog
+
     }
 }

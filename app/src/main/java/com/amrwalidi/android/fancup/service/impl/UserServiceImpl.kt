@@ -1,8 +1,12 @@
 package com.amrwalidi.android.fancup.service.impl
 
+import com.amrwalidi.android.fancup.service.Response
 import com.amrwalidi.android.fancup.service.UserService
 import com.amrwalidi.android.fancup.service.model.UserDoc
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.suspendCancellableCoroutine
 import javax.inject.Inject
 
@@ -87,8 +91,52 @@ class UserServiceImpl @Inject constructor() : UserService {
         }
     }
 
-    override suspend fun deleteAccount(id: String) {
-        usersRef.document(id).delete()
+    override suspend fun updatePoints(id: String, points: Int): Flow<Response> = callbackFlow {
+        usersRef.document(id).update("points", points).addOnCompleteListener {
+            if (it.isSuccessful) {
+                trySend(Response.Success("Data have been update successfully"))
+            } else {
+                trySend(Response.Failure(Exception("Unknown error: ${it.exception?.message}")))
+            }
+            close()
+        }
+        awaitClose()
+    }
+
+    override suspend fun updateCoins(id: String, coins: Int): Flow<Response> = callbackFlow {
+        usersRef.document(id).update("coins", coins).addOnCompleteListener {
+            if (it.isSuccessful) {
+                trySend(Response.Success("Data have been update successfully"))
+            } else {
+                trySend(Response.Failure(Exception("Unknown error: ${it.exception?.message}")))
+            }
+            close()
+        }
+        awaitClose()
+    }
+
+    override suspend fun updateLevel(id: String, level: Int): Flow<Response> = callbackFlow {
+        usersRef.document(id).update("level", level).addOnCompleteListener {
+            if (it.isSuccessful) {
+                trySend(Response.Success("Data have been update successfully"))
+            } else {
+                trySend(Response.Failure(Exception("Unknown error: ${it.exception?.message}")))
+            }
+            close()
+        }
+        awaitClose()
+    }
+
+    override suspend fun deleteUser(id: String): Flow<Response> = callbackFlow {
+        usersRef.document(id).delete().addOnCompleteListener {
+            if (it.isSuccessful) {
+                trySend(Response.Success("User deleted successfully"))
+            } else {
+                trySend(Response.Failure(Exception("Unknown error: ${it.exception?.message}")))
+            }
+            close()
+        }
+        awaitClose()
     }
 
 }

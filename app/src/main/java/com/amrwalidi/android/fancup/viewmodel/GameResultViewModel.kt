@@ -47,19 +47,28 @@ class GameResultViewModel(
     init {
         searchNextQuestion()
         viewModelScope.launch {
-            userRepo.getUser()
-                ?.let {
+            val user = userRepo.getUser()
+            val question = questionRepo.getQuestionById(questionViewModel.questionId)
+            user?.let { u ->
+                if (question?.stars == 0 && points > 0) {
+                    userRepo.updateCoins(u.id, u.coins + (points / 2))
+                }
+                userRepo.updatePoints(u.id, points + u.points)
+                if (u.points + points == (1000 * u.level.toInt())) {
+                    userRepo.updateLevel(u.id, u.level.toInt() + 1)
+                }
+
+                if (question?.stars!! < questionViewModel.stars)
                     questionRepo.updateStars(
-                        it.id,
+                        u.id,
                         questionViewModel.questionId,
                         questionViewModel.stars
                     )
-                }
-            _nextQuestion.value?.let {
-                userRepo.getUser()
-                    ?.let { user -> questionRepo.updatePlayability(user.id, it) }
-            }
 
+                _nextQuestion.value?.let { q ->
+                    questionRepo.updatePlayability(u.id, q)
+                }
+            }
         }
     }
 
