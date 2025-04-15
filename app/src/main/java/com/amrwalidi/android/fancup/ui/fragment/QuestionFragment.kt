@@ -1,6 +1,7 @@
 package com.amrwalidi.android.fancup.ui.fragment
 
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -22,12 +23,14 @@ import com.amrwalidi.android.fancup.databinding.PopupMessageBinding
 import com.amrwalidi.android.fancup.ui.activity.AppActivity
 import com.amrwalidi.android.fancup.viewmodel.QuestionViewModel
 import androidx.core.graphics.drawable.toDrawable
+import com.amrwalidi.android.fancup.LocaleManager
 import com.amrwalidi.android.fancup.databinding.GameResultPopupMessageBinding
 import com.amrwalidi.android.fancup.domain.Question
 
 class QuestionFragment : Fragment() {
 
     private var questionId: String = ""
+    private var lang: String = ""
     private lateinit var questionList: ArrayList<Question>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,9 +43,12 @@ class QuestionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        val prefs = requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        lang = prefs.getString("language", "en") ?: "en"
+
         val viewModel: QuestionViewModel by lazy {
             ViewModelProvider(
-                this, QuestionViewModel.Factory(requireActivity().application, questionId)
+                this, QuestionViewModel.Factory(questionId, lang, requireActivity().application)
             )[QuestionViewModel::class.java]
         }
 
@@ -195,7 +201,9 @@ class QuestionFragment : Fragment() {
 
         binding.message.text = message
 
-        if (message == getString(R.string.congratulation)) {
+        val localizedContext = LocaleManager.setLocale(requireContext(), lang)
+
+        if (message == localizedContext.getString(R.string.congratulation)) {
             binding.message.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),

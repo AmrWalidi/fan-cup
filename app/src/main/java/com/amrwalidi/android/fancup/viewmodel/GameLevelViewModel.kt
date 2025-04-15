@@ -56,6 +56,7 @@ class GameLevelViewModel(application: Application) : AndroidViewModel(applicatio
                 _lastPage.value = true
             } else _displayedQuestions.value = questions.subList(0, 9)
         }
+
     }
 
     fun nextQuestions() {

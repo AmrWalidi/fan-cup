@@ -66,7 +66,7 @@
     <string name="answer">answer</string>
     <string name="left_arrow" translatable="false">left arrow</string>
     <string name="right_arrow" translatable="false">right arrow</string>
-    <string name="time">Time: %1$ds</string>
+    <string name="time">TIME: %1$ds</string>
     <string name="point">POINTS: %1$dxp</string>
     <string name="menu">Menu</string>
     <string name="next">Next</string>

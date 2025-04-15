@@ -1,23 +1,39 @@
 package com.amrwalidi.android.fancup.viewmodel
 
+import android.annotation.SuppressLint
 import android.app.Application
+import android.content.Context
 import android.os.CountDownTimer
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.amrwalidi.android.fancup.LocaleManager
+import com.amrwalidi.android.fancup.R
 import com.amrwalidi.android.fancup.database.getDatabase
 import com.amrwalidi.android.fancup.domain.Question
 import com.amrwalidi.android.fancup.repository.QuestionRepository
+import com.google.mlkit.common.model.DownloadConditions
+import com.google.mlkit.nl.languageid.LanguageIdentification
+import com.google.mlkit.nl.translate.Translation
+import com.google.mlkit.nl.translate.TranslatorOptions
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class QuestionViewModel(
-    application: Application,
     val questionId: String,
+    val lang: String,
+    application: Application,
 ) :
     AndroidViewModel(application) {
+
+    val appContext: Context = getApplication<Application>().applicationContext
+
+    @SuppressLint("StaticFieldLeak")
+    val localizedContext = LocaleManager.setLocale(appContext, lang)
 
     private val database = getDatabase(application)
     private val repo = QuestionRepository(database)
@@ -70,10 +86,43 @@ class QuestionViewModel(
 
 
     init {
+        val languageIdentifier = LanguageIdentification.getClient()
         viewModelScope.launch {
-            _question.value = repo.getQuestionById(questionId)
+            val question = repo.getQuestionById(questionId)
+            question?.let {
+                try {
+                    val detectedLang = languageIdentifier.identifyLanguage(it.text).await()
+                    if (detectedLang != "und" && detectedLang != lang) {
+                        val translatedText = translateText(detectedLang ?: "en", lang, it.text)
+                        question.text = translatedText
+                    } else {
+                        Log.e("TranslationError", "No Language detected")
+                    }
+                } catch (e: Exception) {
+                    Log.e("TranslationError", "Error: ${e.message}")
+                }
+                _question.value = it
+            }
             startCountdown()
         }
+    }
+
+    private suspend fun translateText(
+        sourceLang: String,
+        targetLang: String,
+        text: String
+    ): String {
+        val options = TranslatorOptions.Builder()
+            .setSourceLanguage(sourceLang)
+            .setTargetLanguage(targetLang)
+            .build()
+
+        val translator = Translation.getClient(options)
+
+        val conditions = DownloadConditions.Builder().requireWifi().build()
+        translator.downloadModelIfNeeded(conditions).await()
+
+        return translator.translate(text).await()
     }
 
     private fun startCountdown() {
@@ -95,7 +144,7 @@ class QuestionViewModel(
 
             override fun onFinish() {
                 _timeRemaining.value = "00:00"
-                _completionMessage.value = "Time Out"
+                _completionMessage.value = localizedContext.getString(R.string.time_out)
             }
         }
 
@@ -119,12 +168,12 @@ class QuestionViewModel(
         if (_deletedHearts.value!! < _hearts.value!!) {
             _deletedHearts.value = _deletedHearts.value?.plus(1)
         } else {
-            _completionMessage.value = "Game Over"
+            _completionMessage.value = localizedContext.getString(R.string.game_over)
         }
     }
 
     fun successfulCompletion() {
-        _completionMessage.value = "Congratulation"
+        _completionMessage.value = localizedContext.getString(R.string.congratulation)
     }
 
     fun calculatePoints() {
@@ -142,7 +191,10 @@ class QuestionViewModel(
         }
         if (_stars < 1)
             _stars = 1
-        if (_completionMessage.value == "Game Over") {
+        if (_completionMessage.value == localizedContext.getString(R.string.game_over) || _completionMessage.value == localizedContext.getString(
+                R.string.time_out
+            )
+        ) {
             _points = 0
             _stars = 0
         }
@@ -175,12 +227,12 @@ class QuestionViewModel(
     }
 
 
-    class Factory(val app: Application, val id: String) :
+    class Factory(val id: String, val lang: String, val app: Application) :
         ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(QuestionViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return QuestionViewModel(app, id) as T
+                return QuestionViewModel(id, lang, app) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }

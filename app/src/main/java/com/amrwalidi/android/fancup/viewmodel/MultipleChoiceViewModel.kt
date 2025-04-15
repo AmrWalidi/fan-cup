@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.amrwalidi.android.fancup.domain.Question
 
-class MultipleChoiceViewModel(application: Application, val question: Question?) :
+class MultipleChoiceViewModel(val lang: String, val question: Question?, application: Application) :
     AndroidViewModel(application) {
 
     private val _selectedAnswer = MutableLiveData(-1)
@@ -36,11 +36,12 @@ class MultipleChoiceViewModel(application: Application, val question: Question?)
         _wrongAnswer.value = false
     }
 
-    class Factory(val app: Application, val question: Question?) : ViewModelProvider.Factory {
+    class Factory(val lang: String, val question: Question?, val app: Application) :
+        ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(MultipleChoiceViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return MultipleChoiceViewModel(app, question) as T
+                return MultipleChoiceViewModel(lang, question, app) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }
