@@ -13,7 +13,7 @@ import com.amrwalidi.android.fancup.repository.AuthenticationRepository
 import com.amrwalidi.android.fancup.repository.UserRepository
 import kotlinx.coroutines.launch
 
-class SettingsViewModel(application: Application) : AndroidViewModel(application) {
+class SettingsViewModel(lang: String, application: Application) : AndroidViewModel(application) {
     private val database = getDatabase(application)
     private val authRepo = AuthenticationRepository(database)
     private val userRepo = UserRepository(database)
@@ -26,9 +26,20 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     val popup: LiveData<Int>
         get() = _popup
 
+    private val _languageList = MutableLiveData(arrayOf(false, false, false))
+    val languageList: LiveData<Array<Boolean>>
+        get() = _languageList
+
     init {
         viewModelScope.launch {
             _user.value = userRepo.getUser()
+            _languageList.value = Array(3) { false }.apply {
+                when (lang) {
+                    "ar" -> this[0] = true
+                    "en" -> this[1] = true
+                    "tr" -> this[2] = true
+                }
+            }
         }
     }
 
@@ -49,12 +60,19 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
         _popup.value = number
     }
 
-    class Factory(val app: Application) : ViewModelProvider.Factory {
+    fun selectLanguage(language: Int) {
+        _languageList.value = Array(3) { false }.apply {
+            this[language] = true
+        }
+    }
+
+
+    class Factory(val lang: String, val app: Application) : ViewModelProvider.Factory {
 
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(SettingsViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return SettingsViewModel(app) as T
+                return SettingsViewModel(lang, app) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }

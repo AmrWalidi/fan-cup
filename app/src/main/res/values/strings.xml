@@ -1,85 +1,85 @@
 <resources>
     <string name="app_name">Fan Cup</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="fan_cup_logo">fan cup logo</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="fan_cup_logo" translatable="false">fan cup logo</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
     <string name="don_t_have_an_account">Don’t have an account ?</string>
-    <string name="login_screen_title">login screen title</string>
-    <string name="email_or_username_icon">email or username icon</string>
-    <string name="password_icon">password icon</string>
+    <string name="login_screen_title" translatable="false">login screen title</string>
+    <string name="email_or_username_icon" translatable="false">email or username icon</string>
+    <string name="password_icon" translatable="false">password icon</string>
     <string name="register">Register</string>
-    <string name="username_icon">username icon</string>
+    <string name="username_icon" translatable="false">username icon</string>
     <string name="username">Username</string>
-    <string name="email_icon">email icon</string>
+    <string name="email_icon" translatable="false">email icon</string>
     <string name="email">Email</string>
     <string name="repeat_password">Repeat Password</string>
-    <string name="plus_sign">+</string>
-    <string name="rank_icon">rank icon</string>
-    <string name="store_icon">store icon</string>
-    <string name="online_icon">online icon</string>
-    <string name="home_icon">home icon</string>
-    <string name="champion_icon">champion icon</string>
-    <string name="settings_icon">settings icon</string>
-    <string name="challenge_panel">challenge panel</string>
-    <string name="home_game_category_image">home game category image</string>
+    <string name="plus_sign" translatable="false">+</string>
+    <string name="rank_icon" translatable="false">rank icon</string>
+    <string name="store_icon" translatable="false">store icon</string>
+    <string name="online_icon" translatable="false">online icon</string>
+    <string name="home_icon" translatable="false">home icon</string>
+    <string name="champion_icon" translatable="false">champion icon</string>
+    <string name="settings_icon" translatable="false">settings icon</string>
+    <string name="challenge_panel" translatable="false">challenge panel</string>
+    <string name="home_game_category_image" translatable="false">home game category image</string>
     <string name="start">Start</string>
-    <string name="_1v1">1 v 1</string>
+    <string name="_1v1" translatable="false">1 v 1</string>
     <string name="with_friend">with Friend</string>
     <string name="ranking">Ranking</string>
-    <string name="rank_points">%1$d pts</string>
+    <string name="rank_points" translatable="false">%1$d pts</string>
     <string name="searching">searching</string>
     <string name="vs">vs</string>
     <string name="play">Play</string>
-    <string name="select_challenge">select challenge</string>
-    <string name="edit_button">edit button</string>
+    <string name="select_challenge" translatable="false">select challenge</string>
+    <string name="edit_button" translatable="false">edit button</string>
     <string name="change_language">Change language</string>
-    <string name="language_icon">language icon</string>
+    <string name="language_icon" translatable="false">language icon</string>
     <string name="send_friend_request">Send friend request</string>
-    <string name="send_friend_request_icon">send friend request icon</string>
-    <string name="about_icon">about icon</string>
+    <string name="send_friend_request_icon" translatable="false">send friend request icon</string>
+    <string name="about_icon" translatable="false">about icon</string>
     <string name="about">About</string>
-    <string name="logout_icon">logout icon</string>
+    <string name="logout_icon" translatable="false">logout icon</string>
     <string name="logout">Logout</string>
     <string name="delete_account">Delete account</string>
-    <string name="delete_icon">delete icon</string>
+    <string name="delete_icon" translatable="false">delete icon</string>
     <string name="arabic">Arabic</string>
-    <string name="arabic_language_icon">arabic language icon</string>
+    <string name="arabic_language_icon" translatable="false">arabic language icon</string>
     <string name="english">English</string>
-    <string name="english_language_icon">english language icon</string>
+    <string name="english_language_icon" translatable="false">english language icon</string>
     <string name="turkish">Turkish</string>
-    <string name="turkish_language_icon">turkish language icon</string>
+    <string name="turkish_language_icon" translatable="false">turkish language icon</string>
     <string name="search">Search</string>
-    <string name="search_icon">search icon</string>
+    <string name="search_icon" translatable="false">search icon</string>
     <string name="request">request</string>
     <string name="invite">invite</string>
-    <string name="question_spinner">question spinner</string>
-    <string name="question_picker">question picker</string>
-    <string name="level_container">level_container</string>
-    <string name="more_heart">more heart</string>
-    <string name="give_hint">give hint</string>
-    <string name="more_time">more time</string>
-    <string name="heart">heart</string>
-    <string name="broken_heart">broken heart</string>
-    <string name="return_to_main_menu_icon">return to main menu icon</string>
+    <string name="question_spinner" translatable="false">question spinner</string>
+    <string name="question_picker" translatable="false">question picker</string>
+    <string name="level_container" translatable="false">level container</string>
+    <string name="more_heart" translatable="false">more heart</string>
+    <string name="give_hint" translatable="false">give hint</string>
+    <string name="more_time" translatable="false">more time</string>
+    <string name="heart" translatable="false">heart</string>
+    <string name="broken_heart" translatable="false">broken heart</string>
+    <string name="return_to_main_menu_icon" translatable="false">return to main menu icon</string>
     <string name="submit">Submit</string>
     <string name="answer">answer</string>
-    <string name="left_arrow">left arrow</string>
-    <string name="right_arrow">right arrow</string>
+    <string name="left_arrow" translatable="false">left arrow</string>
+    <string name="right_arrow" translatable="false">right arrow</string>
     <string name="time">Time: %1$ds</string>
-    <string name="point">POINT: %1$dxp</string>
+    <string name="point">POINTS: %1$dxp</string>
     <string name="menu">Menu</string>
     <string name="next">Next</string>
     <string name="cancel">Cancel</string>
     <string name="app_about">Fan Cup is an exciting and engaging trivia game designed for football enthusiasts of all ages. Dive into a world of football knowledge as you answer thought-provoking questions covering the history, players, teams, tournaments, and iconic moments of the beautiful game. Whether you\'re testing your skills solo or competing with friends online, Fan Cup offers a thrilling mix of challenges across multiple levels. With both offline and online modes, you can enjoy the game anywhere, anytime. Climb the ranks, unlock achievements, and prove that you\'re the ultimate football fan. Are you ready to take the Fan Cup challenge and claim your spot at the top?</string>
-    <string name="result_first_star">result first star</string>
-    <string name="result_second_star">result second star</string>
-    <string name="result_third_star">result third star</string>
-    <string name="splash_screen_background_image">splash screen background image</string>
+    <string name="result_first_star" translatable="false">result first star</string>
+    <string name="result_second_star" translatable="false">result second star</string>
+    <string name="result_third_star" translatable="false">result third star</string>
+    <string name="splash_screen_background_image" translatable="false">splash screen background image</string>
     <string name="forget_password">Forget Password ?</string>
     <string name="reset_password">Reset Password</string>
     <string name="provide_your_account_email_to_reset_your_password">Provide Your Account Email to Reset Your Password</string>
-    <string name="popup_close_icon">popup close icon</string>
+    <string name="popup_close_icon" translatable="false">popup close icon</string>
     <string name="exit_game">Exit Game</string>
     <string name="Are_you_sure_you_want_to_exit_the_game">Are you sure you want to exit the game ?</string>
     <string name="Are_you_sure_you_want_to_logout">Are you sure you want to logout ?</string>
@@ -90,9 +90,14 @@
     <string name="game_over">Game Over</string>
     <string name="congratulation">Congratulation</string>
     <string name="time_out">Time Out</string>
-    <string name="first_level_star">first level star</string>
-    <string name="second_level_star">second level star</string>
-    <string name="third_level_star">third level star</string>
+    <string name="first_level_star" translatable="false">first level star</string>
+    <string name="second_level_star" translatable="false">second level star</string>
+    <string name="third_level_star" translatable="false">third level star</string>
     <string name="language">Language</string>
     <string name="confirm">Confirm</string>
+    <string name="home">Home</string>
+    <string name="challenges">Challenges</string>
+    <string name="settings">Settings</string>
+    <string name="champions">Champions</string>
+    <string name="store">Store</string>
 </resources>

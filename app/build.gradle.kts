@@ -91,4 +91,7 @@ dependencies {
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.storage)
+
+    //Language processing
+    implementation(libs.translate)
 }

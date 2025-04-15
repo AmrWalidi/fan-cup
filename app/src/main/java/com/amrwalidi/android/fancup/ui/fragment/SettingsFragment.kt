@@ -1,6 +1,8 @@
 package com.amrwalidi.android.fancup.ui.fragment
 
 import android.app.Dialog
+import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,37 +10,50 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import androidx.appcompat.widget.AppCompatButton
 import androidx.core.graphics.drawable.toDrawable
+import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.amrwalidi.android.fancup.LocaleManager
 import com.amrwalidi.android.fancup.R
 import com.amrwalidi.android.fancup.databinding.FragmentSettingsBinding
 import com.amrwalidi.android.fancup.databinding.LanguagePopupBinding
 import com.amrwalidi.android.fancup.databinding.PopupMessageBinding
 import com.amrwalidi.android.fancup.viewmodel.SettingsViewModel
+import androidx.core.content.edit
 
 class SettingsFragment : Fragment() {
 
-    private val viewModel: SettingsViewModel by lazy {
-        ViewModelProvider(
-            this,
-            SettingsViewModel.Factory(requireActivity().application)
-        )[SettingsViewModel::class.java]
-    }
+
+    private lateinit var viewModel: SettingsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        val prefs = requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        val lang = prefs.getString("language", "en") ?: "en"
+
+        viewModel = ViewModelProvider(
+            this,
+            SettingsViewModel.Factory(lang, requireActivity().application)
+        )[SettingsViewModel::class.java]
+
         val binding: FragmentSettingsBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_settings, container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-
         viewModel.popup.observe(viewLifecycleOwner) {
             val popUpPanel = when (it) {
-                1 -> languagePanel { }
+                1 -> languagePanel {
+                    switchLanguage(
+                        requireContext(),
+                        viewModel.languageList.value?.indexOf(true) ?: 0
+                    )
+                }
+
                 2 -> popUp(
                     getString(R.string.logout),
                     getString(R.string.Are_you_sure_you_want_to_logout),
@@ -57,12 +72,26 @@ class SettingsFragment : Fragment() {
 
                 else -> return@observe
             }
-
             popUpPanel.show()
         }
-
-
         return binding.root
+    }
+
+    private fun switchLanguage(context: Context, languageIndex: Int) {
+        val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        val languageCode = when (languageIndex) {
+            0 -> "ar"
+            1 -> "en"
+            2 -> "tr"
+            else -> return
+        }
+        prefs.edit { putString("language", languageCode) }
+        activity?.let {
+            LocaleManager.setLocale(it, languageCode)
+            val intent = it.intent
+            it.finish()
+            it.startActivity(intent)
+        }
     }
 
     private fun languagePanel(action: () -> Unit): Dialog {
@@ -94,6 +123,23 @@ class SettingsFragment : Fragment() {
         }
 
         binding.viewModel = viewModel
+
+        viewModel.languageList.observe(viewLifecycleOwner) { list ->
+            val selectedLanguageIdx = list.indexOf(true)
+            var index = 0
+            binding.languageList.children.iterator().forEach { lang ->
+                if (lang is AppCompatButton) {
+                    if (index == selectedLanguageIdx) {
+                        lang.setBackgroundResource(R.drawable.selected_language_background)
+                        lang.backgroundTintList = null
+                    } else {
+                        lang.background = null
+                        lang.backgroundTintList = ColorStateList.valueOf("545454".toInt())
+                    }
+                }
+                index++
+            }
+        }
 
         return dialog
 

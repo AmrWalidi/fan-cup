@@ -39,10 +39,10 @@ fun ConstraintLayout.setStatus(selected: Boolean) {
 @BindingAdapter("setStatus")
 fun ImageView.setStatus(selected: Boolean) {
     if (selected) {
-        this.drawable?.setTint(ContextCompat.getColor(context, R.color.white))
+        drawable?.setTint(ContextCompat.getColor(context, R.color.white))
 
     } else {
-        this.drawable?.setTintList(null)
+        drawable?.setTintList(null)
     }
 }
 
@@ -56,7 +56,7 @@ fun dpToPx(dp: Int, context: Context): Int {
 
 @BindingAdapter("setVisible")
 fun ImageView.setVisible(visible: Boolean) {
-    this.visibility = if (visible) View.INVISIBLE else View.VISIBLE
+    visibility = if (visible) View.INVISIBLE else View.VISIBLE
 }
 
 

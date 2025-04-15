@@ -28,10 +28,6 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     val page: LiveData<Int>
         get() = _page
 
-    private val _pageName = MutableLiveData("Home")
-    val pageName: LiveData<String>
-        get() = _pageName
-
     private val _selectedPage = MutableLiveData(arrayOf(false, false, true, false, false))
     val selectedPage: LiveData<Array<Boolean>>
         get() = _selectedPage
@@ -72,14 +68,6 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         if (newPage <= 5) {
             _selectedPage.value = Array(5) { false }.apply {
                 this[newPage - 1] = true
-            }
-            _pageName.value = when (newPage) {
-                1 -> "Store"
-                2 -> "Champions"
-                3 -> "Home"
-                4 -> "Challenges"
-                5 -> "Settings"
-                else -> return
             }
         }
 

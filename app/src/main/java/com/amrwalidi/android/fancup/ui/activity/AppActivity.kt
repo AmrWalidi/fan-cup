@@ -1,5 +1,6 @@
 package com.amrwalidi.android.fancup.ui.activity
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
@@ -10,6 +11,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.amrwalidi.android.fancup.LocaleManager
 import com.amrwalidi.android.fancup.ui.fragment.GameLevelFragment
 import com.amrwalidi.android.fancup.ui.fragment.ChallengesFragment
 import com.amrwalidi.android.fancup.ui.fragment.HomeFragment
@@ -56,11 +58,30 @@ class AppActivity : AppCompatActivity() {
 
         viewModel.page.observe(this) { value ->
             val destination: Fragment = when (value) {
-                2 -> ChampionFragment()
-                3 -> HomeFragment()
-                4 -> ChallengesFragment()
-                5 -> SettingsFragment()
-                6 -> GameLevelFragment()
+                2 -> {
+                    binding.pageTitle.text = getString(R.string.champions)
+                    ChampionFragment()
+                }
+
+                3 -> {
+                    binding.pageTitle.text = getString(R.string.home)
+                    HomeFragment()
+                }
+
+                4 -> {
+                    binding.pageTitle.text = getString(R.string.challenges)
+                    ChallengesFragment()
+                }
+
+                5 -> {
+                    binding.pageTitle.text = getString(R.string.settings)
+                    SettingsFragment()
+                }
+
+                6 -> {
+                    GameLevelFragment()
+                }
+
                 else -> return@observe
             }
 
@@ -94,4 +115,12 @@ class AppActivity : AppCompatActivity() {
         }
     }
 
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(LocaleManager.setLocale(newBase, getSavedLanguage(newBase)))
+    }
+
+    private fun getSavedLanguage(context: Context): String {
+        val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        return prefs.getString("language", "en") ?: "en"
+    }
 }

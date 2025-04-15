@@ -64,8 +64,7 @@
             app:layout_constraintEnd_toStartOf="@+id/bell_notification"
             app:layout_constraintStart_toEndOf="@+id/user_notification"
             app:layout_constraintTop_toTopOf="@+id/bell_notification"
-            android:text="@{viewmodel.pageName}"
-            tools:text="Home"/>
+            tools:text="Home" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/bell_notification"
@@ -135,13 +134,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_bold"
+                        android:text="@{viewmodel.user.level}"
                         android:textColor="@color/white"
                         android:textSize="11sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:text="@{viewmodel.user.level}"
                         tools:text="10" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -164,7 +163,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/level_icon"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="6,464"/>
+                    tools:text="6,464" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -296,8 +295,7 @@
             android:background="#1A1A1A"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintStart_toStartOf="parent"></androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:id="@+id/footer"

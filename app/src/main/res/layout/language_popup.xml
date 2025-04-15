@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.amrwalidi.android.fancup.viewmodel.SettingsViewModel" />
@@ -40,7 +41,7 @@
 
 
         <LinearLayout
-            android:id="@+id/linearLayout7"
+            android:id="@+id/language_list"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
@@ -60,6 +61,7 @@
                 android:layout_marginBottom="5dp"
                 android:backgroundTint="#545454"
                 android:fontFamily="@font/inter_bold"
+                android:onClick="@{()-> viewModel.selectLanguage(0)}"
                 android:paddingLeft="40dp"
                 android:paddingTop="0dp"
                 android:paddingRight="40dp"
@@ -77,6 +79,7 @@
                 android:layout_marginBottom="5dp"
                 android:backgroundTint="#545454"
                 android:fontFamily="@font/inter_bold"
+                android:onClick="@{()-> viewModel.selectLanguage(1)}"
                 android:paddingLeft="40dp"
                 android:paddingTop="0dp"
                 android:paddingRight="40dp"
@@ -94,6 +97,7 @@
                 android:layout_marginBottom="5dp"
                 android:backgroundTint="#545454"
                 android:fontFamily="@font/inter_bold"
+                android:onClick="@{()-> viewModel.selectLanguage(2)}"
                 android:paddingLeft="40dp"
                 android:paddingTop="0dp"
                 android:paddingRight="40dp"
@@ -123,8 +127,8 @@
             app:cornerRadius="2dp"
             app:iconPadding="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/linearLayout7"
-            app:layout_constraintStart_toStartOf="@+id/linearLayout7" />
+            app:layout_constraintEnd_toEndOf="@+id/language_list"
+            app:layout_constraintStart_toStartOf="@+id/language_list" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -9,7 +9,7 @@
         android:icon="@mipmap/fan_cup_logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/fan_cup_logo_round"
-        android:supportsRtl="true"
+        android:supportsRtl="false"
         android:theme="@style/Theme.FanCup"
         tools:targetApi="31">
         <activity

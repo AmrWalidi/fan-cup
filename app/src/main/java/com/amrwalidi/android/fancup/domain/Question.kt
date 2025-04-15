@@ -6,9 +6,9 @@ import android.os.Parcelable
 data class Question(
     val id: String,
     val listId: String = "",
-    val text: String,
+    var text: String,
     val answers: List<String>,
-    val options: List<String>,
+    var options: List<String>,
     val type: Int,
     val difficulty: Int,
     val stars: Int,
