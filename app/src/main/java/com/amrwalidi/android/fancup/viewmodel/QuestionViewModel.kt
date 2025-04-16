@@ -30,7 +30,7 @@ class QuestionViewModel(
 ) :
     AndroidViewModel(application) {
 
-    val appContext: Context = getApplication<Application>().applicationContext
+    private val appContext: Context = getApplication<Application>().applicationContext
 
     @SuppressLint("StaticFieldLeak")
     val localizedContext = LocaleManager.setLocale(appContext, lang)

@@ -22,14 +22,14 @@ class GameActivity : AppCompatActivity() {
         }
 
         val questionId = intent?.getStringExtra("QUESTION_ID")
-        val questionList = intent.getParcelableArrayListExtra<Question>("QUESTION_LIST")
+        val questionList = intent?.getParcelableArrayListExtra<Question>("QUESTION_LIST")
 
-        val questionFragment = QuestionFragment()
-
-        val bundle = Bundle()
-        questionId?.let { bundle.putString("QUESTION_ID", it) }
-        questionList.let { bundle.putParcelableArrayList("QUESTION_LIST", it) }
-        questionFragment.arguments = bundle
+        val questionFragment = QuestionFragment().apply {
+            arguments = Bundle().apply {
+                putString("QUESTION_ID", questionId)
+                putParcelableArrayList("QUESTION_LIST", questionList)
+            }
+        }
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.game_container, questionFragment)
