@@ -38,14 +38,15 @@ class AuthenticationRepository(val database: FanCupDatabase) {
         database.clearAllData()
     }
 
-    suspend fun deleteAccount(id: String) {
-        authService.deleteAccount()
-        userService.deleteUser(id).collect { res1 ->
-            if (res1 is Response.Success)
-                questionService.deleteUserQuestions(id).collect { res2 ->
-                    if (res2 is Response.Success)
+    suspend fun deleteAccount(id: String, password: String) {
+        authService.deleteAccount(password)
+        userService.deleteUser(id).collect { res2 ->
+            if (res2 is Response.Success)
+                questionService.deleteUserQuestions(id).collect { res3 ->
+                    if (res3 is Response.Success)
                         database.clearAllData()
                 }
         }
     }
+
 }

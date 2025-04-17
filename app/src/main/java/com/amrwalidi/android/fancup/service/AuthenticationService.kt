@@ -8,8 +8,8 @@ interface AuthenticationService {
     val currentUserId: String
     fun hasUser(): Boolean
     suspend fun signIn(email: String, password: String): Flow<Response>
-    suspend fun register(email: String, password: String) : Flow<Response>
+    suspend fun register(email: String, password: String): Flow<Response>
     suspend fun signOut()
-    suspend fun deleteAccount()
+    suspend fun deleteAccount(password: String)
     suspend fun resetPassword(email: String)
 }

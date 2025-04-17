@@ -47,8 +47,8 @@ class QuestionAdapter(val viewModel: GameLevelViewModel) :
             }
 
             var index = 0
+            val stars = item.stars
             binding.starsList.children.iterator().forEach { star ->
-                val stars = item.stars
                 if (star is ImageView) {
                     if (index < stars) {
                         star.setImageResource(R.drawable.filled_level_star)

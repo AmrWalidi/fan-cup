@@ -1,8 +1,10 @@
 package com.amrwalidi.android.fancup.service.impl
 
+import android.util.Log
 import com.amrwalidi.android.fancup.service.AuthenticationService
 import com.amrwalidi.android.fancup.service.Response
 import com.google.firebase.Firebase
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -77,8 +79,25 @@ class AuthenticationServiceImpl @Inject constructor() : AuthenticationService {
         Firebase.auth.signOut()
     }
 
-    override suspend fun deleteAccount() {
-        Firebase.auth.currentUser!!.delete().await()
+    override suspend fun deleteAccount(password: String) {
+        val user = FirebaseAuth.getInstance().currentUser
+        val email = user?.email
+
+        if (user != null && email != null) {
+            val credential = EmailAuthProvider.getCredential(email, password)
+
+            try {
+                user.reauthenticate(credential).await()
+
+                user.delete().await()
+                Log.d("FirebaseAuth", "User account deleted successfully")
+            } catch (e: Exception) {
+                Log.e("FirebaseAuth", "Error during account deletion", e)
+                throw e
+            }
+        } else {
+            Log.e("FirebaseAuth", "User is null or email is missing")
+        }
     }
 
     override suspend fun resetPassword(email: String) {

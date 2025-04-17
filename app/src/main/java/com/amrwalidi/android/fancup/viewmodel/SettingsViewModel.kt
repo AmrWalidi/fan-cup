@@ -49,9 +49,11 @@ class SettingsViewModel(lang: String, application: Application) : AndroidViewMod
         }
     }
 
-    fun deleteAccount() {
+    fun deleteAccount(password: String) {
         viewModelScope.launch {
-            user.value?.let { authRepo.deleteAccount(it.id) }
+            user.value?.let {
+                authRepo.deleteAccount(it.id, password)
+            }
             database.clearAllData()
         }
     }

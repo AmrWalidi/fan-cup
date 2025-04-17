@@ -55,6 +55,7 @@ class SettingsFragment : Fragment() {
                 }
 
                 2 -> popUp(
+                    it,
                     getString(R.string.logout),
                     getString(R.string.Are_you_sure_you_want_to_logout),
                     getString(R.string.logout)
@@ -63,11 +64,14 @@ class SettingsFragment : Fragment() {
                 }
 
                 3 -> popUp(
+                    it,
                     getString(R.string.This_account_will_be_deleted),
                     getString(R.string.All_your_account_data_will_be_deleted_permanently),
                     getString(R.string.delete)
-                ) {
-                    viewModel.deleteAccount()
+                ) { password ->
+                    password?.let { p ->
+                        viewModel.deleteAccount(p)
+                    }
                 }
 
                 else -> return@observe
@@ -147,10 +151,11 @@ class SettingsFragment : Fragment() {
 
 
     private fun popUp(
+        idx: Int,
         title: String,
         message: String,
         buttonText: String,
-        action: () -> Unit
+        action: (String?) -> Unit
     ): Dialog {
         val dialog = Dialog(requireContext())
 
@@ -177,7 +182,12 @@ class SettingsFragment : Fragment() {
         binding.messageTitle.text = title
         binding.detailedMessage.text = message
         binding.messageButton.text = buttonText
-        binding.messageButton.setOnClickListener { action() }
+        if (idx == 3) {
+            binding.passwordInput.visibility = View.VISIBLE
+            binding.messageButton.setOnClickListener { action(binding.passwordInput.text.toString()) }
+        } else {
+            binding.messageButton.setOnClickListener { action(null) }
+        }
         binding.closeIcon.setOnClickListener {
             dialog.dismiss()
         }
