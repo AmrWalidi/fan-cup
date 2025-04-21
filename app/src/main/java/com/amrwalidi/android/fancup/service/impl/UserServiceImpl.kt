@@ -1,19 +1,25 @@
 package com.amrwalidi.android.fancup.service.impl
 
+import android.net.Uri
 import com.amrwalidi.android.fancup.service.Response
 import com.amrwalidi.android.fancup.service.UserService
 import com.amrwalidi.android.fancup.service.model.UserDoc
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withContext
+import java.io.File
 import javax.inject.Inject
 
 class UserServiceImpl @Inject constructor() : UserService {
 
 
     private val usersRef = FirebaseFirestore.getInstance().collection("Users")
+
     override suspend fun createUser(id: String, username: String, email: String) {
         val user = UserDoc()
 
@@ -138,5 +144,46 @@ class UserServiceImpl @Inject constructor() : UserService {
         }
         awaitClose()
     }
+
+    override suspend fun getUserProfileImage(id: String): Flow<Response> = callbackFlow {
+        val ref = FirebaseStorage.getInstance().reference.child("user profile/$id")
+        var ext = ""
+        ref.metadata.addOnSuccessListener { metadata ->
+            val contentType = metadata.contentType
+            ext = when (contentType) {
+                "image/jpeg" -> "jpg"
+                "image/png" -> "png"
+                "image/webp" -> "webp"
+                else -> "jpg"
+            }
+        }
+
+        val file = withContext(Dispatchers.IO) {
+            File.createTempFile(id, ".$ext")
+        }
+
+        ref.getFile(file).addOnSuccessListener {
+            trySend(Response.Success(file))
+            close()
+        }.addOnFailureListener {
+            trySend(Response.Failure(Exception("Download failed")))
+            close()
+        }
+        awaitClose()
+    }
+
+    override suspend fun uploadUserProfileImage(id: String, image: Uri): Flow<Response> =
+        callbackFlow {
+            val storageReference = FirebaseStorage.getInstance().getReference("user profile/$id")
+
+            storageReference.putFile(image).addOnSuccessListener {
+                trySend(Response.Success("Image Successfully uploaded"))
+                close()
+            }.addOnFailureListener {
+                trySend(Response.Failure(Exception("Image Successfully uploaded")))
+                close()
+            }
+            awaitClose()
+        }
 
 }

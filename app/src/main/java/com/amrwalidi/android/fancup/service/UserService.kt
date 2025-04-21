@@ -1,5 +1,6 @@
 package com.amrwalidi.android.fancup.service
 
+import android.net.Uri
 import com.amrwalidi.android.fancup.service.model.UserDoc
 import kotlinx.coroutines.flow.Flow
 
@@ -12,4 +13,6 @@ interface UserService {
     suspend fun updateCoins(id: String, coins: Int): Flow<Response>
     suspend fun updateLevel(id: String, level: Int): Flow<Response>
     suspend fun deleteUser(id: String): Flow<Response>
+    suspend fun getUserProfileImage(id: String): Flow<Response>
+    suspend fun uploadUserProfileImage(id: String, image: Uri): Flow<Response>
 }

@@ -2,14 +2,17 @@ package com.amrwalidi.android.fancup.ui.fragment
 
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.children
@@ -22,11 +25,14 @@ import com.amrwalidi.android.fancup.databinding.LanguagePopupBinding
 import com.amrwalidi.android.fancup.databinding.PopupMessageBinding
 import com.amrwalidi.android.fancup.viewmodel.SettingsViewModel
 import androidx.core.content.edit
+import com.amrwalidi.android.fancup.databinding.ChangeProfileImagePopupBinding
 
 class SettingsFragment : Fragment() {
 
 
     private lateinit var viewModel: SettingsViewModel
+    private lateinit var changeProfileBinding: ChangeProfileImagePopupBinding
+    private var image: Uri? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,14 +51,13 @@ class SettingsFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
+        var popUpPanel: Dialog? = null
+
         viewModel.popup.observe(viewLifecycleOwner) {
-            val popUpPanel = when (it) {
-                1 -> languagePanel {
-                    switchLanguage(
-                        requireContext(),
-                        viewModel.languageList.value?.indexOf(true) ?: 0
-                    )
-                }
+            popUpPanel = when (it) {
+                0 -> profilePopUp()
+
+                1 -> languagePanel()
 
                 2 -> popUp(
                     it,
@@ -76,9 +81,60 @@ class SettingsFragment : Fragment() {
 
                 else -> return@observe
             }
-            popUpPanel.show()
+            popUpPanel?.show()
         }
+
+        viewModel.user.observe(viewLifecycleOwner) {
+            popUpPanel?.dismiss()
+        }
+
         return binding.root
+    }
+
+    private fun profilePopUp(): Dialog {
+        val dialog = Dialog(requireContext())
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        changeProfileBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(requireContext()),
+            R.layout.change_profile_image_popup,
+            null,
+            false
+        )
+
+        dialog.setContentView(changeProfileBinding.root)
+
+        dialog.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
+
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
+        dialog.setCancelable(true)
+
+        changeProfileBinding.selectImage.setOnClickListener {
+            val intent = Intent()
+            intent.setType("image/*")
+            intent.setAction(Intent.ACTION_GET_CONTENT)
+            startActivityForResult(intent, 100)
+        }
+
+        changeProfileBinding.upload.setOnClickListener {
+            if (image == null) {
+                Toast.makeText(requireContext(), "Upload Image!!", Toast.LENGTH_SHORT).show()
+            } else
+                viewModel.uploadImage(requireContext(), image!!)
+
+        }
+
+        changeProfileBinding.closeIcon.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        return dialog
+
     }
 
     private fun switchLanguage(context: Context, languageIndex: Int) {
@@ -98,7 +154,7 @@ class SettingsFragment : Fragment() {
         }
     }
 
-    private fun languagePanel(action: () -> Unit): Dialog {
+    private fun languagePanel(): Dialog {
         val dialog = Dialog(requireContext())
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -121,7 +177,7 @@ class SettingsFragment : Fragment() {
 
         dialog.setCancelable(true)
 
-        binding.confirmButton.setOnClickListener { action() }
+        binding.confirmButton.setOnClickListener { switchLanguage(requireContext(), viewModel.languageList.value?.indexOf(true) ?: 0) }
         binding.closeIcon.setOnClickListener {
             dialog.dismiss()
         }
@@ -194,5 +250,15 @@ class SettingsFragment : Fragment() {
 
         return dialog
 
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 100 && data != null && data.data != null) {
+            image = data.data
+            changeProfileBinding.profileImage.setImageURI(image)
+        }
     }
 }

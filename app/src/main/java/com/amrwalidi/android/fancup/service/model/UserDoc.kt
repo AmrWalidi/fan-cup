@@ -1,5 +1,4 @@
 package com.amrwalidi.android.fancup.service.model
-
 import com.amrwalidi.android.fancup.database.entity.DatabaseUser
 
 data class UserDoc(
@@ -12,7 +11,7 @@ data class UserDoc(
     val rank: Int = 1
 )
 
-fun UserDoc?.asDatabaseUser(): DatabaseUser? {
+fun UserDoc?.asDatabaseUser(profileImage: ByteArray?): DatabaseUser? {
     return this?.run {
         DatabaseUser(
             id = id,
@@ -21,7 +20,8 @@ fun UserDoc?.asDatabaseUser(): DatabaseUser? {
             points = points,
             coins = coins,
             level = level,
-            rank = rank
+            rank = rank,
+            profileImage = profileImage
         )
     }
 }

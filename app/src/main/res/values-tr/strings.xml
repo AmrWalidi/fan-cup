@@ -53,4 +53,6 @@
     <string name="settings">Ayarlar</string>
     <string name="champions">Şampiyonlar</string>
     <string name="store">Mağaza</string>
+    <string name="upload_image">Resim Yükleyiniz</string>
+    <string name="upload">Yükle</string>
 </resources>

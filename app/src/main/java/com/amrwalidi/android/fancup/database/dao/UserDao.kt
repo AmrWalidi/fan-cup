@@ -27,6 +27,9 @@ interface UserDao {
     @Query("UPDATE users SET level = level + 1 WHERE id = :id")
     suspend fun updateLevel(id: String)
 
+    @Query("UPDATE users SET profileImage = :image WHERE id = :id")
+    suspend fun updateProfile(id: String, image: ByteArray)
+
     @Query("DELETE FROM users ")
     suspend fun delete()
 }

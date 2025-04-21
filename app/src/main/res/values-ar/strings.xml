@@ -53,4 +53,6 @@
     <string name="settings">الإعدادات</string>
     <string name="champions">الأبطال</string>
     <string name="store">متجر</string>
+    <string name="upload_image">حمل صور</string>
+    <string name="upload">حمل</string>
 </resources>

@@ -3,10 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data >
+    <data>
+
         <variable
             name="viewModel"
             type="com.amrwalidi.android.fancup.viewmodel.SettingsViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,22 +34,25 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/setting_profile_image"
+                    android:id="@+id/profile_image"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_marginEnd="13dp"
+                    android:scaleType="centerCrop"
+                    app:imageByteArray="@{viewModel.user.profileImage}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:shapeAppearanceOverlay="@style/ProfileImage"
-                    tools:src="@tools:sample/avatars" />
+                    android:src="@drawable/default_user" />
 
                 <ImageView
                     android:id="@+id/edit_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/edit_button"
+                    android:onClick="@{()-> viewModel.showPopUp(0)}"
                     android:src="@drawable/edit_pencil"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
@@ -67,9 +72,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_bold"
+                    android:text="@{viewModel.user.username}"
                     android:textColor="@color/white"
                     android:textSize="24sp"
-                    android:text="@{viewModel.user.username}"
                     tools:text="username" />
 
                 <TextView
@@ -77,9 +82,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pontano_sans_bold"
+                    android:text="@{viewModel.user.email}"
                     android:textColor="#B9B9B9"
                     android:textSize="20sp"
-                    android:text="@{viewModel.user.email}"
                     tools:text="username@gmail.com" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -102,12 +107,12 @@
                     android:id="@+id/change_language"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="@{()-> viewModel.showPopUp(1)}"
                     android:orientation="horizontal"
                     android:paddingVertical="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:onClick="@{()-> viewModel.showPopUp(1)}">
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
                         android:id="@+id/imageView6"
@@ -213,12 +218,12 @@
                     android:id="@+id/logout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="@{()-> viewModel.showPopUp(2)}"
                     android:orientation="horizontal"
                     android:paddingVertical="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:onClick="@{()-> viewModel.showPopUp(2)}">
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
                         android:id="@+id/imageView4"
@@ -252,12 +257,12 @@
                     android:id="@+id/delete_account"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="@{()-> viewModel.showPopUp(3)}"
                     android:orientation="horizontal"
                     android:paddingVertical="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:onClick="@{()-> viewModel.showPopUp(3)}">
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
                         android:id="@+id/imageView5"

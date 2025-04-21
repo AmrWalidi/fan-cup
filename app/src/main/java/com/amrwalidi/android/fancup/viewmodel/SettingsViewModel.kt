@@ -1,6 +1,8 @@
 package com.amrwalidi.android.fancup.viewmodel
 
 import android.app.Application
+import android.content.Context
+import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -65,6 +67,13 @@ class SettingsViewModel(lang: String, application: Application) : AndroidViewMod
     fun selectLanguage(language: Int) {
         _languageList.value = Array(3) { false }.apply {
             this[language] = true
+        }
+    }
+
+    fun uploadImage(context: Context, image: Uri) {
+        viewModelScope.launch {
+            _user.value?.let { userRepo.uploadImage(context, it.id, image) }
+            _user.value = userRepo.getUser()
         }
     }
 

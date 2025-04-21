@@ -1,6 +1,9 @@
 package com.amrwalidi.android.fancup.repository
 
+import android.content.Context
+import android.net.Uri
 import com.amrwalidi.android.fancup.database.FanCupDatabase
+import com.amrwalidi.android.fancup.database.entity.DatabaseUser
 import com.amrwalidi.android.fancup.database.entity.asDomainUser
 import com.amrwalidi.android.fancup.domain.User
 import com.amrwalidi.android.fancup.service.Response
@@ -24,14 +27,26 @@ class UserRepository(private val database: FanCupDatabase) {
     }
 
     suspend fun setUser(id: String) {
-        val user = userService.getUserById(id).asDatabaseUser()
-        user?.let { database.userDao.insert(it) }
+        userService.getUserProfileImage(id).collect { res ->
+            var user: DatabaseUser? = null
+            if (res is Response.Success && res.data is ByteArray)
+                user = userService.getUserById(id).asDatabaseUser(res.data)
+            if (res is Response.Failure)
+                user = userService.getUserById(id).asDatabaseUser(null)
+            user?.let { database.userDao.insert(it) }
+        }
     }
 
     suspend fun createUser(id: String, username: String, email: String) {
         userService.createUser(id, username, email)
-        val user = userService.getUserById(id).asDatabaseUser()
-        user?.let { database.userDao.insert(it) }
+        userService.getUserProfileImage(id).collect { res ->
+            var user: DatabaseUser? = null
+            if (res is Response.Success && res.data is ByteArray)
+                user = userService.getUserById(id).asDatabaseUser(res.data)
+            if (res is Response.Failure)
+                user = userService.getUserById(id).asDatabaseUser(null)
+            user?.let { database.userDao.insert(it) }
+        }
     }
 
     suspend fun delete() {
@@ -56,6 +71,24 @@ class UserRepository(private val database: FanCupDatabase) {
         userService.updateLevel(id, level).collect { res ->
             if (res is Response.Success)
                 database.userDao.updateLevel(id)
+        }
+    }
+
+    suspend fun uploadImage(context: Context, id: String, image: Uri) {
+        userService.uploadUserProfileImage(id, image).collect { res ->
+            if (res is Response.Success) {
+                val imageArray = try {
+                    context.contentResolver.openInputStream(image)?.use { inputStream ->
+                        inputStream.readBytes()
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    null
+                }
+                if (imageArray != null) {
+                    database.userDao.updateProfile(id, imageArray)
+                }
+            }
         }
     }
 
