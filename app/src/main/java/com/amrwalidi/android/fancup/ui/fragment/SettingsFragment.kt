@@ -26,6 +26,7 @@ import com.amrwalidi.android.fancup.databinding.PopupMessageBinding
 import com.amrwalidi.android.fancup.viewmodel.SettingsViewModel
 import androidx.core.content.edit
 import com.amrwalidi.android.fancup.databinding.ChangeProfileImagePopupBinding
+import com.amrwalidi.android.fancup.databinding.LoadingDialogBinding
 
 class SettingsFragment : Fragment() {
 
@@ -33,6 +34,7 @@ class SettingsFragment : Fragment() {
     private lateinit var viewModel: SettingsViewModel
     private lateinit var changeProfileBinding: ChangeProfileImagePopupBinding
     private var image: Uri? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,6 +54,7 @@ class SettingsFragment : Fragment() {
         binding.lifecycleOwner = this
 
         var popUpPanel: Dialog? = null
+        val loadingDialog = loadingDialog()
 
         viewModel.popup.observe(viewLifecycleOwner) {
             popUpPanel = when (it) {
@@ -84,9 +87,15 @@ class SettingsFragment : Fragment() {
             popUpPanel?.show()
         }
 
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it) loadingDialog.show() else loadingDialog.dismiss()
+        }
+
         viewModel.user.observe(viewLifecycleOwner) {
             popUpPanel?.dismiss()
         }
+
+
 
         return binding.root
     }
@@ -250,6 +259,34 @@ class SettingsFragment : Fragment() {
 
         return dialog
 
+    }
+
+    private fun loadingDialog(): Dialog {
+        val dialog = Dialog(requireContext())
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        val binding: LoadingDialogBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(requireContext()),
+            R.layout.loading_dialog,
+            null,
+            false
+        )
+
+        dialog.setContentView(binding.root)
+
+        dialog.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
+
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
+        binding.loadingAnimation.playAnimation()
+
+        dialog.setCancelable(false)
+
+        return dialog
     }
 
     @Deprecated("Deprecated in Java")

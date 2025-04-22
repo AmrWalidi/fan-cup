@@ -41,6 +41,8 @@ class AuthenticationServiceImpl @Inject constructor() : AuthenticationService {
     }
 
     override suspend fun signIn(email: String, password: String): Flow<Response> = callbackFlow {
+        trySend(Response.Loading)
+
         Firebase.auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
             if (it.isSuccessful) {
                 trySend(Response.Success(it.result.user!!.uid))
@@ -58,6 +60,8 @@ class AuthenticationServiceImpl @Inject constructor() : AuthenticationService {
     }
 
     override suspend fun register(email: String, password: String): Flow<Response> = callbackFlow {
+        trySend(Response.Loading)
+
         Firebase.auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
             if (it.isSuccessful) {
                 trySend(Response.Success(it.result.user!!.uid))

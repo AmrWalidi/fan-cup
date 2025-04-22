@@ -61,10 +61,10 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
                         is Response.Success -> {
                             val id = res.data.toString()
-                            _isLoading.value = false
                             userRepo.setUser(id)
                             categoryRepo.fetchCategories()
                             questionRepo.retrieveUserQuestions(id)
+                            _isLoading.value = false
                             toAppPage()
                         }
 

@@ -3,7 +3,6 @@ package com.amrwalidi.android.fancup.repository
 import android.content.Context
 import android.net.Uri
 import com.amrwalidi.android.fancup.database.FanCupDatabase
-import com.amrwalidi.android.fancup.database.entity.DatabaseUser
 import com.amrwalidi.android.fancup.database.entity.asDomainUser
 import com.amrwalidi.android.fancup.domain.User
 import com.amrwalidi.android.fancup.service.Response
@@ -28,26 +27,22 @@ class UserRepository(private val database: FanCupDatabase) {
 
     suspend fun setUser(id: String) {
         userService.getUserProfileImage(id).collect { res ->
-            var user: DatabaseUser? = null
-            if (res is Response.Success && res.data is ByteArray)
-                user = userService.getUserById(id).asDatabaseUser(res.data)
-            if (res is Response.Failure)
-                user = userService.getUserById(id).asDatabaseUser(null)
+            val profileImage = if (res is Response.Success && res.data is ByteArray) res.data else null
+            val user = userService.getUserById(id).asDatabaseUser(profileImage)
             user?.let { database.userDao.insert(it) }
         }
     }
 
     suspend fun createUser(id: String, username: String, email: String) {
         userService.createUser(id, username, email)
+
         userService.getUserProfileImage(id).collect { res ->
-            var user: DatabaseUser? = null
-            if (res is Response.Success && res.data is ByteArray)
-                user = userService.getUserById(id).asDatabaseUser(res.data)
-            if (res is Response.Failure)
-                user = userService.getUserById(id).asDatabaseUser(null)
+            val profileImage = if (res is Response.Success && res.data is ByteArray) res.data else null
+            val user = userService.getUserById(id).asDatabaseUser(profileImage)
             user?.let { database.userDao.insert(it) }
         }
     }
+
 
     suspend fun delete() {
         database.userDao.delete()

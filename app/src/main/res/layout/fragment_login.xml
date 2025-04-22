@@ -87,7 +87,8 @@
                     android:inputType="text"
                     android:paddingStart="13dp"
                     android:paddingEnd="13dp"
-                    android:text="@={viewmodel.emailInput}"/>
+                    android:text="@={viewmodel.emailInput}"
+                    android:textColorHint="#929292" />
             </LinearLayout>
 
             <LinearLayout
@@ -125,7 +126,8 @@
                     android:inputType="textPassword"
                     android:paddingStart="13dp"
                     android:paddingEnd="13dp"
-                    android:text="@={viewmodel.passwordInput}"/>
+                    android:text="@={viewmodel.passwordInput}"
+                    android:textColorHint="#929292" />
 
 
             </LinearLayout>

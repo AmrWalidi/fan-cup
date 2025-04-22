@@ -95,4 +95,7 @@ dependencies {
     //Language processing
     implementation(libs.translate)
     implementation(libs.language.id)
+
+    //Lottie
+    implementation(libs.lottie)
 }
