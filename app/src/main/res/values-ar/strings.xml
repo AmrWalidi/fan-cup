@@ -55,4 +55,8 @@
     <string name="store">متجر</string>
     <string name="upload_image">حمل صور</string>
     <string name="upload">حمل</string>
+    <string name="signing_in">جاري تسجيل الدخول…</string>
+    <string name="registering">جاري التسجيل…</string>
+    <string name="uploading_image">جاري تحميل الصورة…</string>
+    <string name="select_image">إختار صورة</string>
 </resources>

@@ -283,6 +283,7 @@ class SettingsFragment : Fragment() {
         )
 
         binding.loadingAnimation.playAnimation()
+        binding.message.text = getString(R.string.upload_image)
 
         dialog.setCancelable(false)
 

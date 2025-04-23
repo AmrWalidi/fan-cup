@@ -80,6 +80,7 @@ class RegisterFragment : Fragment() {
         )
 
         binding.loadingAnimation.playAnimation()
+        binding.message.text = getString(R.string.registering)
 
         dialog.setCancelable(false)
 

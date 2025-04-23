@@ -88,7 +88,7 @@
                     android:paddingStart="13dp"
                     android:paddingEnd="13dp"
                     android:text="@={viewmodel.usernameInput}"
-                    android:textColor="#7C7C7C"
+                    android:textColor="@color/black"
                     android:textColorHint="#929292" />
             </LinearLayout>
 
@@ -127,8 +127,8 @@
                     android:inputType="textEmailAddress"
                     android:paddingStart="13dp"
                     android:paddingEnd="13dp"
+                    android:textColor="@color/black"
                     android:text="@={viewmodel.emailInput}"
-                    android:textColor="#7C7C7C"
                     android:textColorHint="#929292" />
             </LinearLayout>
 
@@ -168,7 +168,7 @@
                     android:paddingStart="13dp"
                     android:paddingEnd="13dp"
                     android:text="@={viewmodel.passwordInput}"
-                    android:textColor="#7C7C7C"
+                    android:textColor="@color/black"
                     android:textColorHint="#929292" />
             </LinearLayout>
 
@@ -208,7 +208,7 @@
                     android:paddingStart="13dp"
                     android:paddingEnd="13dp"
                     android:text="@={viewmodel.repeatedPasswordInput}"
-                    android:textColor="#7C7C7C"
+                    android:textColor="@color/black"
                     android:textColorHint="#929292" />
             </LinearLayout>
 

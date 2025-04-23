@@ -48,8 +48,8 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
     fun signIn() {
         viewModelScope.launch {
-            val emailValue = emailInput.value
-            val passwordValue = passwordInput.value
+            val emailValue = emailInput.value?.trim()
+            val passwordValue = passwordInput.value?.trim()
 
             if (!emailValue.isNullOrEmpty() && !passwordValue.isNullOrEmpty()) {
                 authRepo.signIn(emailValue, passwordValue).collect { res ->

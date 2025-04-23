@@ -42,9 +42,9 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
 
     fun register() {
         viewModelScope.launch {
-            val emailValue = emailInput.value
-            val passwordValue = passwordInput.value
-            val usernameValue = usernameInput.value
+            val emailValue = emailInput.value?.trim()
+            val passwordValue = passwordInput.value?.trim()
+            val usernameValue = usernameInput.value?.trim()
             val repeatedPasswordValue = repeatedPasswordInput.value
 
             if (emailValue.isNullOrEmpty() || passwordValue.isNullOrEmpty() || usernameValue.isNullOrEmpty() || repeatedPasswordValue.isNullOrEmpty()) {

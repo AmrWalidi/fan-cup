@@ -98,6 +98,7 @@ class LoginFragment : Fragment() {
         )
 
         binding.loadingAnimation.playAnimation()
+        binding.message.text = getString(R.string.signing_in)
 
         dialog.setCancelable(false)
 

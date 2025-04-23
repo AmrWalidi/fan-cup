@@ -29,7 +29,7 @@ class ForgetPasswordViewModel(application: Application) : AndroidViewModel(appli
 
     fun resetPassword() {
         viewModelScope.launch {
-            emailInput.value?.let {
+            emailInput.value?.trim()?.let {
                 if (userRepo.getUserByEmail(it) != null) {
                     authRepo.resetPassword(it)
                     toLoginPage()

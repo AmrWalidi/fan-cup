@@ -102,4 +102,8 @@
     <string name="store">Store</string>
     <string name="upload_image">Upload Image</string>
     <string name="upload">Upload</string>
+    <string name="signing_in">Signing In…</string>
+    <string name="registering">Registering…</string>
+    <string name="uploading_image">Uploading Image…</string>
+    <string name="select_image">Select image</string>
 </resources>
