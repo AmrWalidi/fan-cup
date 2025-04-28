@@ -57,6 +57,29 @@ class UserServiceImpl @Inject constructor() : UserService {
         }
     }
 
+    override suspend fun getUsers(id: String, username: String): List<UserDoc>? {
+        return suspendCancellableCoroutine { continuation ->
+            usersRef.orderBy("username")
+                .startAt(username)
+                .endAt(username + '\uf8ff')
+                .get()
+                .addOnSuccessListener { documents ->
+                    if (continuation.isActive) {
+                        val users = documents
+                            .filter { it.id != id }
+                            .map { it.toObject(UserDoc::class.java) }
+                        continuation.resumeWith(Result.success(users))
+                    }
+                }
+                .addOnFailureListener { e ->
+                    if (continuation.isActive) {
+                        println("Error fetching user: ${e.message}")
+                        continuation.resumeWith(Result.failure(e))
+                    }
+                }
+        }
+    }
+
     override suspend fun getUserByUsername(username: String): UserDoc? {
         return suspendCancellableCoroutine { continuation ->
             usersRef.whereEqualTo("username", username)

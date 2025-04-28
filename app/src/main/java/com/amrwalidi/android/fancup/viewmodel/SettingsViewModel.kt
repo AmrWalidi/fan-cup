@@ -36,6 +36,10 @@ class SettingsViewModel(lang: String, application: Application) : AndroidViewMod
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
+    private val _toFriendRequestPage = MutableLiveData<Boolean>()
+    val toFriendRequestPage: LiveData<Boolean>
+        get() = _toFriendRequestPage
+
     init {
         viewModelScope.launch {
             _user.value = userRepo.getUser()
@@ -47,6 +51,30 @@ class SettingsViewModel(lang: String, application: Application) : AndroidViewMod
                 }
             }
         }
+    }
+
+    fun uploadImage(context: Context, image: Uri) {
+        _isLoading.value = true
+        viewModelScope.launch {
+            _user.value?.let { userRepo.uploadImage(context, it.id, image) }
+            _isLoading.value = false
+            _user.value = userRepo.getUser()
+
+        }
+    }
+
+    fun showPopUp(number: Int) {
+        _popup.value = number
+    }
+
+    fun selectLanguage(language: Int) {
+        _languageList.value = Array(3) { false }.apply {
+            this[language] = true
+        }
+    }
+
+    fun navigateToFriendRequestPage() {
+        _toFriendRequestPage.value = true
     }
 
     fun signOut() {
@@ -61,26 +89,6 @@ class SettingsViewModel(lang: String, application: Application) : AndroidViewMod
                 authRepo.deleteAccount(it.id, password)
             }
             database.clearAllData()
-        }
-    }
-
-    fun showPopUp(number: Int) {
-        _popup.value = number
-    }
-
-    fun selectLanguage(language: Int) {
-        _languageList.value = Array(3) { false }.apply {
-            this[language] = true
-        }
-    }
-
-    fun uploadImage(context: Context, image: Uri) {
-        _isLoading.value = true
-        viewModelScope.launch {
-            _user.value?.let { userRepo.uploadImage(context, it.id, image) }
-            _isLoading.value = false
-            _user.value = userRepo.getUser()
-
         }
     }
 

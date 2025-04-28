@@ -8,6 +8,7 @@ import com.amrwalidi.android.fancup.domain.User
 import com.amrwalidi.android.fancup.service.Response
 import com.amrwalidi.android.fancup.service.impl.UserServiceImpl
 import com.amrwalidi.android.fancup.service.model.asDatabaseUser
+import com.amrwalidi.android.fancup.service.model.asDomainUser
 
 class UserRepository(private val database: FanCupDatabase) {
 
@@ -27,7 +28,8 @@ class UserRepository(private val database: FanCupDatabase) {
 
     suspend fun setUser(id: String) {
         userService.getUserProfileImage(id).collect { res ->
-            val profileImage = if (res is Response.Success && res.data is ByteArray) res.data else null
+            val profileImage =
+                if (res is Response.Success && res.data is ByteArray) res.data else null
             val user = userService.getUserById(id).asDatabaseUser(profileImage)
             user?.let { database.userDao.insert(it) }
         }
@@ -37,10 +39,29 @@ class UserRepository(private val database: FanCupDatabase) {
         userService.createUser(id, username, email)
 
         userService.getUserProfileImage(id).collect { res ->
-            val profileImage = if (res is Response.Success && res.data is ByteArray) res.data else null
+            val profileImage =
+                if (res is Response.Success && res.data is ByteArray) res.data else null
             val user = userService.getUserById(id).asDatabaseUser(profileImage)
             user?.let { database.userDao.insert(it) }
         }
+    }
+
+    suspend fun getUsers(username : String = ""): List<User>? {
+        val userId = getUser()?.id
+        val users = userId?.let { userService.getUsers(it, username) } ?: return null
+        val result = mutableListOf<User>()
+
+        for (user in users) {
+            var profileImage: ByteArray? = null
+            userService.getUserProfileImage(user.id).collect { res ->
+                if (res is Response.Success && res.data is ByteArray) {
+                    profileImage = res.data
+                }
+            }
+            user.asDomainUser(profileImage)?.let { result.add(it) }
+        }
+
+        return result
     }
 
 

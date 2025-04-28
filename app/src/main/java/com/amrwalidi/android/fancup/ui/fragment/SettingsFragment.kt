@@ -25,8 +25,10 @@ import com.amrwalidi.android.fancup.databinding.LanguagePopupBinding
 import com.amrwalidi.android.fancup.databinding.PopupMessageBinding
 import com.amrwalidi.android.fancup.viewmodel.SettingsViewModel
 import androidx.core.content.edit
+import androidx.fragment.app.activityViewModels
 import com.amrwalidi.android.fancup.databinding.ChangeProfileImagePopupBinding
 import com.amrwalidi.android.fancup.databinding.LoadingDialogBinding
+import com.amrwalidi.android.fancup.viewmodel.AppViewModel
 
 class SettingsFragment : Fragment() {
 
@@ -35,6 +37,7 @@ class SettingsFragment : Fragment() {
     private lateinit var changeProfileBinding: ChangeProfileImagePopupBinding
     private var image: Uri? = null
 
+    private val appViewModel: AppViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,6 +58,14 @@ class SettingsFragment : Fragment() {
 
         var popUpPanel: Dialog? = null
         val loadingDialog = loadingDialog()
+
+        binding.sendFriendRequest.setOnClickListener {
+            viewModel.navigateToFriendRequestPage()
+        }
+
+        viewModel.toFriendRequestPage.observe(viewLifecycleOwner) {
+            appViewModel.navigate(7)
+        }
 
         viewModel.popup.observe(viewLifecycleOwner) {
             popUpPanel = when (it) {
@@ -94,8 +105,6 @@ class SettingsFragment : Fragment() {
         viewModel.user.observe(viewLifecycleOwner) {
             popUpPanel?.dismiss()
         }
-
-
 
         return binding.root
     }
@@ -186,7 +195,12 @@ class SettingsFragment : Fragment() {
 
         dialog.setCancelable(true)
 
-        binding.confirmButton.setOnClickListener { switchLanguage(requireContext(), viewModel.languageList.value?.indexOf(true) ?: 0) }
+        binding.confirmButton.setOnClickListener {
+            switchLanguage(
+                requireContext(),
+                viewModel.languageList.value?.indexOf(true) ?: 0
+            )
+        }
         binding.closeIcon.setOnClickListener {
             dialog.dismiss()
         }
@@ -283,7 +297,7 @@ class SettingsFragment : Fragment() {
         )
 
         binding.loadingAnimation.playAnimation()
-        binding.message.text = getString(R.string.upload_image)
+        binding.message.text = getString(R.string.uploading_image)
 
         dialog.setCancelable(false)
 

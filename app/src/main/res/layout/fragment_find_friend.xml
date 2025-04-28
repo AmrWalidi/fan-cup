@@ -3,12 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data />
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.amrwalidi.android.fancup.viewmodel.FriendRequestViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".FriendRequestFragment">
+        tools:context=".ui.fragment.FriendRequestFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout3"
@@ -46,6 +51,7 @@
                 android:ems="10"
                 android:hint="@string/search"
                 android:inputType="text"
+                android:text="@={viewModel.searchedUser}"
                 android:textColorHint="#575757"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -55,14 +61,16 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/user_list"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="44dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="@+id/constraintLayout3"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/constraintLayout3"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
             tools:itemCount="7"
-            tools:listitem="@layout/request_user_container" />
+            tools:listitem="@layout/user_container" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

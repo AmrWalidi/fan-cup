@@ -19,6 +19,7 @@ import com.amrwalidi.android.fancup.R
 import com.amrwalidi.android.fancup.ui.fragment.SettingsFragment
 import com.amrwalidi.android.fancup.databinding.ActivityAppBinding
 import com.amrwalidi.android.fancup.ui.fragment.ChampionFragment
+import com.amrwalidi.android.fancup.ui.fragment.FriendRequestFragment
 import com.amrwalidi.android.fancup.viewmodel.AppViewModel
 
 class AppActivity : AppCompatActivity() {
@@ -80,6 +81,10 @@ class AppActivity : AppCompatActivity() {
 
                 6 -> {
                     GameLevelFragment()
+                }
+
+                7 -> {
+                    FriendRequestFragment()
                 }
 
                 else -> return@observe
