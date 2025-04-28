@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
@@ -30,12 +30,12 @@
             android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:fontFamily="@font/poppins_bold"
-            android:text="@string/registering"
             android:textColor="@color/white"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="@+id/loading_animation"
             app:layout_constraintStart_toStartOf="@+id/loading_animation"
-            app:layout_constraintTop_toBottomOf="@+id/loading_animation" />
+            app:layout_constraintTop_toBottomOf="@+id/loading_animation"
+            tools:text="@string/loading" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

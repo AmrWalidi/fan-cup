@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.amrwalidi.android.fancup.databinding.UserContainerBinding
 import com.amrwalidi.android.fancup.domain.User
-import com.amrwalidi.android.fancup.viewmodel.FriendRequestViewModel
+import com.amrwalidi.android.fancup.viewmodel.FriendActionViewModel
 
-class UserAdapter(private val buttonType: String, private val viewModel: FriendRequestViewModel) :
+class UserAdapter(private val buttonType: String, private val viewModel: FriendActionViewModel) :
     ListAdapter<User, UserAdapter.UserViewHolder>(ItemDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         return UserViewHolder.from(parent)
@@ -28,7 +28,7 @@ class UserAdapter(private val buttonType: String, private val viewModel: FriendR
         fun bind(
             item: User,
             buttonType: String,
-            viewModel : FriendRequestViewModel
+            viewModel : FriendActionViewModel
         ) {
             binding.user = item
             binding.button.text = buttonType

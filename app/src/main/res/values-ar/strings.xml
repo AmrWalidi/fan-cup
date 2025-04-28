@@ -59,4 +59,5 @@
     <string name="registering">جاري التسجيل…</string>
     <string name="uploading_image">جاري تحميل الصورة…</string>
     <string name="select_image">إختار صورة</string>
+    <string name="loading">تحميل…</string>
 </resources>

@@ -12,7 +12,7 @@ import com.amrwalidi.android.fancup.domain.User
 import com.amrwalidi.android.fancup.repository.UserRepository
 import kotlinx.coroutines.launch
 
-class FriendRequestViewModel(application: Application) : AndroidViewModel(application) {
+class FriendActionViewModel(application: Application) : AndroidViewModel(application) {
 
     val database = getDatabase(application)
     private val repo = UserRepository(database)
@@ -21,21 +21,27 @@ class FriendRequestViewModel(application: Application) : AndroidViewModel(applic
     val user: LiveData<List<User>>
         get() = _users
 
+    private val _isLoading = MutableLiveData(false)
+    val isLoading: LiveData<Boolean>
+        get() = _isLoading
+
     val searchedUser = MutableLiveData("")
 
 
     fun getUsers(username: String) {
+        _isLoading.value = true
         viewModelScope.launch {
             _users.value = repo.getUsers(username)
+            _isLoading.value = false
         }
     }
 
 
     class Factory(val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(FriendRequestViewModel::class.java)) {
+            if (modelClass.isAssignableFrom(FriendActionViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return FriendRequestViewModel(app) as T
+                return FriendActionViewModel(app) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }

@@ -24,6 +24,6 @@
     </fragment>
     <fragment
         android:id="@+id/playWithFriendFragment"
-        android:name="com.amrwalidi.android.fancup.PlayWithFriendFragment"
+        android:name="com.amrwalidi.android.fancup.ui.fragment.PlayWithFriendFragment"
         android:label="PlayWithFriendFragment" />
 </navigation>

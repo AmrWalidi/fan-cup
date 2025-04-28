@@ -11,7 +11,7 @@
 
         <variable
             name="viewModel"
-            type="com.amrwalidi.android.fancup.viewmodel.FriendRequestViewModel" />
+            type="com.amrwalidi.android.fancup.viewmodel.FriendActionViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

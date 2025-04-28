@@ -59,4 +59,5 @@
     <string name="registering">Kayıt olunuyor…</string>
     <string name="uploading_image">Resim yükleniyor…</string>
     <string name="select_image">Resim seçiniz</string>
+    <string name="loading">yükleniyor…</string>
 </resources>

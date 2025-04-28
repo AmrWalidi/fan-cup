@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.amrwalidi.android.fancup.LocaleManager
+import com.amrwalidi.android.fancup.ui.fragment.PlayWithFriendFragment
 import com.amrwalidi.android.fancup.ui.fragment.GameLevelFragment
 import com.amrwalidi.android.fancup.ui.fragment.ChallengesFragment
 import com.amrwalidi.android.fancup.ui.fragment.HomeFragment
@@ -79,13 +80,11 @@ class AppActivity : AppCompatActivity() {
                     SettingsFragment()
                 }
 
-                6 -> {
-                    GameLevelFragment()
-                }
+                6 -> GameLevelFragment()
 
-                7 -> {
-                    FriendRequestFragment()
-                }
+                7 -> FriendRequestFragment()
+
+                8 -> PlayWithFriendFragment()
 
                 else -> return@observe
             }

@@ -10,14 +10,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.amrwalidi.android.fancup.R
 import com.amrwalidi.android.fancup.adapters.UserAdapter
 import com.amrwalidi.android.fancup.databinding.FragmentFindFriendBinding
-import com.amrwalidi.android.fancup.viewmodel.FriendRequestViewModel
+import com.amrwalidi.android.fancup.viewmodel.FriendActionViewModel
 
 class FriendRequestFragment : Fragment() {
 
-    private val viewModel: FriendRequestViewModel by lazy {
+    private val viewModel: FriendActionViewModel by lazy {
         ViewModelProvider(
-            this, FriendRequestViewModel.Factory(requireActivity().application)
-        )[FriendRequestViewModel::class.java]
+            this, FriendActionViewModel.Factory(requireActivity().application)
+        )[FriendActionViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -37,6 +37,12 @@ class FriendRequestFragment : Fragment() {
 
         viewModel.searchedUser.observe(viewLifecycleOwner) {
             viewModel.getUsers(it)
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.loadingContainer.visibility = View.VISIBLE
+            } else binding.loadingContainer.visibility = View.GONE
         }
         return binding.root
     }

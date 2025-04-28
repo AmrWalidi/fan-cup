@@ -1,59 +1,49 @@
-package com.amrwalidi.android.fancup
+package com.amrwalidi.android.fancup.ui.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import com.amrwalidi.android.fancup.R
+import com.amrwalidi.android.fancup.adapters.UserAdapter
+import com.amrwalidi.android.fancup.databinding.FragmentFindFriendBinding
+import com.amrwalidi.android.fancup.viewmodel.FriendActionViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [PlayWithFriendFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class PlayWithFriendFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private val viewModel: FriendActionViewModel by lazy {
+        ViewModelProvider(
+            this, FriendActionViewModel.Factory(requireActivity().application)
+        )[FriendActionViewModel::class.java]
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_find_friend, container, false)
+    ): View {
+        val binding: FragmentFindFriendBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_find_friend, container, false)
+
+        val adapter = UserAdapter(getString(R.string.invite), viewModel)
+        binding.userList.adapter = adapter
+
+        viewModel.user.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
+
+        viewModel.searchedUser.observe(viewLifecycleOwner) {
+            viewModel.getUsers(it)
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.loadingContainer.visibility = View.VISIBLE
+            } else binding.loadingContainer.visibility = View.GONE
+        }
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment PlayWithFriendFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            PlayWithFriendFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }
