@@ -107,4 +107,5 @@
     <string name="uploading_image">Uploading Image…</string>
     <string name="select_image">Select image</string>
     <string name="loading">loading…</string>
+    <string name="accept">accept</string>
 </resources>

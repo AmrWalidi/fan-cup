@@ -9,17 +9,20 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.amrwalidi.android.fancup.database.getDatabase
 import com.amrwalidi.android.fancup.domain.User
+import com.amrwalidi.android.fancup.repository.NotificationRepository
 import com.amrwalidi.android.fancup.repository.UserRepository
 import kotlinx.coroutines.launch
 
 class FriendActionViewModel(application: Application) : AndroidViewModel(application) {
 
     val database = getDatabase(application)
-    private val repo = UserRepository(database)
+    private val userRepo = UserRepository(database)
+    private val notificationRepo = NotificationRepository(database)
 
     private val _users = MutableLiveData(listOf<User>())
-    val user: LiveData<List<User>>
+    val users: LiveData<List<User>>
         get() = _users
+
 
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean>
@@ -27,12 +30,17 @@ class FriendActionViewModel(application: Application) : AndroidViewModel(applica
 
     val searchedUser = MutableLiveData("")
 
-
     fun getUsers(username: String) {
         _isLoading.value = true
         viewModelScope.launch {
-            _users.value = repo.getUsers(username)
+            _users.value = userRepo.getUsers(username)
             _isLoading.value = false
+        }
+    }
+
+    fun sendNotification(sender: String, receiver: String, message: String, type: Int){
+        viewModelScope.launch {
+            notificationRepo.sendNotification(sender, receiver, message, type)
         }
     }
 

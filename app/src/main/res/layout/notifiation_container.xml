@@ -6,20 +6,8 @@
     <data>
 
         <variable
-            name="user"
-            type="com.amrwalidi.android.fancup.domain.User" />
-
-        <variable
-            name="currentUser"
-            type="String" />
-
-        <variable
-            name="type"
-            type="Integer" />
-
-        <variable
-            name="message"
-            type="String" />
+            name="notification"
+            type="com.amrwalidi.android.fancup.domain.Notification" />
 
         <variable
             name="viewModel"
@@ -29,15 +17,20 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="25dp">
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/notification_background"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/profile_image"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:scaleType="centerCrop"
             android:src="@drawable/default_user"
-            app:imageByteArray="@{user.profileImage}"
+            app:imageByteArray="@{notification.sender.profileImage}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/username"
             app:layout_constraintHorizontal_bias="0.5"
@@ -47,34 +40,56 @@
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
+            android:id="@+id/time_passed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:textColor="#E6E6E6"
+            app:layout_constraintBottom_toBottomOf="@+id/username"
+            app:layout_constraintStart_toEndOf="@+id/username"
+            app:layout_constraintTop_toTopOf="@+id/username"
+            tools:text="45s" />
+
+        <TextView
             android:id="@+id/username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:fontFamily="@font/poppins_medium"
-            android:text="@{user.username}"
+            android:text="@{notification.sender.username}"
             android:textColor="@color/white"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/profile_image"
             app:layout_constraintStart_toEndOf="@+id/profile_image"
             app:layout_constraintTop_toTopOf="@+id/profile_image"
             tools:text="@string/username" />
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="#4E77B4"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/poppins_light"
+            android:textColor="#E6E6E6"
+            app:layout_constraintEnd_toStartOf="@+id/accept_button"
+            app:layout_constraintStart_toStartOf="@+id/username"
+            app:layout_constraintTop_toBottomOf="@+id/username"
+            tools:text="This is a notifiation from the app" />
+
+        <Button
+            android:id="@+id/accept_button"
+            android:layout_width="105dp"
+            android:layout_height="48dp"
+            android:backgroundTint="#2E7D32"
             android:fontFamily="@font/poppins_medium"
             android:paddingTop="0dp"
             android:paddingBottom="0dp"
+            android:text="@string/accept"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:cornerRadius="9dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:onClick="@{() -> viewModel.sendNotification(currentUser, user.id, message, type)}"
-            tools:text="@string/request" />
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

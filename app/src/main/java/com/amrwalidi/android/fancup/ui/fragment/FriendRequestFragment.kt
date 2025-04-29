@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.amrwalidi.android.fancup.R
 import com.amrwalidi.android.fancup.adapters.UserAdapter
 import com.amrwalidi.android.fancup.databinding.FragmentFindFriendBinding
+import com.amrwalidi.android.fancup.viewmodel.AppViewModel
 import com.amrwalidi.android.fancup.viewmodel.FriendActionViewModel
 
 class FriendRequestFragment : Fragment() {
@@ -20,6 +22,9 @@ class FriendRequestFragment : Fragment() {
         )[FriendActionViewModel::class.java]
     }
 
+    private val appViewModel: AppViewModel by activityViewModels()
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,10 +33,16 @@ class FriendRequestFragment : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_find_friend, container, false)
 
         binding.viewModel = viewModel
-        val adapter = UserAdapter(getString(R.string.request), viewModel)
+        val adapter = UserAdapter(
+            appViewModel.user.value?.id ?: "",
+            getString(R.string.request),
+            "${appViewModel.user.value?.id} has sent a friend request",
+            1,
+            viewModel
+        )
         binding.userList.adapter = adapter
 
-        viewModel.user.observe(viewLifecycleOwner) {
+        viewModel.users.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
 

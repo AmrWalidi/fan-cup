@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.amrwalidi.android.fancup.R
 import com.amrwalidi.android.fancup.adapters.UserAdapter
 import com.amrwalidi.android.fancup.databinding.FragmentFindFriendBinding
+import com.amrwalidi.android.fancup.viewmodel.AppViewModel
 import com.amrwalidi.android.fancup.viewmodel.FriendActionViewModel
 
 class PlayWithFriendFragment : Fragment() {
@@ -20,6 +22,9 @@ class PlayWithFriendFragment : Fragment() {
         )[FriendActionViewModel::class.java]
     }
 
+    private val appViewModel: AppViewModel by activityViewModels()
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -27,10 +32,16 @@ class PlayWithFriendFragment : Fragment() {
         val binding: FragmentFindFriendBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_find_friend, container, false)
 
-        val adapter = UserAdapter(getString(R.string.invite), viewModel)
+        val adapter = UserAdapter(
+            appViewModel.user.value?.id ?: "",
+            getString(R.string.invite),
+            "${appViewModel.user.value?.id} has sent an invitation to a game",
+            2,
+            viewModel
+        )
         binding.userList.adapter = adapter
 
-        viewModel.user.observe(viewLifecycleOwner) {
+        viewModel.users.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
 
