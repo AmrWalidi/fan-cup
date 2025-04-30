@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
@@ -35,7 +36,7 @@ class PlayWithFriendFragment : Fragment() {
         val adapter = UserAdapter(
             appViewModel.user.value?.id ?: "",
             getString(R.string.invite),
-            "${appViewModel.user.value?.id} has sent an invitation to a game",
+            "${appViewModel.user.value?.username} has sent an invitation to a game",
             2,
             viewModel
         )
@@ -47,6 +48,13 @@ class PlayWithFriendFragment : Fragment() {
 
         viewModel.searchedUser.observe(viewLifecycleOwner) {
             viewModel.getUsers(it)
+        }
+
+        viewModel.notificationMessage.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                viewModel.resetMessage()
+            }
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) {

@@ -28,6 +28,10 @@ class FriendActionViewModel(application: Application) : AndroidViewModel(applica
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
+    private val _notificationMessage = MutableLiveData("")
+    val notificationMessage: LiveData<String>
+        get() = _notificationMessage
+
     val searchedUser = MutableLiveData("")
 
     fun getUsers(username: String) {
@@ -38,10 +42,14 @@ class FriendActionViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
-    fun sendNotification(sender: String, receiver: String, message: String, type: Int){
+    fun sendNotification(sender: String, receiver: String, message: String, type: Int) {
         viewModelScope.launch {
-            notificationRepo.sendNotification(sender, receiver, message, type)
+            _notificationMessage.value = notificationRepo.sendNotification(sender, receiver, message, type)
         }
+    }
+
+    fun resetMessage() {
+        _notificationMessage.value = ""
     }
 
 

@@ -37,14 +37,17 @@ class NotificationRepository(private val database: FanCupDatabase) {
         return msg
     }
 
-    suspend fun fetchNotifications(sender: String) {
-        val fetchedNotification = notificationService.receiveNotifications(sender)
+    suspend fun fetchNotifications(receiver: String): List<Int> {
+        val fetchedNotification = notificationService.receiveNotifications(receiver)
         val databaseNotification = fetchedNotification.asDatabaseNotification()
         databaseNotification?.let { database.notificationDao.insert(it) }
+        val friendRequest = database.notificationDao.unreadFriendRequestNotifications()
+        val invitations = database.notificationDao.unreadGameInvitationNotifications()
+        return listOf(friendRequest, invitations)
     }
 
-    suspend fun getNotifications(sender: String): List<Notification> = coroutineScope {
-        val databaseNotifications = database.notificationDao.getNotifications()
+    suspend fun getNotifications(type: Int): List<Notification> = coroutineScope {
+        val databaseNotifications = database.notificationDao.getNotifications(type)
 
         val deferredNotifications = databaseNotifications.map { dbNotification ->
             async {
@@ -85,6 +88,11 @@ class NotificationRepository(private val database: FanCupDatabase) {
         }
 
         deferredNotifications.awaitAll().filterNotNull()
+    }
+
+    suspend fun readNotifications(userId: String, type: Int) {
+        notificationService.readNotifications(userId, type)
+        database.notificationDao.readNotifications(type)
     }
 
 }

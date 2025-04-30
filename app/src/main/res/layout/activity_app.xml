@@ -25,10 +25,12 @@
             android:layout_marginTop="9dp"
             android:layout_weight="1"
             android:background="@drawable/ic_notification_user_filled_24"
+            android:onClick="@{() -> viewmodel.navigate(9)}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/friends_notification_number_container"
                 android:layout_width="17dp"
                 android:layout_height="17dp"
                 android:background="@drawable/notification_count_background"
@@ -73,11 +75,13 @@
             android:layout_marginEnd="9dp"
             android:layout_weight="1"
             android:background="@drawable/ic_notification_bell"
+            android:onClick="@{() -> viewmodel.navigate(10)}"
             app:layout_constraintBottom_toBottomOf="@+id/user_notification"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/user_notification">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/bell_notification_number_container"
                 android:layout_width="17dp"
                 android:layout_height="17dp"
                 android:background="@drawable/notification_count_background"
@@ -86,7 +90,7 @@
                 app:layout_constraintEnd_toEndOf="parent">
 
                 <TextView
-                    android:id="@+id/notification_number"
+                    android:id="@+id/bell_notification_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_bold"
@@ -295,7 +299,7 @@
             android:background="#1A1A1A"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"></androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintStart_toStartOf="parent" />
 
         <LinearLayout
             android:id="@+id/footer"

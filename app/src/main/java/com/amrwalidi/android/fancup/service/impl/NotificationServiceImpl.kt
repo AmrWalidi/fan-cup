@@ -21,13 +21,14 @@ class NotificationServiceImpl : NotificationService {
         message: String
     ): Flow<Response> = callbackFlow {
         val notification = NotificationDoc()
-        val id  = sender + receiver + notification.time
-        notification.id = id
+
         notification.sender = sender
         notification.receiver = receiver
         notification.message = message
         notification.time = Timestamp.now()
         notification.type = type
+        val id = sender + receiver + (notification.time?.toDate()?.time ?: "")
+        notification.id = id
 
         notificationRef.document(id)
             .set(notification)
@@ -45,7 +46,7 @@ class NotificationServiceImpl : NotificationService {
     override suspend fun receiveNotifications(userId: String): List<NotificationDoc>? {
         return try {
             val notificationDocs = notificationRef
-                .whereEqualTo("sender", userId)
+                .whereEqualTo("receiver", userId)
                 .get()
                 .await()
 
@@ -57,11 +58,13 @@ class NotificationServiceImpl : NotificationService {
         }
     }
 
-    override suspend fun readMessages(userId: String) {
+    override suspend fun readNotifications(userId: String, type: Int) {
         try {
             val notificationDocs = notificationRef
-                .whereEqualTo("sender", userId)
-                .get().await()
+                .whereEqualTo("receiver", userId)
+                .whereEqualTo("type", type)
+                .get()
+                .await()
 
             for (doc in notificationDocs) {
                 notificationRef.document(doc.id)

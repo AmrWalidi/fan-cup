@@ -6,8 +6,8 @@ import java.util.Date
 
 @Entity(tableName = "notifications")
 data class DatabaseNotification(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    @PrimaryKey
+    val id: String,
     val sender: String,
     val active: Boolean,
     val message: String,

@@ -11,6 +11,7 @@ import androidx.lifecycle.viewModelScope
 import com.amrwalidi.android.fancup.database.getDatabase
 import com.amrwalidi.android.fancup.domain.User
 import com.amrwalidi.android.fancup.repository.AuthenticationRepository
+import com.amrwalidi.android.fancup.repository.NotificationRepository
 import com.amrwalidi.android.fancup.repository.UserRepository
 import kotlinx.coroutines.launch
 
@@ -19,6 +20,7 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     private val database = getDatabase(application)
     private val authRepo = AuthenticationRepository(database)
     private val userRepo = UserRepository(database)
+    private val notificationRepo = NotificationRepository(database)
 
     private val _user = MutableLiveData<User>()
     val user: LiveData<User>
@@ -40,6 +42,10 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     val toLoginScreen: LiveData<Boolean>
         get() = _toLoginScreen
 
+    private val _notificationList = MutableLiveData<List<Int>>(listOf())
+    val notificationList: LiveData<List<Int>>
+        get() = _notificationList
+
     init {
         viewModelScope.launch {
             launch {
@@ -48,6 +54,14 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
                 }
             }
             _user.value = userRepo.getUser()
+        }
+    }
+
+    fun fetchNotifications() {
+        viewModelScope.launch {
+            if(_user.value != null){
+                _notificationList.value = notificationRepo.fetchNotifications(_user.value!!.id)
+            }
         }
     }
 
@@ -72,7 +86,6 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         }
 
     }
-
 
     private fun returnToLoginScreen() {
         _toLoginScreen.value = true

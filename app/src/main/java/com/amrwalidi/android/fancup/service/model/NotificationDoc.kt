@@ -7,7 +7,7 @@ data class NotificationDoc(
     var id: String = "",
     var sender: String = "",
     var receiver: String = "",
-    var active: Boolean = false,
+    var active: Boolean = true,
     var message: String = "",
     var type: Int = 0,
     var time: Timestamp? = null,
@@ -16,6 +16,7 @@ data class NotificationDoc(
 fun List<NotificationDoc>?.asDatabaseNotification(): List<DatabaseNotification>? {
     return this?.map {
         DatabaseNotification(
+            id = it.id,
             sender = it.sender,
             active = it.active,
             message = it.message,

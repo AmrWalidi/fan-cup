@@ -2,7 +2,7 @@ package com.amrwalidi.android.fancup.domain
 
 
 data class Notification (
-    val id : Int,
+    val id : String,
     val sender : User?,
     val active : Boolean,
     val type : Int,

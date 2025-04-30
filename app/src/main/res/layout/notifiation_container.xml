@@ -11,13 +11,13 @@
 
         <variable
             name="viewModel"
-            type="com.amrwalidi.android.fancup.viewmodel.FriendActionViewModel" />
+            type="com.amrwalidi.android.fancup.viewmodel.NotificationViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="25dp"
+        android:layout_marginBottom="15dp"
         android:background="@drawable/notification_background"
         android:paddingHorizontal="10dp"
         android:paddingVertical="10dp">
@@ -43,9 +43,12 @@
             android:id="@+id/time_passed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="10dp"
+            android:paddingEnd="10dp"
+            android:text="@{notification.timePassed}"
             android:textColor="#E6E6E6"
             app:layout_constraintBottom_toBottomOf="@+id/username"
+            app:layout_constraintEnd_toEndOf="@+id/message"
             app:layout_constraintStart_toEndOf="@+id/username"
             app:layout_constraintTop_toTopOf="@+id/username"
             tools:text="45s" />
@@ -73,11 +76,12 @@
             app:layout_constraintEnd_toStartOf="@+id/accept_button"
             app:layout_constraintStart_toStartOf="@+id/username"
             app:layout_constraintTop_toBottomOf="@+id/username"
+            android:text="@{notification.message}"
             tools:text="This is a notifiation from the app" />
 
         <Button
             android:id="@+id/accept_button"
-            android:layout_width="105dp"
+            android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:backgroundTint="#2E7D32"
             android:fontFamily="@font/poppins_medium"

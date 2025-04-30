@@ -60,4 +60,6 @@
     <string name="uploading_image">جاري تحميل الصورة…</string>
     <string name="select_image">إختار صورة</string>
     <string name="loading">تحميل…</string>
+    <string name="accept">قبول</string>
+    <string name="notifications">إشعارات</string>
 </resources>

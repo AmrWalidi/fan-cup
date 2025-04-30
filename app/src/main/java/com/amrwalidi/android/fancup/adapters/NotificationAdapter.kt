@@ -7,8 +7,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.amrwalidi.android.fancup.databinding.NotifiationContainerBinding
 import com.amrwalidi.android.fancup.domain.Notification
+import com.amrwalidi.android.fancup.viewmodel.NotificationViewModel
 
-class NotificationAdapter :
+class NotificationAdapter(private val viewModel: NotificationViewModel) :
     ListAdapter<Notification, NotificationAdapter.NotificationViewHolder>(ItemDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationViewHolder {
         return NotificationViewHolder.from(parent)
@@ -16,7 +17,7 @@ class NotificationAdapter :
 
     override fun onBindViewHolder(holder: NotificationViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(viewModel, item)
     }
 
     class NotificationViewHolder private constructor(
@@ -24,8 +25,9 @@ class NotificationAdapter :
     ) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Notification) {
+        fun bind(viewModel: NotificationViewModel, item: Notification) {
             binding.notification = item
+            binding.viewModel = viewModel
         }
 
         companion object {
