@@ -4,12 +4,14 @@ import android.net.Uri
 import com.amrwalidi.android.fancup.service.Response
 import com.amrwalidi.android.fancup.service.UserService
 import com.amrwalidi.android.fancup.service.model.UserDoc
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.tasks.await
 import java.io.File
 import javax.inject.Inject
 
@@ -210,4 +212,30 @@ class UserServiceImpl @Inject constructor() : UserService {
             awaitClose()
         }
 
+    override suspend fun addFriend(id: String, friend: String): Flow<Response> = callbackFlow {
+        val docRef = usersRef.document(id)
+        try {
+            val user = docRef.get().await()
+            val friends = user.get("friends") as? List<*> ?: emptyList<Any>()
+
+            if (!friends.contains(friend)) {
+                docRef.update("friends", FieldValue.arrayUnion(friend))
+                    .addOnSuccessListener {
+                        trySend(Response.Success("Value added successfully"))
+                        close()
+                    }
+                    .addOnFailureListener { e ->
+                        trySend(Response.Failure(e))
+                        close()
+                    }
+            } else {
+                trySend(Response.Success("Friend already exists"))
+                close()
+            }
+        } catch (e: Exception) {
+            trySend(Response.Failure(e))
+            close()
+        }
+        awaitClose()
+    }
 }

@@ -28,7 +28,7 @@ class NotificationFragment(val type: Int) : Fragment() {
         val binding: FragmentNotificationBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_notification, container, false)
 
-        val adapter = NotificationAdapter(viewModel)
+        val adapter = NotificationAdapter(type, viewModel)
         binding.notificationList.adapter = adapter
 
         viewModel.notifications.observe(viewLifecycleOwner) {

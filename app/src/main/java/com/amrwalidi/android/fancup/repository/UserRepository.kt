@@ -46,7 +46,7 @@ class UserRepository(private val database: FanCupDatabase) {
         }
     }
 
-    suspend fun getUsers(username : String = ""): List<User>? {
+    suspend fun getUsers(username: String = ""): List<User>? {
         val userId = getUser()?.id
         val users = userId?.let { userService.getUsers(it, username) } ?: return null
         val result = mutableListOf<User>()
@@ -62,6 +62,31 @@ class UserRepository(private val database: FanCupDatabase) {
         }
 
         return result
+    }
+
+    suspend fun getFriends(username: String): List<User> {
+        val friends = getUser()?.friends ?: emptyList()
+        if (friends.isNotEmpty()) {
+            val users = mutableListOf<User>()
+            for (friend in friends) {
+                var profileImage: ByteArray? = null
+                userService.getUserProfileImage(friend).collect { res ->
+                    if (res is Response.Success && res.data is ByteArray) {
+                        profileImage = res.data
+                    }
+                }
+                val user = userService.getUserById(friend)
+                user.asDomainUser(profileImage)?.let { users.add(it) }
+            }
+            val result = mutableListOf<User>()
+            users.forEach { u ->
+                if (u.username.startsWith(username)) {
+                    result.add(u)
+                }
+            }
+            return result
+        }
+        return emptyList()
     }
 
 

@@ -10,7 +10,9 @@ data class UserDoc(
     val points: Int = 0,
     val coins: Int = 0,
     val level: Int = 1,
-    val rank: Int = 1
+    val rank: Int = 1,
+    val friends: List<String> = listOf(),
+    val in_lobby: Boolean = false
 )
 
 fun UserDoc?.asDatabaseUser(profileImage: ByteArray?): DatabaseUser? {
@@ -19,11 +21,13 @@ fun UserDoc?.asDatabaseUser(profileImage: ByteArray?): DatabaseUser? {
             id = id,
             username = username,
             email = email,
+            profileImage = profileImage,
             points = points,
             coins = coins,
             level = level,
             rank = rank,
-            profileImage = profileImage
+            friends = friends,
+            inLobby = in_lobby
         )
     }
 }
@@ -33,12 +37,14 @@ fun UserDoc?.asDomainUser(profileImage: ByteArray?): User? {
         User(
             id = id,
             username = username,
-            email =  email,
+            email = email,
+            profileImage = profileImage,
             points = points,
             coins = coins,
             level = level.toString(),
             rank = rank.toString(),
-            profileImage = profileImage
+            friends = friends,
+            inLobby = in_lobby
         )
     }
 }

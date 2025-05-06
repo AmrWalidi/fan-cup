@@ -10,11 +10,13 @@ data class DatabaseUser(
     val id: String,
     val username: String,
     val email: String,
+    val profileImage: ByteArray?,
     val points: Int,
     val coins: Int,
     val level: Int,
     val rank: Int,
-    val profileImage: ByteArray?
+    val friends : List<String>,
+    val inLobby: Boolean
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -53,11 +55,13 @@ fun DatabaseUser?.asDomainUser(): User? {
             id = id,
             username = username,
             email = email,
+            profileImage = profileImage,
             points = points,
             coins = coins,
             level = level.toString(),
             rank = rank.toString(),
-            profileImage = profileImage
+            friends = friends,
+            inLobby = inLobby
         )
     }
 }

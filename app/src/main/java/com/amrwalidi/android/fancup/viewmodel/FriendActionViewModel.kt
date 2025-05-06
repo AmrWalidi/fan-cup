@@ -23,6 +23,10 @@ class FriendActionViewModel(application: Application) : AndroidViewModel(applica
     val users: LiveData<List<User>>
         get() = _users
 
+    private val _friends = MutableLiveData(listOf<User>())
+    val friends: LiveData<List<User>>
+        get() = _friends
+
 
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean>
@@ -33,6 +37,18 @@ class FriendActionViewModel(application: Application) : AndroidViewModel(applica
         get() = _notificationMessage
 
     val searchedUser = MutableLiveData("")
+
+    fun onSearchTextChanged(username: String) {
+        searchedUser.value = username
+    }
+
+    fun getFriends(username: String) {
+        _isLoading.value = true
+        viewModelScope.launch {
+            _friends.value = userRepo.getFriends(username)
+            _isLoading.value = false
+        }
+    }
 
     fun getUsers(username: String) {
         _isLoading.value = true

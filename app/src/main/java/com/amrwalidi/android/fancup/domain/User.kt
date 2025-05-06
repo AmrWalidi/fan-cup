@@ -4,11 +4,13 @@ data class User(
     val id: String,
     val username: String,
     val email: String,
+    var profileImage: ByteArray?,
     val points: Int,
     val coins: Int,
     val level: String,
     val rank: String,
-    var profileImage: ByteArray?
+    val friends : List<String>,
+    val inLobby: Boolean
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

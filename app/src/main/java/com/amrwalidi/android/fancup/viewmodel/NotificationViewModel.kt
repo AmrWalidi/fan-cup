@@ -35,6 +35,13 @@ class NotificationViewModel(val type: Int, application: Application) :
         }
     }
 
+    fun acceptFriendRequest(friend: String){
+        viewModelScope.launch {
+            user?.id?.let { id -> notificationRepo.acceptFriendRequest(id , friend) }
+
+        }
+    }
+
     class Factory(val type: Int, val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(NotificationViewModel::class.java)) {

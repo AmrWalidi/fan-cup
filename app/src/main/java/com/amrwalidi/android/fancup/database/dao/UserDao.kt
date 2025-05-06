@@ -30,6 +30,12 @@ interface UserDao {
     @Query("UPDATE users SET profileImage = :image WHERE id = :id")
     suspend fun updateProfile(id: String, image: ByteArray)
 
+    @Query("UPDATE users SET friends = :friends WHERE id = :id")
+    suspend fun addFriend(id: String, friends: String)
+
+    @Query("SELECT friends FROM USERS WHERE id = :id")
+    suspend fun getFriends(id: String) : String
+
     @Query("DELETE FROM users ")
     suspend fun delete()
 }

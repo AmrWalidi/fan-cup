@@ -16,4 +16,5 @@ interface UserService {
     suspend fun deleteUser(id: String): Flow<Response>
     suspend fun getUserProfileImage(id: String): Flow<Response>
     suspend fun uploadUserProfileImage(id: String, image: Uri): Flow<Response>
+    suspend fun addFriend(id: String, friend: String): Flow<Response>
 }
