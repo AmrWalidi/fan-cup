@@ -28,7 +28,7 @@
     <string name="with_friend">with Friend</string>
     <string name="ranking">Ranking</string>
     <string name="rank_points" translatable="false">%1$d pts</string>
-    <string name="searching">searching</string>
+    <string name="searching">searching…</string>
     <string name="vs">vs</string>
     <string name="play">Play</string>
     <string name="select_challenge" translatable="false">select challenge</string>

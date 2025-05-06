@@ -36,6 +36,12 @@ interface UserDao {
     @Query("SELECT friends FROM USERS WHERE id = :id")
     suspend fun getFriends(id: String) : String
 
+    @Query("UPDATE users SET inLobby = 1 WHERE id = :id")
+    suspend fun enterLobby(id: String)
+
+    @Query("UPDATE users SET inLobby = 0 WHERE id = :id")
+    suspend fun exitLobby(id: String)
+
     @Query("DELETE FROM users ")
     suspend fun delete()
 }

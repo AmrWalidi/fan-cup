@@ -1,5 +1,6 @@
 package com.amrwalidi.android.fancup.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.amrwalidi.android.fancup.R
 import com.amrwalidi.android.fancup.databinding.FragmentChampionBinding
+import com.amrwalidi.android.fancup.ui.activity.OnlineGameActivity
 import com.amrwalidi.android.fancup.viewmodel.AppViewModel
 import com.amrwalidi.android.fancup.viewmodel.ChampionViewModel
 
@@ -32,6 +34,15 @@ class ChampionFragment : Fragment() {
 
         binding.withFriendButton.setOnClickListener {
             viewModel.navigateToPlayWithFriendPage()
+        }
+
+        binding.withFriendButton.setOnClickListener {
+            viewModel.navigateToPlayWithFriendPage()
+        }
+
+        binding.oneVsOneButton.setOnClickListener {
+            val intent = Intent(requireContext(), OnlineGameActivity::class.java)
+            startActivity(intent)
         }
 
         viewModel.toPlayWithFriendPage.observe(viewLifecycleOwner) {
