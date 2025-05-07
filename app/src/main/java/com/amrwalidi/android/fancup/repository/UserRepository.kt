@@ -154,8 +154,8 @@ class UserRepository(private val database: FanCupDatabase) {
         val activeUsers = users?.filter { it.inLobby }
         val usersNum = activeUsers?.size
         var selectedPlayer: User? = null
-        if (usersNum!! > 1) {
-            val index = (1..usersNum).random()
+        if (usersNum!! >= 1) {
+            val index = (0..usersNum).random()
             selectedPlayer = activeUsers[index]
         }
         return selectedPlayer

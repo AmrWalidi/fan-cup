@@ -99,6 +99,7 @@
                 android:backgroundTint="#4E9050"
                 android:fontFamily="@font/poppins_bold"
                 android:text="@string/play"
+                android:textColor="@color/white"
                 android:textSize="35sp"
                 app:cornerRadius="7dp"
                 app:layout_constraintEnd_toEndOf="parent"

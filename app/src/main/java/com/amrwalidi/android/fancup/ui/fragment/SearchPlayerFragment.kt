@@ -21,6 +21,7 @@ class SearchPlayerFragment : Fragment() {
         )[SearchPlayerViewModel::class.java]
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,8 +54,8 @@ class SearchPlayerFragment : Fragment() {
         return binding.root
     }
 
-    override fun onStop(){
-        super.onStop()
+    override fun onDestroyView() {
+        super.onDestroyView()
         viewModel.exitLobby()
     }
 

@@ -43,14 +43,12 @@
             android:id="@+id/time_passed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
             android:paddingEnd="10dp"
             android:text="@{notification.timePassed}"
             android:textColor="#E6E6E6"
-            app:layout_constraintBottom_toBottomOf="@+id/username"
-            app:layout_constraintEnd_toEndOf="@+id/message"
-            app:layout_constraintStart_toEndOf="@+id/username"
-            app:layout_constraintTop_toTopOf="@+id/username"
+            app:layout_constraintBottom_toTopOf="@+id/message"
+            app:layout_constraintStart_toStartOf="@+id/username"
+            app:layout_constraintTop_toBottomOf="@+id/username"
             tools:text="45s" />
 
         <TextView
@@ -62,6 +60,7 @@
             android:text="@{notification.sender.username}"
             android:textColor="@color/white"
             android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/time_passed"
             app:layout_constraintStart_toEndOf="@+id/profile_image"
             app:layout_constraintTop_toTopOf="@+id/profile_image"
             tools:text="@string/username" />
@@ -72,11 +71,12 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:fontFamily="@font/poppins_light"
+            android:text="@{notification.message}"
             android:textColor="#E6E6E6"
+            app:layout_constraintBottom_toBottomOf="@+id/profile_image"
             app:layout_constraintEnd_toStartOf="@+id/accept_button"
             app:layout_constraintStart_toStartOf="@+id/username"
-            app:layout_constraintTop_toBottomOf="@+id/username"
-            android:text="@{notification.message}"
+            app:layout_constraintTop_toBottomOf="@+id/time_passed"
             tools:text="This is a notifiation from the app" />
 
         <Button

@@ -213,16 +213,19 @@ class UserServiceImpl @Inject constructor() : UserService {
         }
 
     override suspend fun addFriend(id: String, friend: String): Flow<Response> = callbackFlow {
-        val docRef = usersRef.document(id)
+        val userRef = usersRef.document(id)
+        val friendRef = usersRef.document(friend)
         try {
-            val user = docRef.get().await()
+            val user = userRef.get().await()
             val friends = user.get("friends") as? List<*> ?: emptyList<Any>()
 
             if (!friends.contains(friend)) {
-                docRef.update("friends", FieldValue.arrayUnion(friend))
+                userRef.update("friends", FieldValue.arrayUnion(friend))
                     .addOnSuccessListener {
-                        trySend(Response.Success("Value added successfully"))
-                        close()
+                        friendRef.update("friends", FieldValue.arrayUnion(id)).addOnSuccessListener {
+                            trySend(Response.Success("Value added successfully"))
+                            close()
+                        }
                     }
                     .addOnFailureListener { e ->
                         trySend(Response.Failure(e))
