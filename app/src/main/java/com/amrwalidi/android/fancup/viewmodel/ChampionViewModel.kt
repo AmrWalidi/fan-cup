@@ -6,12 +6,30 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import com.amrwalidi.android.fancup.database.getDatabase
+import com.amrwalidi.android.fancup.domain.User
+import com.amrwalidi.android.fancup.repository.UserRepository
+import kotlinx.coroutines.launch
 
 class ChampionViewModel(application: Application) : AndroidViewModel(application) {
+
+    private val database = getDatabase(application)
+    private val repo = UserRepository(database)
 
     private val _toPlayWithFriendPage = MutableLiveData<Boolean>()
     val toPlayWithFriendPage: LiveData<Boolean>
         get() = _toPlayWithFriendPage
+
+    private val _users = MutableLiveData<List<User>>()
+    val users: LiveData<List<User>>
+        get() = _users
+
+    init {
+        viewModelScope.launch {
+            _users.value = repo.getUsers()?.sortedBy { it.rank }
+        }
+    }
 
     fun navigateToPlayWithFriendPage() {
         _toPlayWithFriendPage.value = true

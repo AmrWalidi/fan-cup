@@ -27,7 +27,7 @@
     <string name="_1v1" translatable="false">1 v 1</string>
     <string name="with_friend">with Friend</string>
     <string name="ranking">Ranking</string>
-    <string name="rank_points" translatable="false">%1$d pts</string>
+    <string name="level">Level %1$s</string>
     <string name="searching">searching…</string>
     <string name="vs">vs</string>
     <string name="play">Play</string>

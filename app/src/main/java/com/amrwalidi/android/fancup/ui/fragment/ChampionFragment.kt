@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.amrwalidi.android.fancup.R
+import com.amrwalidi.android.fancup.adapters.RankAdapter
 import com.amrwalidi.android.fancup.databinding.FragmentChampionBinding
 import com.amrwalidi.android.fancup.ui.activity.OnlineGameActivity
 import com.amrwalidi.android.fancup.viewmodel.AppViewModel
@@ -31,6 +32,15 @@ class ChampionFragment : Fragment() {
     ): View {
         val binding: FragmentChampionBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_champion, container, false)
+
+        binding.lifecycleOwner = this
+
+        val adapter = RankAdapter(requireContext())
+        binding.rankList.adapter = adapter
+
+        viewModel.users.observe(viewLifecycleOwner){
+            adapter.submitList(it)
+        }
 
         binding.withFriendButton.setOnClickListener {
             viewModel.navigateToPlayWithFriendPage()

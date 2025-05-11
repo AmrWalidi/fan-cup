@@ -74,6 +74,23 @@ class UserRepository(private val database: FanCupDatabase) {
         return result
     }
 
+    suspend fun getUsers(): List<User>? {
+        val users = userService.getUsers() ?: return null
+        val result = mutableListOf<User>()
+
+        for (user in users) {
+            var profileImage: ByteArray? = null
+            userService.getUserProfileImage(user.id).collect { res ->
+                if (res is Response.Success && res.data is ByteArray) {
+                    profileImage = res.data
+                }
+            }
+            user.asDomainUser(profileImage)?.let { result.add(it) }
+        }
+
+        return result
+    }
+
     suspend fun getFriends(username: String): List<User> {
         val friends = getUser()?.friends ?: emptyList()
         if (friends.isNotEmpty()) {
@@ -123,6 +140,10 @@ class UserRepository(private val database: FanCupDatabase) {
             if (res is Response.Success)
                 database.userDao.updateLevel(id)
         }
+    }
+
+    suspend fun updateRank() {
+        userService.updateRank()
     }
 
     suspend fun uploadImage(context: Context, id: String, image: Uri) {

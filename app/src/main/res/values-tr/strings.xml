@@ -11,6 +11,7 @@
     <string name="start">Başlat</string>
     <string name="with_friend">arkadaşla</string>
     <string name="ranking">Sıralama</string>
+    <string name="level">seviye %1$s</string>
     <string name="searching">arıyor…</string>
     <string name="vs">Karşı</string>
     <string name="play">Oyna</string>

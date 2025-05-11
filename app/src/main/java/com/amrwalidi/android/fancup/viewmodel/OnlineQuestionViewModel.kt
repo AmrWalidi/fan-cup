@@ -57,6 +57,22 @@ class OnlineQuestionViewModel(
         }
     }
 
+    fun updatePoints(points: Int){
+        viewModelScope.launch {
+            _winner.value?.let {
+                if (points > 0) {
+                    userRepo.updateCoins(it.id, it.coins + (points / 2))
+                }
+                userRepo.updatePoints(it.id, points + it.points)
+                if (it.points + points == (1000 * it.level.toInt())) {
+                    userRepo.updateLevel(it.id, it.level.toInt() + 1)
+                    userRepo.updatePoints(it.id,0)
+                    userRepo.updateRank()
+                }
+            }
+        }
+    }
+
     fun endMatch() {
         viewModelScope.launch {
             matchRepo.endMatch(matchId)

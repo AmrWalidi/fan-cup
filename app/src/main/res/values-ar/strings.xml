@@ -11,6 +11,7 @@
     <string name="start">بدأ</string>
     <string name="with_friend">مع صديق</string>
     <string name="ranking">تصنيف</string>
+    <string name="level">" %1$s مستوى"</string>
     <string name="searching">بحث…</string>
     <string name="vs">ضد</string>
     <string name="play">لعب</string>

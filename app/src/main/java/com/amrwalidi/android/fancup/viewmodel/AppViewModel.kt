@@ -54,6 +54,7 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
                 }
             }
             _user.value = userRepo.getUser()
+            userRepo.updateRank()
         }
     }
 

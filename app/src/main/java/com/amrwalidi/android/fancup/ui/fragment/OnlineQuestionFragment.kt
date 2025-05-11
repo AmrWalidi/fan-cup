@@ -160,6 +160,7 @@ class OnlineQuestionFragment : Fragment() {
                 val completionMessagePopup = completionMessagePopup("${it.username} has won")
                 completionMessagePopup.show()
                 Handler(Looper.getMainLooper()).postDelayed({
+                    onlineQuestionViewModel.updatePoints(questionViewModel.points)
                     onlineQuestionViewModel.endMatch()
                     completionMessagePopup.dismiss()
                     val intent = Intent(requireContext(), AppActivity::class.java)

@@ -1,11 +1,13 @@
 package com.amrwalidi.android.fancup.service.impl
 
 import android.net.Uri
+import android.util.Log
 import com.amrwalidi.android.fancup.service.Response
 import com.amrwalidi.android.fancup.service.UserService
 import com.amrwalidi.android.fancup.service.model.UserDoc
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -69,6 +71,26 @@ class UserServiceImpl @Inject constructor() : UserService {
                     if (continuation.isActive) {
                         val users = documents
                             .filter { it.id != id }
+                            .map { it.toObject(UserDoc::class.java) }
+                        continuation.resumeWith(Result.success(users))
+                    }
+                }
+                .addOnFailureListener { e ->
+                    if (continuation.isActive) {
+                        println("Error fetching user: ${e.message}")
+                        continuation.resumeWith(Result.failure(e))
+                    }
+                }
+        }
+    }
+
+    override suspend fun getUsers(): List<UserDoc>? {
+        return suspendCancellableCoroutine { continuation ->
+            usersRef
+                .get()
+                .addOnSuccessListener { documents ->
+                    if (continuation.isActive) {
+                        val users = documents
                             .map { it.toObject(UserDoc::class.java) }
                         continuation.resumeWith(Result.success(users))
                     }
@@ -155,6 +177,35 @@ class UserServiceImpl @Inject constructor() : UserService {
         }
         awaitClose()
     }
+
+
+    override suspend fun updateRank() {
+        usersRef
+            .orderBy("level", Query.Direction.DESCENDING)
+            .get()
+            .addOnSuccessListener { snapshot ->
+                val batch = FirebaseFirestore.getInstance().batch()
+                var rank = 1
+
+                for (document in snapshot.documents) {
+                    val userRef = document.reference
+                    batch.update(userRef, "rank", rank)
+                    rank++
+                }
+
+                batch.commit()
+                    .addOnSuccessListener {
+                        Log.d("Ranking", "All user ranks updated successfully.")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("Ranking", "Error updating ranks", e)
+                    }
+            }
+            .addOnFailureListener { e ->
+                Log.e("Ranking", "Failed to fetch users", e)
+            }
+    }
+
 
     override suspend fun deleteUser(id: String): Flow<Response> = callbackFlow {
         usersRef.document(id).delete().addOnCompleteListener {
