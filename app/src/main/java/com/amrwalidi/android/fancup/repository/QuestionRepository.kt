@@ -41,7 +41,8 @@ class QuestionRepository(private val database: FanCupDatabase) {
     }
 
     suspend fun getQuestionById(id: String): Question? {
-        return database.questionDao.getQuestionById(id).asDomainQuestion()
+        val databaseQuestion = database.questionDao.getQuestionById(id)
+        return databaseQuestion.asDomainQuestion()
     }
 
     suspend fun updatePlayability(userId: String, questionId: String) {

@@ -55,6 +55,7 @@
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:text="@string/submit"
+                android:textColor="@color/white"
                 android:textSize="24sp"
                 app:cornerRadius="10dp"
                 app:iconPadding="0dp" />

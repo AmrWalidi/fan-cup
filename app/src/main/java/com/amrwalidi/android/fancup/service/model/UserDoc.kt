@@ -12,7 +12,6 @@ data class UserDoc(
     val level: Int = 1,
     val rank: Int = 1,
     val friends: List<String> = listOf(),
-    val in_lobby: Boolean = false
 )
 
 fun UserDoc?.asDatabaseUser(profileImage: ByteArray?): DatabaseUser? {
@@ -27,7 +26,6 @@ fun UserDoc?.asDatabaseUser(profileImage: ByteArray?): DatabaseUser? {
             level = level,
             rank = rank,
             friends = friends,
-            inLobby = in_lobby
         )
     }
 }
@@ -44,7 +42,6 @@ fun UserDoc?.asDomainUser(profileImage: ByteArray?): User? {
             level = level.toString(),
             rank = rank.toString(),
             friends = friends,
-            inLobby = in_lobby
         )
     }
 }

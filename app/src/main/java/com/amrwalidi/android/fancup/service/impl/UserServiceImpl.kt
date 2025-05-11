@@ -222,10 +222,11 @@ class UserServiceImpl @Inject constructor() : UserService {
             if (!friends.contains(friend)) {
                 userRef.update("friends", FieldValue.arrayUnion(friend))
                     .addOnSuccessListener {
-                        friendRef.update("friends", FieldValue.arrayUnion(id)).addOnSuccessListener {
-                            trySend(Response.Success("Value added successfully"))
-                            close()
-                        }
+                        friendRef.update("friends", FieldValue.arrayUnion(id))
+                            .addOnSuccessListener {
+                                trySend(Response.Success("Value added successfully"))
+                                close()
+                            }
                     }
                     .addOnFailureListener { e ->
                         trySend(Response.Failure(e))
@@ -242,25 +243,4 @@ class UserServiceImpl @Inject constructor() : UserService {
         awaitClose()
     }
 
-    override suspend fun enterLobby(id: String): Flow<Response> = callbackFlow {
-        usersRef.document(id).update("in_lobby", true).addOnSuccessListener {
-            trySend(Response.Success("Entered Lobby"))
-            close()
-        }.addOnFailureListener { e ->
-            trySend(Response.Failure(Exception(e.message)))
-            close()
-        }
-        awaitClose()
-    }
-
-    override suspend fun exitLobby(id: String): Flow<Response> = callbackFlow {
-        usersRef.document(id).update("in_lobby", false).addOnSuccessListener {
-            trySend(Response.Success("Exited Lobby"))
-            close()
-        }.addOnFailureListener { e ->
-            trySend(Response.Failure(Exception(e.message)))
-            close()
-        }
-        awaitClose()
-    }
 }

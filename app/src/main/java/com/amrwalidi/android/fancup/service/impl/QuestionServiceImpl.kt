@@ -99,6 +99,11 @@ class QuestionServiceImpl @Inject constructor() : QuestionService {
         }
     }
 
+    override suspend fun getRandomQuestion(): String {
+        val docs = questionRef.get().await().documents
+        return  docs.random().id
+    }
+
     override suspend fun updateStars(
         userId: String,
         questionId: String,

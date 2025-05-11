@@ -8,6 +8,7 @@ interface QuestionService {
     suspend fun getQuestionById(id: String): QuestionDoc?
     suspend fun createUserQuestionRef(userId: String, questionId: String)
     suspend fun getUserQuestions(userId: String): List<QuestionDoc?>
+    suspend fun getRandomQuestion(): String
     suspend fun updateStars(userId: String, questionId: String, stars: Int): Flow<Response>
     suspend fun updatePlayability(
         userId: String,

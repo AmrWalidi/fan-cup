@@ -10,7 +10,6 @@ data class User(
     val level: String,
     val rank: String,
     val friends : List<String>,
-    val inLobby: Boolean
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

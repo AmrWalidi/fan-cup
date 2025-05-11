@@ -56,6 +56,7 @@ class GameResultViewModel(
                 userRepo.updatePoints(u.id, points + u.points)
                 if (u.points + points == (1000 * u.level.toInt())) {
                     userRepo.updateLevel(u.id, u.level.toInt() + 1)
+                    userRepo.updatePoints(u.id,0)
                 }
 
                 if (question?.stars!! < questionViewModel.stars)

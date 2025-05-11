@@ -31,16 +31,8 @@ class SearchPlayerFragment : Fragment() {
 
         viewModel.user.observe(viewLifecycleOwner) { user ->
             if (user != null) {
-                binding.userProfileImage.imageByteArray( user.profileImage)
+                binding.userProfileImage.imageByteArray(user.profileImage)
                 viewModel.searchForPlayer()
-                binding.playButton.setOnClickListener {
-                    viewModel.exitLobby()
-                    findNavController().navigate(
-                        SearchPlayerFragmentDirections.actionSearchPlayerFragmentToSpinnerFragment(
-                            user.id
-                        )
-                    )
-                }
             }
         }
 
@@ -48,6 +40,17 @@ class SearchPlayerFragment : Fragment() {
             if (user != null) {
                 binding.searchingText.visibility = View.GONE
                 binding.searchedProfileImage.imageByteArray(user.profileImage)
+                viewModel.playersReady()
+            }
+        }
+
+        viewModel.isReady.observe(viewLifecycleOwner) {
+            if (it) {
+                findNavController().navigate(
+                    SearchPlayerFragmentDirections.actionSearchPlayerFragmentToOnlineQuestionFragment(
+                        viewModel.match, viewModel.question
+                    )
+                )
             }
         }
 

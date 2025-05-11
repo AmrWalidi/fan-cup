@@ -18,6 +18,16 @@ class UserRepository(private val database: FanCupDatabase) {
         return database.userDao.getUser().asDomainUser()
     }
 
+    suspend fun getUserById(id: String): User? {
+        var user: User? = null
+        userService.getUserProfileImage(id).collect { res ->
+            val profileImage =
+                if (res is Response.Success && res.data is ByteArray) res.data else null
+            user = userService.getUserById(id).asDomainUser(profileImage)
+        }
+        return user
+    }
+
     suspend fun getUserByUsername(username: String): String? {
         return userService.getUserByUsername(username)?.id
     }
@@ -131,35 +141,6 @@ class UserRepository(private val database: FanCupDatabase) {
                 }
             }
         }
-    }
-
-    suspend fun enterLobby(){
-        val id = getUser()?.id
-        userService.enterLobby(id!!).collect{res->
-            if (res is Response.Success)
-                database.userDao.enterLobby(id)
-        }
-    }
-
-    suspend fun exitLobby(){
-        val id = getUser()?.id
-        userService.exitLobby(id!!).collect{ res ->
-            if (res is Response.Success)
-                database.userDao.exitLobby(id)
-        }
-    }
-
-    suspend fun searchForPlayer(): User? {
-        val users = getUsers("")
-        val activeUsers = users?.filter { it.inLobby }
-        val usersNum = activeUsers?.size
-        var selectedPlayer: User? = null
-        if (usersNum!! >= 1) {
-            val index = (0..usersNum).random()
-            selectedPlayer = activeUsers[index]
-        }
-        return selectedPlayer
-
     }
 
 }

@@ -54,6 +54,7 @@
                 android:fontFamily="@font/rethink_sans_bold"
                 android:onClick="@{() -> viewModel.submit()}"
                 android:text="@string/submit"
+                android:textColor="@color/white"
                 android:textSize="24sp"
                 app:cornerRadius="10dp"
                 app:iconPadding="0dp" />
