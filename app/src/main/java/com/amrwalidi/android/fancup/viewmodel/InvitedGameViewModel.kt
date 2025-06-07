@@ -46,10 +46,11 @@ class InvitedGameViewModel(sender: String, application: Application) :
             _user.value = userRepo.getUser()
             val user = userRepo.getUser()
             _match = matchRepo.createInvitedMatch(user?.id ?: "", sender)
+            _opponent.value = userRepo.getUserById(sender)
+            _question = matchRepo.getMatchQuestion(_match)
             while (_isReady.value == false) {
                 _isReady.value = matchRepo.playersReady(_match)
             }
-            _opponent.value = userRepo.getUserById(sender)
         }
 
     }
