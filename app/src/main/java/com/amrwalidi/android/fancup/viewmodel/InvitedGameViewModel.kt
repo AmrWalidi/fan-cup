@@ -11,10 +11,10 @@ import com.amrwalidi.android.fancup.database.getDatabase
 import com.amrwalidi.android.fancup.domain.User
 import com.amrwalidi.android.fancup.repository.MatchRepository
 import com.amrwalidi.android.fancup.repository.UserRepository
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class SearchPlayerViewModel(application: Application) : AndroidViewModel(application) {
+class InvitedGameViewModel(sender: String, application: Application) :
+    AndroidViewModel(application) {
 
     private val database = getDatabase(application)
     private val matchRepo = MatchRepository(database)
@@ -24,62 +24,42 @@ class SearchPlayerViewModel(application: Application) : AndroidViewModel(applica
     val user: LiveData<User>
         get() = _user
 
+    private val _opponent = MutableLiveData<User>()
+    val opponent: LiveData<User>
+        get() = _opponent
+
     private var _match = ""
-    val match : String
+    val match: String
         get() = _match
+
+    private var _question: String = ""
+    val question: String
+        get() = _question
 
     private val _isReady = MutableLiveData(false)
     val isReady: LiveData<Boolean>
         get() = _isReady
 
-    private var _question: String = ""
-    val question : String
-        get() = _question
-
-    private val _searchedUser = MutableLiveData<User>()
-    val searchedUser: LiveData<User>
-        get() = _searchedUser
 
     init {
         viewModelScope.launch {
             _user.value = userRepo.getUser()
-            matchRepo.enterLobby(_user.value?.id ?: "")
-        }
-    }
-
-    fun exitLobby() {
-        viewModelScope.launch {
-            matchRepo.exitLobby(_user.value?.id ?: "")
-        }
-    }
-
-    fun searchForPlayer() {
-        viewModelScope.launch {
-            val playersInLobby = matchRepo.getAllPlayersInLobby()
-            delay(playersInLobby * 2000L)
-            while (_searchedUser.value == null) {
-                val pair = matchRepo.searchForPlayer(_user.value?.id ?: "")
-                _searchedUser.value = pair.first
-                _match = pair.second
-            }
-
-        }
-    }
-
-    fun playersReady() {
-        viewModelScope.launch {
-            _question = matchRepo.getMatchQuestion(_match)
+            val user = userRepo.getUser()
+            _match = matchRepo.createInvitedMatch(user?.id ?: "", sender)
             while (_isReady.value == false) {
                 _isReady.value = matchRepo.playersReady(_match)
             }
+            _opponent.value = userRepo.getUserById(sender)
         }
+
     }
 
-    class Factory(val app: Application) : ViewModelProvider.Factory {
+    class Factory(private val sender: String, val app: Application) :
+        ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(SearchPlayerViewModel::class.java)) {
+            if (modelClass.isAssignableFrom(InvitedGameViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return SearchPlayerViewModel(app) as T
+                return InvitedGameViewModel(sender, app) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }

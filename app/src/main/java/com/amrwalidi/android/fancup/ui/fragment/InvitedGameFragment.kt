@@ -1,6 +1,8 @@
 package com.amrwalidi.android.fancup.ui.fragment
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,19 +11,27 @@ import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.amrwalidi.android.fancup.R
 import com.amrwalidi.android.fancup.bindingUtils.imageByteArray
 import com.amrwalidi.android.fancup.databinding.FragmentSearchPlayerBinding
-import com.amrwalidi.android.fancup.viewmodel.SearchPlayerViewModel
+import com.amrwalidi.android.fancup.viewmodel.InvitedGameViewModel
 
-class SearchPlayerFragment : Fragment() {
 
-    private val viewModel: SearchPlayerViewModel by lazy {
-        ViewModelProvider(
-            this, SearchPlayerViewModel.Factory(requireActivity().application)
-        )[SearchPlayerViewModel::class.java]
+class InvitedGameFragment : Fragment() {
+
+    private val args: InvitedGameFragmentArgs by navArgs()
+
+    private lateinit var viewModel: InvitedGameViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        viewModel = ViewModelProvider(
+            this,
+            InvitedGameViewModel.Factory(args.sender, requireActivity().application)
+        )[InvitedGameViewModel::class.java]
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,31 +45,30 @@ class SearchPlayerFragment : Fragment() {
                 binding.userUsername.text = user.username
                 binding.userUsername.visibility = View.VISIBLE
                 binding.userProfileImage.imageByteArray(user.profileImage)
-                viewModel.searchForPlayer()
             }
         }
 
-        viewModel.searchedUser.observe(viewLifecycleOwner) { user ->
+        viewModel.opponent.observe(viewLifecycleOwner) { user ->
             if (user != null) {
                 binding.searchedUsername.text = user.username
                 binding.searchedUsername.visibility = View.VISIBLE
                 binding.searchingText.visibility = View.GONE
                 binding.searchedProfileImage.imageByteArray(user.profileImage)
-                viewModel.playersReady()
             }
         }
 
         viewModel.isReady.observe(viewLifecycleOwner) {
             if (it) {
-                findNavController().navigate(
-                    SearchPlayerFragmentDirections.actionSearchPlayerFragmentToOnlineQuestionFragment(
-                        viewModel.match, viewModel.question
+                Handler(Looper.getMainLooper()).postDelayed({
+                    findNavController().navigate(
+                        SearchPlayerFragmentDirections.actionSearchPlayerFragmentToOnlineQuestionFragment(
+                            viewModel.match, viewModel.question
+                        )
                     )
-                )
+                }, 1500)
+
             }
         }
-
-
 
         return binding.root
     }
@@ -74,10 +83,4 @@ class SearchPlayerFragment : Fragment() {
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        viewModel.exitLobby()
-    }
-
 }

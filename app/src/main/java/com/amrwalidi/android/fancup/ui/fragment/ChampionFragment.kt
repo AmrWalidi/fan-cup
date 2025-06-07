@@ -46,12 +46,9 @@ class ChampionFragment : Fragment() {
             viewModel.navigateToPlayWithFriendPage()
         }
 
-        binding.withFriendButton.setOnClickListener {
-            viewModel.navigateToPlayWithFriendPage()
-        }
-
         binding.oneVsOneButton.setOnClickListener {
             val intent = Intent(requireContext(), OnlineGameActivity::class.java)
+            intent.putExtra("GAME_TYPE", 1)
             startActivity(intent)
         }
 

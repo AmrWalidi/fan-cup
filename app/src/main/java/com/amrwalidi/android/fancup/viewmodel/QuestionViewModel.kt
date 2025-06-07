@@ -16,6 +16,7 @@ import com.amrwalidi.android.fancup.R
 import com.amrwalidi.android.fancup.database.getDatabase
 import com.amrwalidi.android.fancup.domain.Question
 import com.amrwalidi.android.fancup.repository.QuestionRepository
+import com.amrwalidi.android.fancup.repository.UserRepository
 import com.google.mlkit.common.model.DownloadConditions
 import com.google.mlkit.nl.languageid.LanguageIdentification
 import com.google.mlkit.nl.translate.Translation
@@ -36,7 +37,8 @@ class QuestionViewModel(
     val localizedContext = LocaleManager.setLocale(appContext, lang)
 
     private val database = getDatabase(application)
-    private val repo = QuestionRepository(database)
+    private val questionRepo = QuestionRepository(database)
+    private val userRepo = UserRepository(database)
 
     private var countDownTimer: CountDownTimer? = null
 
@@ -88,7 +90,7 @@ class QuestionViewModel(
     init {
         val languageIdentifier = LanguageIdentification.getClient()
         viewModelScope.launch {
-            val question = repo.getQuestionById(questionId)
+            val question = questionRepo.getQuestionById(questionId)
             question?.let {
                 try {
                     val detectedLang = languageIdentifier.identifyLanguage(it.text).await()
@@ -199,6 +201,32 @@ class QuestionViewModel(
             _stars = 0
         }
     }
+
+    fun updateUserStats(){
+        viewModelScope.launch {
+            val user = userRepo.getUser()
+            val question = questionRepo.getQuestionById(questionId)
+            user?.let { u ->
+                if (question?.stars == 0 && points > 0) {
+                    userRepo.updateCoins(u.id, u.coins + (points / 2))
+                }
+                userRepo.updatePoints(u.id, points + u.points)
+                if (u.points + points == (1000 * u.level.toInt())) {
+                    userRepo.updateLevel(u.id, u.level.toInt() + 1)
+                    userRepo.updatePoints(u.id,0)
+                    userRepo.updateRank()
+                }
+
+                if (question?.stars!! < stars)
+                    questionRepo.updateStars(
+                        u.id,
+                        questionId,
+                        stars
+                    )
+            }
+        }
+    }
+
 
     fun extraTime() {
         if (_clickedHelpers.value?.get(2) == false) {

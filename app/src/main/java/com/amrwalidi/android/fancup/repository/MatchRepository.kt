@@ -40,6 +40,17 @@ class MatchRepository(database: FanCupDatabase) {
 
     }
 
+    suspend fun createInvitedMatch(currentUserId: String, opponentId: String): String {
+        var matchId = ""
+
+        matchService.createInvitedMatch(currentUserId, opponentId).collect { res ->
+            if (res is Response.Success) {
+                matchId = res.data.toString()
+            }
+        }
+        return matchId
+    }
+
     suspend fun playersReady(matchId: String): Boolean {
         return matchService.playersReady(matchId)
     }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Base.Theme.FanCup" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="android:windowSplashScreenBackground">#131313</item>
-    </style>
+    <style name="Base.Theme.FanCup" parent="Theme.Material3.DayNight.NoActionBar"/>
+
+    <style name="Theme.FanCup" parent="Theme.Material3.DayNight.NoActionBar" />
 </resources>

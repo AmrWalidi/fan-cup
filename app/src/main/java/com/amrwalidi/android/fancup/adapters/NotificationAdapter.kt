@@ -33,6 +33,12 @@ class NotificationAdapter(private val type : Int, private val viewModel: Notific
                     viewModel.acceptFriendRequest(item.sender?.id!!)
                 }
             }
+
+            else{
+                binding.acceptButton.setOnClickListener{
+                    viewModel.acceptInvitation(item.sender?.id!!)
+                }
+            }
         }
 
         companion object {

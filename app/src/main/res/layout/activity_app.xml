@@ -62,47 +62,93 @@
             android:fontFamily="@font/poppins_bold"
             android:textColor="#EDEDED"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/bell_notification"
-            app:layout_constraintEnd_toStartOf="@+id/bell_notification"
-            app:layout_constraintStart_toEndOf="@+id/user_notification"
-            app:layout_constraintTop_toTopOf="@+id/bell_notification"
+            app:layout_constraintBottom_toBottomOf="@+id/right_menu"
+            app:layout_constraintEnd_toEndOf="@+id/right_menu"
+            app:layout_constraintStart_toStartOf="@+id/user_notification"
+            app:layout_constraintTop_toTopOf="@+id/right_menu"
             tools:text="Home" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/bell_notification"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+        <LinearLayout
+            android:id="@+id/right_menu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="9dp"
-            android:layout_weight="1"
-            android:background="@drawable/ic_notification_bell"
-            android:onClick="@{() -> viewmodel.navigate(10)}"
-            app:layout_constraintBottom_toBottomOf="@+id/user_notification"
+            android:baselineAligned="false"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/user_notification">
+            app:layout_constraintTop_toTopOf="@+id/user_notification"
+            app:layout_constraintBottom_toBottomOf="@+id/user_notification">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/bell_notification_number_container"
-                android:layout_width="17dp"
-                android:layout_height="17dp"
-                android:background="@drawable/notification_count_background"
-                android:visibility="gone"
+                android:id="@+id/bell_notification"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/ic_notification_bell"
+                android:onClick="@{() -> viewmodel.navigate(10)}"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:id="@+id/bell_notification_number"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/bell_notification_number_container"
+                    android:layout_width="17dp"
+                    android:layout_height="17dp"
+                    android:background="@drawable/notification_count_background"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <TextView
+                        android:id="@+id/bell_notification_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_bold"
+                        android:textColor="@color/white"
+                        android:textSize="11sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="2" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:onClick="@{() -> viewmodel.navigate(5)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/bell_notification"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+
+                    android:id="@+id/settings_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_bold"
-                    android:textColor="@color/white"
-                    android:textSize="11sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="2" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/imageView11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/settings_icon"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/settings" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+
 
         <LinearLayout
             android:id="@+id/stats_group"
@@ -281,6 +327,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
+
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/mainFragment"
             android:name="com.amrwalidi.android.fancup.ui.fragment.HomeFragment"
@@ -314,35 +361,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="@{() -> viewmodel.navigate(1)}">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/store_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:setStatus="@{viewmodel.selectedPage[0]}">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/store_icon"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:setStatus="@{viewmodel.selectedPage[0]}"
-                        app:srcCompat="@drawable/store" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
@@ -431,37 +449,6 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:setStatus="@{viewmodel.selectedPage[3]}"
                         app:srcCompat="@drawable/challenges" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="@{() -> viewmodel.navigate(5)}">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-
-                    android:id="@+id/settings_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:setStatus="@{viewmodel.selectedPage[4]}">
-
-                    <ImageView
-                        android:id="@+id/imageView11"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/settings_icon"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:setStatus="@{viewmodel.selectedPage[4]}"
-                        app:srcCompat="@drawable/settings" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -8,6 +8,7 @@ interface MatchService {
     suspend fun exitLobby(id: String)
     suspend fun getAllPlayersInLobby(): Int
     suspend fun createMatch(id: String): Flow<Response>
+    suspend fun createInvitedMatch(id: String, opponentId: String): Flow<Response>
     suspend fun getMatch(matchId: String): MatchDoc?
     suspend fun playersReady(matchId: String): Boolean
     suspend fun getMatchQuestion(matchId: String): String

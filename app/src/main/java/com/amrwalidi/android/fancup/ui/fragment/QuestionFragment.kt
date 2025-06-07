@@ -119,6 +119,7 @@ class QuestionFragment : Fragment() {
                 viewModel.calculatePoints()
                 val completionMessagePopup = completionMessagePopup(it)
                 completionMessagePopup.show()
+                viewModel.updateUserStats()
                 Handler(Looper.getMainLooper()).postDelayed({
                     completionMessagePopup.dismiss()
                     requireActivity().supportFragmentManager.beginTransaction()

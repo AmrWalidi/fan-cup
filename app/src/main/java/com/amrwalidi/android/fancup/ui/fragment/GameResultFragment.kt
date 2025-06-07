@@ -94,6 +94,7 @@ class GameResultFragment(
         gameResultViewModel.toMenu.observe(viewLifecycleOwner) {
             if (it) {
                 val intent = Intent(requireContext(), AppActivity::class.java)
+                activity?.finish()
                 startActivity(intent)
             }
         }

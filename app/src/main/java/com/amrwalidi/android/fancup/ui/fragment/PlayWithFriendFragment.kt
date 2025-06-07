@@ -1,5 +1,6 @@
 package com.amrwalidi.android.fancup.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.amrwalidi.android.fancup.R
 import com.amrwalidi.android.fancup.adapters.UserAdapter
 import com.amrwalidi.android.fancup.databinding.FragmentFindFriendBinding
+import com.amrwalidi.android.fancup.ui.activity.OnlineGameActivity
 import com.amrwalidi.android.fancup.viewmodel.AppViewModel
 import com.amrwalidi.android.fancup.viewmodel.FriendActionViewModel
 
@@ -66,6 +68,20 @@ class PlayWithFriendFragment : Fragment() {
             if (it) {
                 binding.loadingContainer.visibility = View.VISIBLE
             } else binding.loadingContainer.visibility = View.GONE
+        }
+
+        viewModel.invitation.observe(viewLifecycleOwner) { invitation ->
+            val enteredMatch = invitation["enteredMatch"] as? Boolean ?: false
+            val invitee = invitation["invitee"] as? String ?: ""
+
+            if (enteredMatch) {
+                val intent = Intent(requireContext(), OnlineGameActivity::class.java).apply {
+                    putExtra("INVITEE", invitee)
+                    putExtra("USER_TYPE", "inviter")
+                    putExtra("GAME_TYPE", 2)
+                }
+                startActivity(intent)
+            }
         }
         return binding.root
     }

@@ -36,6 +36,11 @@ class FriendActionViewModel(application: Application) : AndroidViewModel(applica
     val notificationMessage: LiveData<String>
         get() = _notificationMessage
 
+    private val _invitation =
+        MutableLiveData<Map<String, Any>>(mapOf("invitee" to "", "enteredMatch" to false))
+    val invitation: LiveData<Map<String, Any>>
+        get() = _invitation
+
     val searchedUser = MutableLiveData("")
 
     fun onSearchTextChanged(username: String) {
@@ -60,7 +65,12 @@ class FriendActionViewModel(application: Application) : AndroidViewModel(applica
 
     fun sendNotification(sender: String, receiver: String, message: String, type: Int) {
         viewModelScope.launch {
-            _notificationMessage.value = notificationRepo.sendNotification(sender, receiver, message, type)
+            _notificationMessage.value =
+                notificationRepo.sendNotification(sender, receiver, message, type)
+            if (type == 2) {
+
+                _invitation.value = mapOf("invitee" to receiver, "enteredMatch" to true)
+            }
         }
     }
 

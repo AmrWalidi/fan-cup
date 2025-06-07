@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/online_game_nav"
-    app:startDestination="@id/searchPlayerFragment">
+    app:startDestination="@+id/gameControllerFragment">
 
     <fragment
         android:id="@+id/searchPlayerFragment"
@@ -23,6 +23,29 @@
             app:argType="string" />
         <argument
             android:name="question_id"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/gameControllerFragment"
+        android:name="com.amrwalidi.android.fancup.ui.fragment.GameControllerFragment"
+        android:label="fragment_game_controller" >
+        <action
+            android:id="@+id/action_gameControllerFragment_to_searchPlayerFragment"
+            app:destination="@id/searchPlayerFragment" />
+        <action
+            android:id="@+id/action_gameControllerFragment_to_invitedGameFragment"
+            app:destination="@id/invitedGameFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/invitedGameFragment"
+        android:name="com.amrwalidi.android.fancup.ui.fragment.InvitedGameFragment"
+        android:label="fragment_invited_game"
+        tools:layout="@layout/fragment_search_player" >
+        <action
+            android:id="@+id/action_invitedGameFragment_to_onlineQuestionFragment"
+            app:destination="@id/onlineQuestionFragment" />
+        <argument
+            android:name="sender"
             app:argType="string" />
     </fragment>
 </navigation>
