@@ -22,13 +22,13 @@ class GameControllerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val game = activity?.intent?.getIntExtra("GAME_TYPE", 0)
-        val invitee = activity?.intent?.getStringExtra("INVITEE") ?: ""
+        val opponent = activity?.intent?.getStringExtra("OPPONENT") ?: ""
 
         val direction = if (game == 1) {
             GameControllerFragmentDirections.actionGameControllerFragmentToSearchPlayerFragment()
         } else {
             GameControllerFragmentDirections.actionGameControllerFragmentToInvitedGameFragment(
-                invitee
+                opponent
             )
         }
 

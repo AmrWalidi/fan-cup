@@ -76,8 +76,7 @@ class PlayWithFriendFragment : Fragment() {
 
             if (enteredMatch) {
                 val intent = Intent(requireContext(), OnlineGameActivity::class.java).apply {
-                    putExtra("INVITEE", invitee)
-                    putExtra("USER_TYPE", "inviter")
+                    putExtra("OPPONENT", invitee)
                     putExtra("GAME_TYPE", 2)
                 }
                 startActivity(intent)

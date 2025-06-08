@@ -294,4 +294,19 @@ class UserServiceImpl @Inject constructor() : UserService {
         awaitClose()
     }
 
+    override suspend fun getFriends(id: String): Flow<Response> = callbackFlow {
+        val userRef = usersRef.document(id)
+
+        try {
+            val user = userRef.get().await()
+            val friends = user.get("friends") as? List<*> ?: emptyList<Any>()
+            trySend(Response.Success(friends))
+            close()
+        } catch (e: Exception) {
+            trySend(Response.Failure(e))
+            close()
+        }
+        awaitClose()
+    }
+
 }

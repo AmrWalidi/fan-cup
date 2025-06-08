@@ -98,9 +98,14 @@ class NotificationRepository(private val database: FanCupDatabase) {
     suspend fun acceptFriendRequest(user: String, friend: String) {
         userService.addFriend(user, friend).collect { res ->
             if (res is Response.Success) {
-                if (res.data == "Value added successfully"){
+                if (res.data == "Value added successfully") {
                     val current = database.userDao.getFriends(user)
-                    val friends = "$current, $friend"
+                    val friends: String = if (current.isEmpty()) {
+                        friend
+                    } else {
+                        "$current, $friend"
+                    }
+
                     database.userDao.addFriend(user, friends)
                 }
             }

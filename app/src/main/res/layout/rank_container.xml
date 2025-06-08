@@ -32,13 +32,14 @@
             android:layout_height="match_parent"
             android:layout_marginStart="24dp"
             android:orientation="vertical"
+            android:gravity="left"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/profile_image"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/rank_username"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_bold"
                 android:textColor="#D8D8D8"
@@ -48,7 +49,7 @@
 
             <TextView
                 android:id="@+id/rank_points"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_bold"
                 android:text="@{@string/level(user.level)}"

@@ -29,7 +29,7 @@ class InvitedGameFragment : Fragment() {
 
         viewModel = ViewModelProvider(
             this,
-            InvitedGameViewModel.Factory(args.sender, requireActivity().application)
+            InvitedGameViewModel.Factory(args.opponent, requireActivity().application)
         )[InvitedGameViewModel::class.java]
     }
 

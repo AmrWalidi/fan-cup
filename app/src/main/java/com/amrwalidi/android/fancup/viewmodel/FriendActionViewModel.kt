@@ -68,7 +68,6 @@ class FriendActionViewModel(application: Application) : AndroidViewModel(applica
             _notificationMessage.value =
                 notificationRepo.sendNotification(sender, receiver, message, type)
             if (type == 2) {
-
                 _invitation.value = mapOf("invitee" to receiver, "enteredMatch" to true)
             }
         }

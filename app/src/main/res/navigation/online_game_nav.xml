@@ -45,7 +45,7 @@
             android:id="@+id/action_invitedGameFragment_to_onlineQuestionFragment"
             app:destination="@id/onlineQuestionFragment" />
         <argument
-            android:name="sender"
+            android:name="opponent"
             app:argType="string" />
     </fragment>
 </navigation>

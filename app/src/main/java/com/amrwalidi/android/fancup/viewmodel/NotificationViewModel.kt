@@ -27,6 +27,10 @@ class NotificationViewModel(val type: Int, application: Application) :
     val notifications: LiveData<List<Notification>>
         get() = _notifications
 
+    private val _invitationAccepted = MutableLiveData<Map<String, Any>>(mapOf("inviter" to "", "enteredMatch" to false))
+    val invitationAccepted : LiveData<Map<String, Any>>
+        get() = _invitationAccepted
+
     init {
         viewModelScope.launch {
             user = userRepo.getUser()
@@ -44,7 +48,7 @@ class NotificationViewModel(val type: Int, application: Application) :
 
     fun acceptInvitation(sender: String){
         viewModelScope.launch {
-            user?.id?.let { id -> notificationRepo.acceptFriendRequest(id , sender) }
+            _invitationAccepted.value = mapOf("inviter" to sender, "enteredMatch" to true)
         }
     }
 

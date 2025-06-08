@@ -13,7 +13,7 @@ import com.amrwalidi.android.fancup.repository.MatchRepository
 import com.amrwalidi.android.fancup.repository.UserRepository
 import kotlinx.coroutines.launch
 
-class InvitedGameViewModel(sender: String, application: Application) :
+class InvitedGameViewModel(opponentId: String, application: Application) :
     AndroidViewModel(application) {
 
     private val database = getDatabase(application)
@@ -45,8 +45,8 @@ class InvitedGameViewModel(sender: String, application: Application) :
         viewModelScope.launch {
             _user.value = userRepo.getUser()
             val user = userRepo.getUser()
-            _match = matchRepo.createInvitedMatch(user?.id ?: "", sender)
-            _opponent.value = userRepo.getUserById(sender)
+            _match = matchRepo.createInvitedMatch(user?.id ?: "", opponentId)
+            _opponent.value = userRepo.getUserById(opponentId)
             _question = matchRepo.getMatchQuestion(_match)
             while (_isReady.value == false) {
                 _isReady.value = matchRepo.playersReady(_match)
@@ -55,12 +55,12 @@ class InvitedGameViewModel(sender: String, application: Application) :
 
     }
 
-    class Factory(private val sender: String, val app: Application) :
+    class Factory(private val opponentId: String, val app: Application) :
         ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(InvitedGameViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return InvitedGameViewModel(sender, app) as T
+                return InvitedGameViewModel(opponentId, app) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }
