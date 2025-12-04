@@ -1,4 +1,4 @@
-![Fan Cup Logo](public/logo.svg)
+![Fan Cup Logo](app/src/main/res/drawable/fan_cup_logo.png)
 # Fan Cup
 
 An android mobile application project developed for football fans. The app is designed to provide an engaging experience through interactive features, matches, and fan-based content. This project is built using **Kotlin with Gradle**.
