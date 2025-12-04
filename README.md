@@ -57,11 +57,10 @@ fan-cup/
 ---
 
 ✅ Usage
-
--Launch the app on your device/emulator
--Explore the football fan interface
--Extend with new features such as:
-  -User accounts
-  -Live scores
-  -Players rankings
+   - Launch the app on your device/emulator
+   - Explore the football fan interface
+   - Extend with new features such as:
+     - User accounts
+     - Live scores
+     - Players rankings
 ---
